@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "name": "payment-service",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
