@@ -11,3 +11,6 @@ on:
 jobs:
     getCode:
         runs-on: Ubuntu-latest
+        steps:
+            - name: First step
+              run: echo "API-gateway"

@@ -36,7 +36,7 @@ const ratelimit = rateLimit({
     },
     store: new RedisStore({
         sendCommand: (...args: [string, ...string[]]): Promise<any> => {
-        return redisClient.call(...args);
+            return redisClient.call(...args);
         }
     }),
 })
