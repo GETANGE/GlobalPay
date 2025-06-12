@@ -1,0 +1,13 @@
+name: Transaction-workflow
+
+on:
+    push:
+        branches:
+            - transaction
+    pull_request:
+        types: [opened, closed, auto_merge_enabled]
+    workflow_dispatch:
+
+jobs:
+    getCode:
+        runs-on: Ubuntu-latest

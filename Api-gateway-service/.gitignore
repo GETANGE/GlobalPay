@@ -3,6 +3,10 @@
 # Logs
 
 logs
+combined.log
+app-error.log
+exception.log
+rejections.log
 _.log
 npm-debug.log_
 yarn-debug.log*
