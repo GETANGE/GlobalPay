@@ -14,19 +14,33 @@ class APIError extends Error{
     }
 }
 
+interface CustomError{
+  statusCode: number;
+  status: string;
+  message: string
+}
+
 export const errorHandler = (
-  err: Error | APIError,
+  err: CustomError,
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const statusCode = err instanceof APIError ? err.statusCode : 500;
-  const status = err instanceof APIError ? err.status : 'error';
+  let status = err.status || 'Internal server error'
+  let statusCode = err.statusCode || 500
 
   res.status(statusCode).json({
-    status,
-    message: err.message || 'Internal server error',
+    status: status,
+    message: err.message
   });
 };
+
+export const unhandledRoutes = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  return next( new APIError(`This route ${req.originalUrl} is not yet handled...`, 401))
+}
 
 export default APIError;

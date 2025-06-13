@@ -7,7 +7,7 @@ import cors from "cors"
 import logger from "./utils/logger";
 import { corsOptions } from "./configs/cors-config";
 import { rateLimit } from "express-rate-limit";
-import APIError, { errorHandler } from "./controllers/errorHandler";
+import APIError from "./controllers/errorHandler";
 import RedisStore from "rate-limit-redis";
 
 dotenv.config()
@@ -23,7 +23,15 @@ app.use(express.json());
 app.use(cors(corsOptions));
 
 // Rate limiting
-const redisClient = new Redis(process.env.REDIS_URL as string)
+const redisClient = new Redis(process.env.REDIS_URL as string);
+
+redisClient.on("error", (err)=>{
+    logger.warn(`Redis connections error: ${err.message}`)
+})
+
+redisClient.on("connect", ()=>{
+    logger.info(`🚀 Redis connected successfully`)
+})
 
 const ratelimit = rateLimit({
     windowMs: 15 * 60 * 1000,
@@ -39,6 +47,7 @@ const ratelimit = rateLimit({
             return redisClient.call(...args);
         }
     }),
+    skip: () => !redisClient.status
 })
 
 app.use(ratelimit)
@@ -50,8 +59,35 @@ app.get('/', (req:Request, res:Response) =>{
     })
 })
 
-app.use(errorHandler)
+// Forward Proxies 
 
-app.listen(()=>{
+interface CustomError{
+  statusCode: number;
+  status: string;
+  message: string
+}
+
+app.use(( err: CustomError, req: Request, res: Response, next: NextFunction ) => {
+  let status = err.status || 'Internal server error'
+  let statusCode = err.statusCode || 500
+
+  res.status(statusCode).json({
+    status: status,
+    message: err.message
+  });
+});
+
+process.on("uncaughtException", (err) => {
+  console.error("Uncaught Exception:", err.message);
+  process.exit(1); // Exit to prevent an unstable state
+});
+
+// Handle unhandled promise rejections (async errors outside Express)
+process.on("unhandledRejection", (err: any) => {
+  console.error("Unhandled Promise Rejection:", err.message);
+  process.exit(1);
+});
+
+app.listen(PORT, ()=>{
     logger.info(`🦈 Api-gateway is listening on port: ${PORT}`)
 })
