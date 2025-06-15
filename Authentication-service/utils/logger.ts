@@ -12,7 +12,7 @@ const customFormat = printf(({ level, message, timestamp }) => {
 const logger = winston.createLogger({
     level: process.env.LOG_LEVEL as string || 'info',
     defaultMeta: {
-        service: 'api-gateway-service'
+        service: 'authentication-service'
     },
     format: combine(
         colorize(), 

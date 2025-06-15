@@ -22,7 +22,7 @@ app.use(express.json());
 
 app.use(cors(corsOptions));
 
-// Rate limiting
+// IP-based Rate limiting
 const redisClient = new Redis(process.env.REDIS_URL as string);
 
 redisClient.on("error", (err)=>{

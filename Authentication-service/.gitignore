@@ -1,6 +1,10 @@
 # Based on https://raw.githubusercontent.com/github/gitignore/main/Node.gitignore
 
 # Logs
+combined.log
+app-error.log
+exception.log
+rejections.log
 
 logs
 _.log
