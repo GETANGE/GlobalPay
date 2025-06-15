@@ -130,3 +130,167 @@ Error: EIO: i/o error, write
     at doWrite (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/readable-stream@3.6.2/node_modules/readable-stream/lib/_stream_writable.js:390:139)
     at writeOrBuffer (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/readable-stream@3.6.2/node_modules/readable-stream/lib/_stream_writable.js:381:5)
     at Console.Writable.write (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/readable-stream@3.6.2/node_modules/readable-stream/lib/_stream_writable.js:302:11) : 2025-06-14 01:11:48.567 AM
+[[31merror[39m]: uncaughtException: Missing parameter name at 1: https://git.new/pathToRegexpError
+TypeError: Missing parameter name at 1: https://git.new/pathToRegexpError
+    at name (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/path-to-regexp@8.2.0/node_modules/path-to-regexp/src/index.ts:153:13)
+    at lexer (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/path-to-regexp@8.2.0/node_modules/path-to-regexp/src/index.ts:171:21)
+    at lexer.next (<anonymous>)
+    at Iter.peek (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/path-to-regexp@8.2.0/node_modules/path-to-regexp/src/index.ts:188:32)
+    at Iter.tryConsume (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/path-to-regexp@8.2.0/node_modules/path-to-regexp/src/index.ts:195:24)
+    at Iter.text (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/path-to-regexp@8.2.0/node_modules/path-to-regexp/src/index.ts:213:26)
+    at consume (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/path-to-regexp@8.2.0/node_modules/path-to-regexp/src/index.ts:285:23)
+    at parse (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/path-to-regexp@8.2.0/node_modules/path-to-regexp/src/index.ts:320:18)
+    at /home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/path-to-regexp@8.2.0/node_modules/path-to-regexp/src/index.ts:503:40
+    at Array.map (<anonymous>) : 2025-06-14 01:11:35.571 PM
+[[31merror[39m]: uncaughtException: Missing parameter name at 1: https://git.new/pathToRegexpError
+TypeError: Missing parameter name at 1: https://git.new/pathToRegexpError
+    at name (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/path-to-regexp@8.2.0/node_modules/path-to-regexp/src/index.ts:153:13)
+    at lexer (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/path-to-regexp@8.2.0/node_modules/path-to-regexp/src/index.ts:171:21)
+    at lexer.next (<anonymous>)
+    at Iter.peek (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/path-to-regexp@8.2.0/node_modules/path-to-regexp/src/index.ts:188:32)
+    at Iter.tryConsume (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/path-to-regexp@8.2.0/node_modules/path-to-regexp/src/index.ts:195:24)
+    at Iter.text (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/path-to-regexp@8.2.0/node_modules/path-to-regexp/src/index.ts:213:26)
+    at consume (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/path-to-regexp@8.2.0/node_modules/path-to-regexp/src/index.ts:285:23)
+    at parse (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/path-to-regexp@8.2.0/node_modules/path-to-regexp/src/index.ts:320:18)
+    at /home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/path-to-regexp@8.2.0/node_modules/path-to-regexp/src/index.ts:503:40
+    at Array.map (<anonymous>) : 2025-06-14 01:11:52.176 PM
+[[31merror[39m]: uncaughtException: EIO: i/o error, write
+Error: EIO: i/o error, write
+    at writeSync (node:fs:924:3)
+    at SyncWriteStream._write (node:internal/fs/sync_write_stream:27:5)
+    at writeOrBuffer (node:internal/streams/writable:572:12)
+    at _write (node:internal/streams/writable:501:10)
+    at SyncWriteStream.Writable.write (node:internal/streams/writable:510:10)
+    at Console.log (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/winston@3.17.0/node_modules/winston/lib/winston/transports/console.js:87:23)
+    at Console._write (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/winston-transport@4.9.0/node_modules/winston-transport/modern.js:82:19)
+    at doWrite (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/readable-stream@3.6.2/node_modules/readable-stream/lib/_stream_writable.js:390:139)
+    at writeOrBuffer (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/readable-stream@3.6.2/node_modules/readable-stream/lib/_stream_writable.js:381:5)
+    at Console.Writable.write (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/readable-stream@3.6.2/node_modules/readable-stream/lib/_stream_writable.js:302:11) : 2025-06-14 03:46:44.897 PM
+[[31merror[39m]: uncaughtException: EIO: i/o error, write
+Error: EIO: i/o error, write
+    at writeSync (node:fs:924:3)
+    at SyncWriteStream._write (node:internal/fs/sync_write_stream:27:5)
+    at writeOrBuffer (node:internal/streams/writable:572:12)
+    at _write (node:internal/streams/writable:501:10)
+    at SyncWriteStream.Writable.write (node:internal/streams/writable:510:10)
+    at Console.log (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/winston@3.17.0/node_modules/winston/lib/winston/transports/console.js:87:23)
+    at Console._write (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/winston-transport@4.9.0/node_modules/winston-transport/modern.js:82:19)
+    at doWrite (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/readable-stream@3.6.2/node_modules/readable-stream/lib/_stream_writable.js:390:139)
+    at writeOrBuffer (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/readable-stream@3.6.2/node_modules/readable-stream/lib/_stream_writable.js:381:5)
+    at Console.Writable.write (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/readable-stream@3.6.2/node_modules/readable-stream/lib/_stream_writable.js:302:11) : 2025-06-15 02:06:28.617 PM
+[[31merror[39m]: uncaughtException: EIO: i/o error, write
+Error: EIO: i/o error, write
+    at writeSync (node:fs:924:3)
+    at SyncWriteStream._write (node:internal/fs/sync_write_stream:27:5)
+    at writeOrBuffer (node:internal/streams/writable:572:12)
+    at _write (node:internal/streams/writable:501:10)
+    at SyncWriteStream.Writable.write (node:internal/streams/writable:510:10)
+    at Console.log (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/winston@3.17.0/node_modules/winston/lib/winston/transports/console.js:87:23)
+    at Console._write (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/winston-transport@4.9.0/node_modules/winston-transport/modern.js:82:19)
+    at doWrite (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/readable-stream@3.6.2/node_modules/readable-stream/lib/_stream_writable.js:390:139)
+    at writeOrBuffer (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/readable-stream@3.6.2/node_modules/readable-stream/lib/_stream_writable.js:381:5)
+    at Console.Writable.write (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/readable-stream@3.6.2/node_modules/readable-stream/lib/_stream_writable.js:302:11) : 2025-06-15 02:06:28.617 PM
+[[31merror[39m]: uncaughtException: EIO: i/o error, write
+Error: EIO: i/o error, write
+    at writeSync (node:fs:924:3)
+    at SyncWriteStream._write (node:internal/fs/sync_write_stream:27:5)
+    at writeOrBuffer (node:internal/streams/writable:572:12)
+    at _write (node:internal/streams/writable:501:10)
+    at SyncWriteStream.Writable.write (node:internal/streams/writable:510:10)
+    at Console.log (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/winston@3.17.0/node_modules/winston/lib/winston/transports/console.js:87:23)
+    at Console._write (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/winston-transport@4.9.0/node_modules/winston-transport/modern.js:82:19)
+    at doWrite (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/readable-stream@3.6.2/node_modules/readable-stream/lib/_stream_writable.js:390:139)
+    at writeOrBuffer (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/readable-stream@3.6.2/node_modules/readable-stream/lib/_stream_writable.js:381:5)
+    at Console.Writable.write (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/readable-stream@3.6.2/node_modules/readable-stream/lib/_stream_writable.js:302:11) : 2025-06-15 02:06:28.620 PM
+[[31merror[39m]: uncaughtException: EIO: i/o error, write
+Error: EIO: i/o error, write
+    at writeSync (node:fs:924:3)
+    at SyncWriteStream._write (node:internal/fs/sync_write_stream:27:5)
+    at writeOrBuffer (node:internal/streams/writable:572:12)
+    at _write (node:internal/streams/writable:501:10)
+    at SyncWriteStream.Writable.write (node:internal/streams/writable:510:10)
+    at Console.log (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/winston@3.17.0/node_modules/winston/lib/winston/transports/console.js:87:23)
+    at Console._write (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/winston-transport@4.9.0/node_modules/winston-transport/modern.js:82:19)
+    at doWrite (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/readable-stream@3.6.2/node_modules/readable-stream/lib/_stream_writable.js:390:139)
+    at writeOrBuffer (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/readable-stream@3.6.2/node_modules/readable-stream/lib/_stream_writable.js:381:5)
+    at Console.Writable.write (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/readable-stream@3.6.2/node_modules/readable-stream/lib/_stream_writable.js:302:11) : 2025-06-15 04:05:26.367 PM
+[[31merror[39m]: uncaughtException: ⨯ Unable to compile TypeScript:
+[96mconfigs/db-config.ts[0m:[93m16[0m:[93m9[0m - [91merror[0m[90m TS1109: [0mExpression expected.
+
+[7m16[0m   user: ,
+[7m  [0m [91m        ~[0m
+
+TSError: ⨯ Unable to compile TypeScript:
+[96mconfigs/db-config.ts[0m:[93m16[0m:[93m9[0m - [91merror[0m[90m TS1109: [0mExpression expected.
+
+[7m16[0m   user: ,
+[7m  [0m [91m        ~[0m
+
+    at createTSError (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/ts-node@10.9.2_@types+node@24.0.1_typescript@5.8.3/node_modules/ts-node/src/index.ts:859:12)
+    at reportTSError (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/ts-node@10.9.2_@types+node@24.0.1_typescript@5.8.3/node_modules/ts-node/src/index.ts:863:19)
+    at getOutput (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/ts-node@10.9.2_@types+node@24.0.1_typescript@5.8.3/node_modules/ts-node/src/index.ts:1077:36)
+    at Object.compile (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/ts-node@10.9.2_@types+node@24.0.1_typescript@5.8.3/node_modules/ts-node/src/index.ts:1433:41)
+    at Module.m._compile (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/ts-node@10.9.2_@types+node@24.0.1_typescript@5.8.3/node_modules/ts-node/src/index.ts:1617:30)
+    at node:internal/modules/cjs/loader:1895:10
+    at Object.require.extensions.<computed> [as .ts] (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/ts-node@10.9.2_@types+node@24.0.1_typescript@5.8.3/node_modules/ts-node/src/index.ts:1621:12)
+    at Module.load (node:internal/modules/cjs/loader:1465:32)
+    at Function._load (node:internal/modules/cjs/loader:1282:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14) : 2025-06-15 04:27:20.203 PM
+[[31merror[39m]: uncaughtException: ⨯ Unable to compile TypeScript:
+[96mconfigs/db-config.ts[0m:[93m19[0m:[93m11[0m - [91merror[0m[90m TS2552: [0mCannot find name 'client'. Did you mean 'Client'?
+
+[7m19[0m     await client.connect();
+[7m  [0m [91m          ~~~~~~[0m
+
+TSError: ⨯ Unable to compile TypeScript:
+[96mconfigs/db-config.ts[0m:[93m19[0m:[93m11[0m - [91merror[0m[90m TS2552: [0mCannot find name 'client'. Did you mean 'Client'?
+
+[7m19[0m     await client.connect();
+[7m  [0m [91m          ~~~~~~[0m
+
+    at createTSError (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/ts-node@10.9.2_@types+node@24.0.1_typescript@5.8.3/node_modules/ts-node/src/index.ts:859:12)
+    at reportTSError (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/ts-node@10.9.2_@types+node@24.0.1_typescript@5.8.3/node_modules/ts-node/src/index.ts:863:19)
+    at getOutput (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/ts-node@10.9.2_@types+node@24.0.1_typescript@5.8.3/node_modules/ts-node/src/index.ts:1077:36)
+    at Object.compile (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/ts-node@10.9.2_@types+node@24.0.1_typescript@5.8.3/node_modules/ts-node/src/index.ts:1433:41)
+    at Module.m._compile (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/ts-node@10.9.2_@types+node@24.0.1_typescript@5.8.3/node_modules/ts-node/src/index.ts:1617:30)
+    at node:internal/modules/cjs/loader:1895:10
+    at Object.require.extensions.<computed> [as .ts] (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/ts-node@10.9.2_@types+node@24.0.1_typescript@5.8.3/node_modules/ts-node/src/index.ts:1621:12)
+    at Module.load (node:internal/modules/cjs/loader:1465:32)
+    at Function._load (node:internal/modules/cjs/loader:1282:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14) : 2025-06-15 04:41:50.339 PM
+[[31merror[39m]: uncaughtException: EIO: i/o error, write
+Error: EIO: i/o error, write
+    at writeSync (node:fs:924:3)
+    at SyncWriteStream._write (node:internal/fs/sync_write_stream:27:5)
+    at writeOrBuffer (node:internal/streams/writable:572:12)
+    at _write (node:internal/streams/writable:501:10)
+    at SyncWriteStream.Writable.write (node:internal/streams/writable:510:10)
+    at Console.log (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/winston@3.17.0/node_modules/winston/lib/winston/transports/console.js:87:23)
+    at Console._write (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/winston-transport@4.9.0/node_modules/winston-transport/modern.js:82:19)
+    at doWrite (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/readable-stream@3.6.2/node_modules/readable-stream/lib/_stream_writable.js:390:139)
+    at writeOrBuffer (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/readable-stream@3.6.2/node_modules/readable-stream/lib/_stream_writable.js:381:5)
+    at Console.Writable.write (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/readable-stream@3.6.2/node_modules/readable-stream/lib/_stream_writable.js:302:11) : 2025-06-15 04:58:51.611 PM
+[[31merror[39m]: uncaughtException: EIO: i/o error, write
+Error: EIO: i/o error, write
+    at writeSync (node:fs:924:3)
+    at SyncWriteStream._write (node:internal/fs/sync_write_stream:27:5)
+    at writeOrBuffer (node:internal/streams/writable:572:12)
+    at _write (node:internal/streams/writable:501:10)
+    at SyncWriteStream.Writable.write (node:internal/streams/writable:510:10)
+    at Console.log (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/winston@3.17.0/node_modules/winston/lib/winston/transports/console.js:87:23)
+    at Console._write (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/winston-transport@4.9.0/node_modules/winston-transport/modern.js:82:19)
+    at doWrite (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/readable-stream@3.6.2/node_modules/readable-stream/lib/_stream_writable.js:390:139)
+    at writeOrBuffer (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/readable-stream@3.6.2/node_modules/readable-stream/lib/_stream_writable.js:381:5)
+    at Console.Writable.write (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/readable-stream@3.6.2/node_modules/readable-stream/lib/_stream_writable.js:302:11) : 2025-06-15 05:02:05.172 PM
+[[31merror[39m]: uncaughtException: EIO: i/o error, write
+Error: EIO: i/o error, write
+    at writeSync (node:fs:924:3)
+    at SyncWriteStream._write (node:internal/fs/sync_write_stream:27:5)
+    at writeOrBuffer (node:internal/streams/writable:572:12)
+    at _write (node:internal/streams/writable:501:10)
+    at SyncWriteStream.Writable.write (node:internal/streams/writable:510:10)
+    at Console.log (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/winston@3.17.0/node_modules/winston/lib/winston/transports/console.js:87:23)
+    at Console._write (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/winston-transport@4.9.0/node_modules/winston-transport/modern.js:82:19)
+    at doWrite (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/readable-stream@3.6.2/node_modules/readable-stream/lib/_stream_writable.js:390:139)
+    at writeOrBuffer (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/readable-stream@3.6.2/node_modules/readable-stream/lib/_stream_writable.js:381:5)
+    at Console.Writable.write (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/readable-stream@3.6.2/node_modules/readable-stream/lib/_stream_writable.js:302:11) : 2025-06-15 05:02:05.196 PM
