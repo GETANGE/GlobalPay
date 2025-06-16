@@ -4,7 +4,7 @@ import logger from "../utils/logger";
 
 dotenv.config();
 
-const env = process.env.NODE_ENV;
+const env = process.env.NODE_ENV as string;
 
 let client: Client;
 
@@ -43,3 +43,5 @@ export const connectDatabase = async () => {
     logger.warn("❌ Database connection error", error);
   }
 };
+
+export default client

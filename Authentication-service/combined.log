@@ -230,3 +230,592 @@
 [[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-15 05:05:14.317 PM
 [[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-15 05:05:15.144 PM
 [[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-15 05:05:15.152 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 09:11:18.100 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 09:11:19.009 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 09:11:19.017 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 09:12:36.614 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 09:12:38.765 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 09:12:38.774 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 09:13:07.098 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 09:13:08.155 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 09:13:08.166 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 09:17:00.359 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 09:17:01.403 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 09:17:01.430 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 09:18:57.534 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 09:18:58.523 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 09:18:58.532 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 09:23:32.612 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 09:23:56.877 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 09:23:57.545 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 09:23:57.553 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 09:25:59.284 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 09:25:59.989 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 09:25:59.996 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 09:26:23.153 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 09:26:23.881 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 09:26:23.888 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 09:29:10.276 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 09:29:12.167 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 09:29:12.177 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 09:29:43.814 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 09:29:44.758 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 09:29:44.766 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 09:31:34.738 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 09:31:35.434 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 09:31:35.457 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 09:32:11.091 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 09:32:11.954 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 09:32:11.961 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 09:33:08.204 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 09:33:08.873 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 09:33:08.884 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 09:34:16.613 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 09:34:16.626 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 09:34:16.665 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 09:35:14.118 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 09:35:15.442 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 09:35:15.451 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 09:35:25.353 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 09:35:26.035 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 09:35:26.043 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 09:37:53.362 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 09:37:54.260 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 09:37:54.267 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 09:38:15.986 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 09:38:16.878 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 09:38:16.886 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 09:42:38.625 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 09:42:39.349 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 09:42:39.356 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 09:43:11.346 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 09:43:12.038 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 09:43:12.046 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 09:43:46.671 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 09:43:47.545 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 09:43:47.555 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 09:44:06.595 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 09:44:07.286 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 09:44:07.295 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 09:46:04.908 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 09:46:05.626 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 09:46:05.635 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 09:46:51.483 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 09:46:52.250 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 09:46:52.257 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 09:48:25.669 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 09:48:26.403 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 09:48:26.414 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 09:48:50.786 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 09:48:51.549 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 09:48:51.557 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 09:49:14.538 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 09:49:15.349 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 09:49:15.357 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 09:50:17.403 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 09:50:18.381 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 09:50:18.390 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 09:50:46.957 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 09:50:59.268 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 09:51:00.131 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 09:51:00.141 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 09:51:44.180 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 09:51:45.982 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 09:51:45.988 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 09:52:35.781 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 09:52:37.617 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 09:52:37.627 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 09:56:26.240 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 09:56:26.942 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 09:56:26.953 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 09:56:47.041 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 09:56:48.015 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 09:56:48.023 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 10:01:51.513 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 10:01:52.349 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 10:01:52.359 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 10:02:35.514 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 10:02:36.209 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 10:02:36.216 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 10:05:30.876 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 10:05:31.744 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 10:05:31.750 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 10:05:54.167 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 10:05:55.043 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 10:05:55.050 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 10:06:10.782 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 10:06:11.435 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 10:06:11.446 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 10:07:41.426 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 10:07:42.082 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 10:07:42.091 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 10:25:05.221 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 10:25:23.990 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 10:25:24.956 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 10:25:24.968 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 10:25:43.070 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 10:26:26.045 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 10:26:26.913 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 10:26:26.921 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 10:27:03.663 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 10:27:04.520 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 10:27:04.531 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 10:28:22.194 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 10:28:22.951 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 10:28:22.958 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 10:30:51.830 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 10:30:52.734 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 10:30:52.741 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 10:31:21.701 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 10:31:22.439 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 10:31:22.448 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 10:31:36.654 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 10:31:38.530 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 10:31:38.555 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 10:32:08.431 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 10:32:09.220 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 10:32:09.228 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 10:33:00.046 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 10:34:15.911 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 10:34:16.752 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 10:34:16.762 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 10:35:51.155 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 10:35:51.796 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 10:35:51.805 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 10:36:12.625 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 10:36:13.315 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 10:36:13.326 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 10:36:56.678 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 10:36:57.390 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 10:36:57.399 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 10:38:38.292 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 10:38:39.173 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 10:38:39.184 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 10:39:55.803 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 10:39:56.591 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 10:39:56.598 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 10:40:11.451 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 10:40:20.869 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 10:40:21.611 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 10:40:21.619 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 10:41:56.694 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 10:41:57.575 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 10:41:57.588 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 10:42:08.233 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 10:42:08.244 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 10:42:08.688 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 10:42:18.294 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 10:42:18.927 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 10:42:18.935 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 10:43:37.721 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 10:43:38.797 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 10:43:38.808 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 10:44:55.723 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 10:44:56.873 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 10:44:56.885 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-16 11:24:08.035 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-16 11:24:08.493 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-16 11:24:08.502 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:05:25.288 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:05:26.029 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:05:26.035 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:06:20.034 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:06:20.793 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:06:20.804 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:13:19.253 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:13:19.994 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:13:20.011 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:14:50.720 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:14:51.478 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:14:51.489 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:15:25.661 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:15:26.552 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:15:26.560 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:15:57.644 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:15:58.538 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:15:58.553 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:16:25.753 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:16:26.653 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:16:26.662 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:16:36.214 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:16:36.877 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:16:36.884 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:17:25.604 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:17:26.269 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:17:26.278 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:18:14.111 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:18:14.986 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:18:14.993 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:18:34.464 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:18:35.367 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:18:35.377 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:19:59.773 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:20:00.718 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:20:00.725 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:20:27.469 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:20:28.249 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:20:28.256 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:21:26.383 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:21:27.305 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:21:27.314 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:21:46.476 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:21:47.246 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:21:47.257 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:21:54.733 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:21:55.603 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:21:55.612 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:22:42.519 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:22:43.419 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:22:43.427 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:24:35.935 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:24:36.613 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:24:36.624 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:26:05.942 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:26:06.763 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:26:06.772 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:26:22.216 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:26:22.909 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:26:22.916 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:26:48.905 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:26:49.602 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:26:49.611 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:27:17.707 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:27:18.687 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:27:18.696 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:28:56.288 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:28:57.138 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:28:57.144 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:30:12.754 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:30:13.500 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:30:13.507 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:30:24.246 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:30:31.277 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:30:32.157 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:30:32.165 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:32:11.351 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:32:12.183 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:32:12.193 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:32:27.943 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:32:28.580 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:32:28.586 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:33:12.788 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:33:13.687 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:33:13.694 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:34:46.351 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:34:47.019 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:34:47.026 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:34:58.784 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:34:59.636 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:34:59.646 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:35:18.793 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:35:19.556 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:35:19.565 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:35:28.406 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:35:29.101 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:35:29.109 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:35:43.632 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:35:44.371 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:35:44.380 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:36:25.369 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:36:25.970 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:36:25.978 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:37:33.394 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:37:34.310 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:37:34.317 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:37:58.583 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:37:59.305 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:37:59.314 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:39:05.201 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:39:05.795 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:39:05.803 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:39:33.831 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:39:34.730 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:39:34.739 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:41:14.650 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:41:15.585 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:41:15.594 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:41:55.730 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:41:56.390 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:41:56.399 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:42:20.104 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:42:21.016 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:42:21.023 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:42:45.049 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:42:45.798 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:42:45.805 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:49:07.953 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:49:09.559 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:49:09.566 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:49:43.140 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:49:43.841 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:49:43.849 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:50:59.205 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:51:00.111 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:51:00.119 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:51:20.950 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:51:21.636 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:51:21.643 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:54:38.292 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:55:04.097 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:55:04.905 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:55:04.912 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:55:36.272 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:55:37.179 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:55:37.189 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:55:55.318 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:55:56.105 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:55:56.112 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:56:11.279 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:56:12.020 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:56:12.029 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:56:49.315 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:56:50.070 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:56:50.077 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:57:10.378 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:57:11.110 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:57:11.118 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:57:53.360 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:57:54.191 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:57:54.198 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:58:46.825 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:58:47.610 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:58:47.617 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:59:15.418 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:59:16.069 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:59:16.081 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 12:59:55.475 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 12:59:56.240 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 12:59:56.247 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:01:13.115 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:01:13.989 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:01:13.999 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:01:40.332 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:01:54.457 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:01:55.406 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:01:55.413 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:02:10.093 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:02:10.955 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:02:10.966 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:03:33.304 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:03:49.351 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:03:50.283 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:03:50.291 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:05:01.837 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:05:02.610 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:05:02.617 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:08:39.574 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:08:40.316 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:08:40.324 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:09:05.298 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:09:06.202 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:09:06.209 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:15:49.091 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:15:49.983 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:15:49.990 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:17:22.455 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:17:23.170 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:17:23.178 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:17:39.355 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:17:40.164 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:17:40.170 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:18:19.376 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:19:10.434 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:19:11.103 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:19:11.111 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:19:48.926 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:19:49.695 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:19:49.702 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:21:36.530 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:21:37.552 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:21:37.573 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:21:46.129 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:21:46.964 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:21:46.971 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:22:41.402 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:22:43.045 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:22:43.052 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:24:41.468 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:24:42.192 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:24:42.200 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:28:19.351 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:28:20.239 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:28:20.247 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:29:59.002 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:29:59.859 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:29:59.868 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:30:47.361 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:30:48.079 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:30:48.090 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:31:00.616 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:31:01.360 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:31:01.369 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:32:25.048 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:32:26.009 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:32:26.017 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:32:45.588 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:32:46.303 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:32:46.311 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:32:59.627 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:33:00.480 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:33:00.487 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:33:21.076 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:33:22.139 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:33:22.149 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:33:31.671 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:33:32.577 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:33:32.586 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:33:47.812 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:33:48.741 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:33:48.749 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:34:24.366 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:34:25.350 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:34:25.363 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:34:42.395 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:34:43.443 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:34:43.455 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:34:59.365 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:35:00.133 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:35:00.143 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:35:48.307 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:35:49.050 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:35:49.057 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:36:17.244 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:36:18.161 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:36:18.170 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:36:41.248 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:36:42.220 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:36:42.229 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:37:03.818 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:37:04.751 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:37:04.759 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:37:22.367 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:37:23.265 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:37:23.273 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:38:01.224 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:38:01.900 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:38:01.906 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:41:11.349 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:41:12.244 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:41:12.255 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:41:24.864 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:41:25.599 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:41:25.606 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:45:00.248 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:45:00.982 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:45:00.991 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:45:39.770 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:45:54.331 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:45:55.297 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:45:55.304 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:46:18.136 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:46:19.043 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:46:19.051 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:46:35.856 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:46:55.097 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:46:55.879 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:46:55.888 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:47:21.326 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:47:22.010 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:47:22.018 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:47:50.102 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:47:51.039 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:47:51.046 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:48:25.420 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:48:26.352 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:48:26.362 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:48:49.497 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:48:50.183 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:48:50.193 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:49:26.630 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:49:27.387 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:49:27.395 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:50:08.098 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:50:09.028 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:50:09.034 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:53:40.582 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:53:41.325 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:53:41.333 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:54:21.230 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:54:21.920 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:54:21.928 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:54:49.470 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:54:50.373 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:54:50.379 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:58:32.319 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:58:33.036 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:58:33.044 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:58:49.163 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:58:49.848 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:58:49.857 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 01:59:52.874 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 01:59:53.798 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 01:59:53.807 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 02:00:55.355 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 02:00:56.012 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 02:00:56.021 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 02:01:20.439 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 02:01:21.389 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 02:01:21.397 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 02:01:40.075 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 02:01:40.747 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 02:01:40.758 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 02:01:53.655 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 02:01:54.589 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 02:01:54.596 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 02:04:10.446 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 02:04:11.137 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 02:04:11.145 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 02:06:48.514 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 02:06:49.384 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 02:06:49.390 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 02:07:01.192 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 02:07:02.111 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 02:07:02.118 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 02:07:31.830 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 02:07:32.737 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 02:07:32.743 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 02:07:54.284 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 02:07:55.188 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 02:07:55.194 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 02:08:28.759 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 02:08:29.445 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 02:08:29.452 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 02:08:54.565 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 02:08:55.238 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 02:08:55.244 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 02:09:06.723 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 02:09:07.743 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 02:09:07.752 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 02:09:26.027 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 02:09:27.047 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 02:09:27.057 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 02:09:44.336 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 02:09:45.275 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 02:09:45.282 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 02:10:31.904 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 02:10:32.843 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 02:10:32.851 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 02:10:41.704 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 02:10:42.501 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 02:10:42.507 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 02:11:23.506 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 02:11:24.350 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 02:11:24.358 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 02:13:05.782 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 02:13:06.643 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 02:13:06.654 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 02:13:49.400 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 02:13:50.099 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 02:13:50.109 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 02:14:38.858 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 02:14:39.611 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 02:14:39.619 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 02:15:21.140 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 02:15:21.958 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 02:15:21.980 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 02:16:32.724 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 02:16:33.755 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 02:16:33.766 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-17 02:16:48.410 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-17 02:16:49.267 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-17 02:16:49.274 AM

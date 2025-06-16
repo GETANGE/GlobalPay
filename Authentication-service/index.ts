@@ -23,6 +23,8 @@ app.use(express.json());
 app.use(morgan('dev'));
 app.use(cors(corsOptions))
 
+app.set("trust proxy", true) // used to enable getting the deviceIp
+
 const redisClient = new Redis(process.env.REDIS_URL as string)
 
 redisClient.on('error', (error)=>{
