@@ -294,3 +294,73 @@ Error: EIO: i/o error, write
     at doWrite (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/readable-stream@3.6.2/node_modules/readable-stream/lib/_stream_writable.js:390:139)
     at writeOrBuffer (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/readable-stream@3.6.2/node_modules/readable-stream/lib/_stream_writable.js:381:5)
     at Console.Writable.write (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/readable-stream@3.6.2/node_modules/readable-stream/lib/_stream_writable.js:302:11) : 2025-06-15 05:02:05.196 PM
+[[31merror[39m]: uncaughtException: app.use() requires a middleware function
+TypeError: app.use() requires a middleware function
+    at Function.use (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/express@5.1.0/node_modules/express/lib/application.js:213:11)
+    at Object.<anonymous> (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/index.ts:74:5)
+    at Module._compile (node:internal/modules/cjs/loader:1730:14)
+    at Module.m._compile (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/ts-node@10.9.2_@types+node@24.0.1_typescript@5.8.3/node_modules/ts-node/src/index.ts:1618:23)
+    at node:internal/modules/cjs/loader:1895:10
+    at Object.require.extensions.<computed> [as .ts] (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/ts-node@10.9.2_@types+node@24.0.1_typescript@5.8.3/node_modules/ts-node/src/index.ts:1621:12)
+    at Module.load (node:internal/modules/cjs/loader:1465:32)
+    at Function._load (node:internal/modules/cjs/loader:1282:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24) : 2025-06-17 10:30:07.046 PM
+[[31merror[39m]: uncaughtException: app.use() requires a middleware function
+TypeError: app.use() requires a middleware function
+    at Function.use (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/express@5.1.0/node_modules/express/lib/application.js:213:11)
+    at Object.<anonymous> (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/index.ts:76:5)
+    at Module._compile (node:internal/modules/cjs/loader:1730:14)
+    at Module.m._compile (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/ts-node@10.9.2_@types+node@24.0.1_typescript@5.8.3/node_modules/ts-node/src/index.ts:1618:23)
+    at node:internal/modules/cjs/loader:1895:10
+    at Object.require.extensions.<computed> [as .ts] (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/ts-node@10.9.2_@types+node@24.0.1_typescript@5.8.3/node_modules/ts-node/src/index.ts:1621:12)
+    at Module.load (node:internal/modules/cjs/loader:1465:32)
+    at Function._load (node:internal/modules/cjs/loader:1282:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24) : 2025-06-17 10:31:24.738 PM
+[[31merror[39m]: uncaughtException: EIO: i/o error, write
+Error: EIO: i/o error, write
+    at writeSync (node:fs:924:3)
+    at SyncWriteStream._write (node:internal/fs/sync_write_stream:27:5)
+    at writeOrBuffer (node:internal/streams/writable:572:12)
+    at _write (node:internal/streams/writable:501:10)
+    at SyncWriteStream.Writable.write (node:internal/streams/writable:510:10)
+    at Console.log (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/winston@3.17.0/node_modules/winston/lib/winston/transports/console.js:87:23)
+    at Console._write (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/winston-transport@4.9.0/node_modules/winston-transport/modern.js:82:19)
+    at doWrite (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/readable-stream@3.6.2/node_modules/readable-stream/lib/_stream_writable.js:390:139)
+    at writeOrBuffer (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/readable-stream@3.6.2/node_modules/readable-stream/lib/_stream_writable.js:381:5)
+    at Console.Writable.write (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/readable-stream@3.6.2/node_modules/readable-stream/lib/_stream_writable.js:302:11) : 2025-06-17 11:55:01.850 PM
+[[31merror[39m]: uncaughtException: EIO: i/o error, write
+Error: EIO: i/o error, write
+    at writeSync (node:fs:924:3)
+    at SyncWriteStream._write (node:internal/fs/sync_write_stream:27:5)
+    at writeOrBuffer (node:internal/streams/writable:572:12)
+    at _write (node:internal/streams/writable:501:10)
+    at SyncWriteStream.Writable.write (node:internal/streams/writable:510:10)
+    at Console.log (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/winston@3.17.0/node_modules/winston/lib/winston/transports/console.js:87:23)
+    at Console._write (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/winston-transport@4.9.0/node_modules/winston-transport/modern.js:82:19)
+    at doWrite (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/readable-stream@3.6.2/node_modules/readable-stream/lib/_stream_writable.js:390:139)
+    at writeOrBuffer (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/readable-stream@3.6.2/node_modules/readable-stream/lib/_stream_writable.js:381:5)
+    at Console.Writable.write (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/readable-stream@3.6.2/node_modules/readable-stream/lib/_stream_writable.js:302:11) : 2025-06-17 11:55:02.112 PM
+[[31merror[39m]: uncaughtException: ⨯ Unable to compile TypeScript:
+[96mcontrollers/authController.ts[0m:[93m4[0m:[93m20[0m - [91merror[0m[90m TS2307: [0mCannot find module 'bcrypt' or its corresponding type declarations.
+
+[7m4[0m import bcrypt from "bcrypt"
+[7m [0m [91m                   ~~~~~~~~[0m
+
+TSError: ⨯ Unable to compile TypeScript:
+[96mcontrollers/authController.ts[0m:[93m4[0m:[93m20[0m - [91merror[0m[90m TS2307: [0mCannot find module 'bcrypt' or its corresponding type declarations.
+
+[7m4[0m import bcrypt from "bcrypt"
+[7m [0m [91m                   ~~~~~~~~[0m
+
+    at createTSError (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/ts-node@10.9.2_@types+node@24.0.3_typescript@5.8.3/node_modules/ts-node/src/index.ts:859:12)
+    at reportTSError (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/ts-node@10.9.2_@types+node@24.0.3_typescript@5.8.3/node_modules/ts-node/src/index.ts:863:19)
+    at getOutput (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/ts-node@10.9.2_@types+node@24.0.3_typescript@5.8.3/node_modules/ts-node/src/index.ts:1077:36)
+    at Object.compile (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/ts-node@10.9.2_@types+node@24.0.3_typescript@5.8.3/node_modules/ts-node/src/index.ts:1433:41)
+    at Module.m._compile (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/ts-node@10.9.2_@types+node@24.0.3_typescript@5.8.3/node_modules/ts-node/src/index.ts:1617:30)
+    at node:internal/modules/cjs/loader:1895:10
+    at Object.require.extensions.<computed> [as .ts] (/home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/ts-node@10.9.2_@types+node@24.0.3_typescript@5.8.3/node_modules/ts-node/src/index.ts:1621:12)
+    at Module.load (node:internal/modules/cjs/loader:1465:32)
+    at Function._load (node:internal/modules/cjs/loader:1282:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14) : 2025-06-18 01:40:51.521 AM

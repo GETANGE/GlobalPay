@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS users (
     is_phone_verified BOOLEAN DEFAULT false,
     two_factor_enabled BOOLEAN DEFAULT false,
     kyc_status VARCHAR(50),
-    national_id VARCHAR(20),
+    national_id VARCHAR(200),
     date_of_birth DATE,
     wallet_balance NUMERIC(12, 2) DEFAULT 0.00,
     currency VARCHAR(10),
@@ -22,6 +22,16 @@ CREATE TABLE IF NOT EXISTS users (
     device_ip VARCHAR(45),
     notification_preference VARCHAR(50)
 );
+
+ALTER TABLE users
+ALTER COLUMN national_id TYPE VARCHAR(200)
+
+ALTER TABLE users
+DROP COLUMN IF EXISTS access_token;
+
+ALTER TABLE users
+ALTER COLUMN wallet_balance TYPE NUMERIC(12, 2),
+ALTER COLUMN wallet_balance SET DEFAULT 0;
 
 CREATE TABLE IF NOT EXISTS refreshToken (
     id SERIAL PRIMARY KEY,

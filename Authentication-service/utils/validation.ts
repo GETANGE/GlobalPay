@@ -17,7 +17,7 @@ export const registration_validation = (data:any)=>{
             Joi.string(),
             Joi.number()
         ],
-        phoneNumber: Joi.number().integer().min(10).max(10),
+        phoneNumber: Joi.string().min(10),
         isEmailVerified: Joi.boolean(),
         isPhoneVerified: Joi.boolean(),
         twoFactorEnabled: Joi.boolean(),

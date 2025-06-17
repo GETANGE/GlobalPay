@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import APIError from "./errorHandler";
 import logger from "../utils/logger";
+import bcrypt from "bcrypt"
 import { registration_validation } from "../utils/validation";
-import { encrypt } from "../middlewares/hashing";
 import client from "../configs/db-config";
 import { getClientDeviceIp } from "../middlewares/deviceIp";
 
@@ -59,8 +59,8 @@ export const Registration = async (req: Request, res: Response, next: NextFuncti
         }
 
         // Hash sensitive fields
-        const hashedPassword = await encrypt(password);
-        const hashedNationalId = await encrypt(nationalID);
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedNationalId = await bcrypt.hash(nationalID.toString(), 10);
 
         // Insert new user
         const insertQuery = {
@@ -93,7 +93,7 @@ export const Registration = async (req: Request, res: Response, next: NextFuncti
         });
 
     } catch (error: any) {
-        logger.error(`Internal server error`, error);
-        return next(new APIError(`Internal server error`, 500));
+        logger.error(`Internal server error`, error.stack);
+        return next(new APIError(`Internal server error ${error.message}`, 500));
     }
 };
