@@ -12,11 +12,13 @@ import APIError from "./controllers/errorHandler"
 import { connectDatabase } from "./configs/db-config"
 import { corsOptions } from "./configs/cors-config"
 
+import userRoutes from "./routes/userRoute"
+
 dotenv.config()
 
 const PORT =process.env.AUTH_PORT as string || 3001
 
-const app = express()
+const app = express();
 
 app.use(helmet());
 app.use(express.json());
@@ -69,6 +71,8 @@ const SensitiveEndopointRatelimit = rateLimit({
 
 app.use(SensitiveEndopointRatelimit)
 
+app.use('/auth', userRoutes)
+
 app.get('/', (req:Request, res:Response) => {
     res.status(200).json({
         status:'success',
@@ -84,6 +88,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 interface CustomeError{
     statusCode: number;
     status: string;
+    message: string
 }
 
 app.use((err: CustomeError, req:Request, res:Response, next:NextFunction)=>{
@@ -91,8 +96,8 @@ app.use((err: CustomeError, req:Request, res:Response, next:NextFunction)=>{
     let statusCode = err.statusCode || 500
 
     res.status(statusCode).json({
-        status: 'error',
-        message: status
+        status: status,
+        message: err.message
     })
 })
 
