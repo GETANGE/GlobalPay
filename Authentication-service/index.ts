@@ -13,6 +13,7 @@ import { connectDatabase } from "./configs/db-config"
 import { corsOptions } from "./configs/cors-config"
 
 import userRoutes from "./routes/userRoute"
+import { connectToRabbitMQ } from "./utils/rabbitMQ"
 
 dotenv.config()
 
@@ -112,7 +113,8 @@ process.on("unhandledRejection", (err: any) => {
 });
 
 async function startServer() {
-    await connectDatabase()
+    await connectDatabase();
+    await connectToRabbitMQ()
     app.listen(PORT, ()=>{
         logger.info(`🔐 Auth server is running on port : ${PORT}`)
     })
