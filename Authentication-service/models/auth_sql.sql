@@ -44,3 +44,17 @@ CREATE TABLE IF NOT EXISTS refreshToken (
         REFERENCES users(id)
         ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS user_verification (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL,
+    email_token TEXT,
+    phone_token TEXT,
+    email_expires_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    phone_expires_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    
+    CONSTRAINT fk_user
+        FOREIGN KEY (user_id)
+        REFERENCES users(id)
+        ON DELETE CASCADE
+);

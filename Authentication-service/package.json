@@ -14,11 +14,15 @@
   "license": "ISC",
   "packageManager": "pnpm@10.12.1",
   "devDependencies": {
+    "@types/africastalking": "^0.6.2",
+    "@types/amqplib": "^0.10.7",
     "@types/bcrypt": "^5.0.2",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/morgan": "^1.9.10",
     "@types/node": "^24.0.1",
+    "@types/nodemailer": "^6.4.17",
     "@types/pg": "^8.15.4",
     "dotenv": "^16.5.0",
     "eslint": "^9.29.0",
@@ -31,6 +35,8 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
+    "africastalking": "^0.7.3",
+    "amqplib": "^0.10.8",
     "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
     "dotenv-flow": "^4.1.0",
@@ -39,6 +45,7 @@
     "ioredis": "^5.6.1",
     "joi": "^17.13.3",
     "morgan": "^1.10.0",
+    "nodemailer": "^7.0.3",
     "pg": "^8.16.0",
     "pm2": "^6.0.8",
     "rate-limit-redis": "^4.2.1",

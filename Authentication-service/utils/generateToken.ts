@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken'
+import jwt from "jsonwebtoken"
 import crypto from 'crypto'
 import dotenv from 'dotenv'
 import client from '../configs/db-config'
@@ -15,7 +15,7 @@ export const generateToken = async(user:any)=>{
     expiresAt.setDate(expiresAt.getDate()+7) // expires after 7 days
 
     const query ={
-        text:`INSERT INTO users(user_id, access_token, expiresAt) VALUES($1, $2, $3) RETURNING *`,
+        text:`INSERT INTO user_verification(user_id, access_token, expiresAt) VALUES($1, $2, $3) RETURNING *`,
         values: [user.id, access_token, expiresAt]
     }
 

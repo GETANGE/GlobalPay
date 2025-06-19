@@ -40,7 +40,7 @@ export const connectDatabase = async () => {
     await client.connect();
     logger.info(`🌊 Connected to the ${env} database successfully...`);
   } catch (error) {
-    logger.warn("❌ Database connection error", error);
+    logger.warn("😢 Database connection error", error);
   }
 };
 
