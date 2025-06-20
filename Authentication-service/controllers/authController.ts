@@ -5,6 +5,8 @@ import bcrypt from "bcrypt"
 import { registration_validation } from "../utils/validation";
 import client from "../configs/db-config";
 import { getClientDeviceIp } from "../middlewares/deviceIp";
+import { publishEmailJob, publishSMSJob } from "../utils/rabbitMQ";
+import { resetToken } from "../utils/generateToken";
 
 export const Registration = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -50,12 +52,21 @@ export const Registration = async (req: Request, res: Response, next: NextFuncti
 
         // Check if the user already exists
         const checkQuery = {
-            text: 'SELECT 1 FROM users WHERE email = $1',
-            values: [email]
+            text: 'SELECT id, email, phone_number FROM users WHERE email = $1 OR phone_number = $2',
+            values: [email, phoneNumber]
         };
         const existingUser: any = await client.query(checkQuery);
-        if (existingUser.rowCount > 0) {
-            return next(new APIError(`A user with that email already exists`, 409));
+
+        if (existingUser.rows.length > 0) {
+            const user = existingUser.rows[0];
+
+            if (user.email === email) {
+                return next(new APIError(`A user with that email already exists`, 409));
+            }
+
+            if (user.phone_number === phoneNumber) {
+                return next(new APIError(`A user with that phone number already exists`, 409));
+            }
         }
 
         // Hash sensitive fields
@@ -97,9 +108,42 @@ export const Registration = async (req: Request, res: Response, next: NextFuncti
     }
 };
 
-export const verifyEmail = async(req:Request, res:Response, next:NextFunction) =>{
+export const sendEmailToken = async(req:Request, res:Response, next:NextFunction) =>{
     try {
-        
+        const { email } = req.body;
+
+        if(!email){
+            return next(new APIError(`Please provide you email`, 400))
+        }
+
+        const userData = {
+            name: 'fetch-user',
+            text: 'SELECT id, username FROM users WHERE email = $1',
+            values: [email]
+        }
+
+        const user = await client.query(userData)
+        if(!user.rows.length){
+            return next(new APIError(`User does not exist`, 404))
+        }
+
+        const { token } = resetToken();
+
+        // send Token(add to queue)
+        await publishEmailJob({
+            email: email,
+            name: user.rows[0].username,
+            userId: user.rows[0].id,
+            subject: "GlobalPay Email Verification",
+            message: `Please verify your email address by using the One-Time Password (OTP) provided below.`,
+            otp: token
+        });
+
+        res.status(200).json({
+            status:"success",
+            message: "Otp email verification sent successfully"
+        })
+
     } catch (error) {
         logger.error(`Internal server error`, error);
         return next(new APIError(`Internal server error`, 500))
@@ -108,7 +152,39 @@ export const verifyEmail = async(req:Request, res:Response, next:NextFunction) =
 
 export const verifySMS = async(req:Request, res:Response, next:NextFunction) =>{
     try {
-        
+        const { phone_number } = req.body;
+
+        if(!phone_number){
+            return next(new APIError(`Please provide you phonenumber`, 400))
+        }
+
+        const userData = {
+            name: 'fetch-user',
+            text: 'SELECT id, username FROM users WHERE phone_number = $1',
+            values: [phone_number]
+        }
+
+        const user = await client.query(userData);
+
+        if(!user.rows.length){
+            return next(new APIError(`User does not exist`, 404))
+        }
+
+        const { token } = resetToken();
+
+        // send Token
+        await publishSMSJob({
+            phone_number: phone_number,
+            name: user.rows[0].username,
+            userId: user.rows[0].id,
+            message: `Please verify your Phonenumber by using the One-Time Password (OTP) provided below. ${token}`,
+        });
+
+        res.status(200).json({
+            status:"success",
+            message: "Otp SMS verification sent successfully"
+        })
+
     } catch (error) {
         logger.error(`Internal server error`, error);
         return next(new APIError(`Internal server error`, 500))

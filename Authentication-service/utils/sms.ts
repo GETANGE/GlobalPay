@@ -3,8 +3,13 @@ import dotenv from "dotenv"
 import logger from "./logger";
 import APIError from "../controllers/errorHandler";
 import { connectToRabbitMQ } from "./rabbitMQ";
+import type { Channel } from 'amqplib';
+import client from "../configs/db-config";
+import { resetToken } from "./generateToken";
 
 dotenv.config()
+
+const SMS_QUEUE: string = "sms_queue"
 
 interface Credentials{
     apiKey: string;
@@ -49,20 +54,39 @@ export const sendSMS = async (phone_number: string, message: string, from?: stri
 };
 
 // SMS queue processor
+let channel: Channel;
+
 const processSMSJobs = async()=>{
     try {
-        const { channel } = await connectToRabbitMQ();
+        channel = await connectToRabbitMQ();
 
-        await channel.assertQueue("sms_queue", { durable: true });
-        channel.consume("sms_queue", async(msg:any)=>{
+        await channel.assertQueue(SMS_QUEUE, { durable: true });
+        channel.consume(SMS_QUEUE, async(msg:any)=>{
             if(!msg) return;
 
             try {
                 const data = JSON.parse(msg.content.toString());
-                const { phone_number, message, from } = data;
+                const { phone_number, message, from, userId } = data;
 
                 logger.info(`💌 Processing job for :${data.phone_number}`)
                 const result = await sendSMS(phone_number, message, from);
+
+                // insert to the database
+                const { hashedToken, expiresAt } = resetToken();
+                
+                const insertQuery = {
+                    text: `
+                        INSERT INTO user_verification (user_id, phone_token, phone_expires_at) 
+                        VALUES ($1, $2, $3) 
+                        ON CONFLICT (user_id) DO UPDATE
+                        SET phone_token = EXCLUDED.phone_token,
+                            phone_expires_at = EXCLUDED.phone_expires_at
+                        RETURNING *
+                    `,
+                    values: [userId, hashedToken, expiresAt]
+                }
+
+                await client.query(insertQuery);                
 
                 logger.info(`💌 SMS sent: ${JSON.stringify(result)}`)
                 channel.ack(msg)

@@ -286,3 +286,467 @@
 [[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-19 04:59:03.969 PM
 [[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-19 04:59:05.600 PM
 [[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-19 04:59:05.607 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-19 09:40:24.231 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-19 09:40:25.146 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-19 09:40:27.173 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-19 09:40:27.181 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-19 09:41:01.525 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-19 09:41:02.305 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-19 09:41:04.349 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-19 09:41:04.355 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-19 09:42:18.661 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-19 09:42:19.563 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-19 09:42:21.212 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-19 09:42:21.217 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-19 09:43:59.895 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-19 09:44:00.601 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-19 09:44:02.737 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-19 09:44:02.744 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-19 09:46:31.751 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-19 09:46:33.233 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-19 09:46:35.501 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-19 09:46:35.507 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-19 09:47:06.790 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-19 09:47:07.450 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-19 09:47:09.471 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-19 09:47:09.477 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-19 10:02:38.388 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-19 10:02:39.135 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-19 10:02:40.758 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-19 10:02:40.765 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-19 10:03:59.988 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-19 10:04:00.694 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-19 10:04:03.009 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-19 10:04:03.019 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-19 10:05:11.042 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-19 10:05:11.682 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-19 10:05:33.280 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-19 10:05:34.001 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-19 10:05:36.196 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-19 10:05:36.203 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-19 10:08:36.358 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-19 10:08:37.022 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-19 10:08:38.922 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-19 10:08:38.929 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-19 10:09:54.278 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-19 10:09:54.952 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-19 10:09:57.056 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-19 10:09:57.062 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-19 10:10:23.562 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-19 10:10:24.427 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-19 10:10:26.440 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-19 10:10:26.446 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-19 10:12:01.320 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-19 10:12:10.189 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-19 10:12:10.934 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-19 10:12:12.610 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-19 10:12:12.616 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-19 10:15:17.173 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-19 10:15:18.067 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-19 10:15:45.878 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-19 10:15:46.569 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-19 10:15:48.677 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-19 10:15:48.683 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-19 10:17:46.008 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-19 10:17:46.867 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-19 10:17:49.049 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-19 10:17:49.054 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-19 10:19:47.021 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-19 10:19:47.843 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-19 10:19:49.455 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-19 10:19:49.464 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-19 10:19:59.785 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-19 10:20:00.398 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-19 10:20:02.547 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-19 10:20:02.554 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-19 10:21:10.544 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-19 10:21:11.447 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-19 10:21:13.012 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-19 10:21:13.018 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-19 10:22:23.880 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-19 10:22:24.780 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-19 10:22:26.822 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-19 10:22:26.828 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-19 10:26:59.069 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-19 10:26:59.851 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-19 10:27:01.422 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-19 10:27:01.432 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-19 10:27:12.330 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-19 10:27:13.964 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-19 10:27:16.015 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-19 10:27:16.022 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-19 10:28:07.042 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-19 10:28:07.749 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-19 10:28:09.288 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-19 10:28:09.295 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-19 10:38:17.097 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-19 10:38:17.937 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-19 10:38:19.600 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-19 10:38:19.606 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-19 11:19:50.106 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-19 11:19:50.748 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-19 11:19:52.410 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-19 11:19:52.417 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-19 11:39:32.845 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-19 11:39:33.697 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-19 11:39:35.390 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-19 11:39:35.396 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-19 11:41:41.421 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-19 11:41:42.192 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-19 11:41:44.458 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-19 11:41:44.464 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-19 11:53:38.940 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-19 11:53:39.552 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-19 11:53:41.186 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-19 11:53:41.194 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-19 11:54:18.130 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-19 11:54:18.828 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-19 11:54:20.414 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-19 11:54:20.422 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-19 11:55:22.952 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-19 11:55:23.774 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-19 11:55:25.785 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-19 11:55:25.794 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-19 11:56:26.576 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-19 11:56:27.512 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-19 11:56:29.166 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-19 11:56:29.174 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 12:03:13.643 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 12:03:14.659 AM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 12:03:16.204 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 12:03:16.212 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 12:03:43.004 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 12:03:43.753 AM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 12:03:45.759 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 12:03:45.766 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 12:04:44.634 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 12:04:45.460 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 12:04:56.244 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 12:04:57.234 AM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 12:04:58.913 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 12:04:58.920 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 12:55:14.752 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 12:55:15.769 AM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 12:55:17.312 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 12:55:17.322 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 12:58:35.109 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 12:59:09.066 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 12:59:09.740 AM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 12:59:11.437 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 12:59:11.442 AM
+[[31merror[39m]: Internal server error syntax error at or near "RETURNING" : 2025-06-20 01:03:22.807 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 01:07:10.885 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 01:07:10.900 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 01:07:11.697 AM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 01:07:13.327 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 01:07:13.335 AM
+[[31merror[39m]: Internal server error syntax error at or near "RETURNING" : 2025-06-20 01:07:20.440 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 01:08:41.614 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 01:08:42.332 AM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 01:08:43.909 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 01:08:43.915 AM
+[[31merror[39m]: Internal server error syntax error at or near "RETURNING" : 2025-06-20 01:09:13.825 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 01:09:52.630 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 01:09:53.345 AM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 01:09:55.282 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 01:09:55.288 AM
+[[31merror[39m]: Internal server error syntax error at or near "RETURNING" : 2025-06-20 01:10:04.309 AM
+[[32minfo[39m]: Registration endpoint hit... : 2025-06-20 01:12:30.448 AM
+[[31merror[39m]: Internal server error syntax error at or near "RETURNING" : 2025-06-20 01:13:06.960 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 01:13:53.092 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 01:13:53.863 AM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 01:13:55.422 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 01:13:55.428 AM
+[[32minfo[39m]: Job added to queue for undefined : 2025-06-20 01:14:04.090 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 01:15:26.902 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 01:15:27.844 AM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 01:15:29.968 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 01:15:29.976 AM
+[[32minfo[39m]: Job added to queue for +254115166414 : 2025-06-20 01:15:35.928 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 01:19:48.798 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 01:19:49.476 AM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 01:19:51.640 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 01:19:51.648 AM
+[[32minfo[39m]: Job added to queue for +254115166414 : 2025-06-20 01:20:00.735 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 01:20:58.482 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 01:20:59.432 AM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 01:21:01.581 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 01:21:01.588 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 01:21:22.992 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 01:21:23.941 AM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 01:21:25.658 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 01:21:25.666 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 01:23:08.186 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 01:23:08.868 AM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 01:23:10.888 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 01:23:10.896 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 01:23:33.371 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 01:23:34.365 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 01:23:49.554 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 01:23:50.343 AM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 01:23:52.002 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 01:23:52.010 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 01:25:35.682 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 01:25:36.421 AM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 01:25:38.536 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 01:25:38.543 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 01:26:40.102 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 01:26:40.766 AM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 01:26:42.577 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 01:26:42.589 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 01:27:08.900 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 01:27:09.836 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 01:27:31.936 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 01:27:32.663 AM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 01:27:34.306 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 01:27:34.315 AM
+[[32minfo[39m]: Job added to queue for +254115166414 : 2025-06-20 01:27:43.041 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 01:30:27.365 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 01:30:28.011 AM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 01:30:30.065 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 01:30:30.071 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 01:41:28.941 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 01:41:29.894 AM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 01:41:30.342 AM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 01:41:31.456 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 01:41:31.460 AM
+[[32minfo[39m]: Job added to queue for +254115166414 : 2025-06-20 01:41:47.737 AM
+[[32minfo[39m]: 💌 Processing job for :+254115166414 : 2025-06-20 01:41:47.977 AM
+[[32minfo[39m]: 💌 SMS sent successfully : 2025-06-20 01:41:48.837 AM
+[[32minfo[39m]: 💌 SMS sent: {"SMSMessageData":{"Message":"Sent to 0/1 Total Cost: 0","Recipients":[{"cost":"0","messageId":"None","number":"+254115166414","status":"UserInBlacklist","statusCode":406}]}} : 2025-06-20 01:41:48.837 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 01:46:00.730 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 01:46:01.609 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 01:46:01.615 AM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 01:46:02.644 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 01:46:24.818 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 01:46:25.609 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 01:46:25.616 AM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 01:46:26.304 AM
+[[32minfo[39m]: Job added to queue for +254756735004 : 2025-06-20 01:46:36.794 AM
+[[32minfo[39m]: 💌 Processing job for :+254756735004 : 2025-06-20 01:46:37.099 AM
+[[32minfo[39m]: 💌 SMS sent successfully : 2025-06-20 01:46:38.031 AM
+[[32minfo[39m]: 💌 SMS sent: {"SMSMessageData":{"Message":"Sent to 1/1 Total Cost: KES 0.8000","Recipients":[{"cost":"KES 0.8000","messageId":"ATXid_b19f91e2a22fa2d18dbf8e26e92cceba","messageParts":1,"number":"+254756735004","status":"Success","statusCode":100}]}} : 2025-06-20 01:46:38.032 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 01:51:21.143 AM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 01:51:22.010 AM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 01:51:22.017 AM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 01:51:22.572 AM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 02:31:05.230 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 02:31:05.955 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 02:31:05.964 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 02:31:07.008 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 02:31:07.012 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 02:34:24.777 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 02:34:25.645 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 02:34:25.651 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 02:34:26.225 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 02:34:26.483 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 03:10:59.046 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 03:10:59.981 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 03:10:59.993 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 03:11:00.788 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 03:11:00.813 PM
+[[32minfo[39m]: Registration endpoint hit... : 2025-06-20 03:13:29.850 PM
+[[32minfo[39m]: Registration endpoint hit... : 2025-06-20 03:14:06.808 PM
+[[33mwarn[39m]: Validation error "username" must only contain alpha-numeric characters : 2025-06-20 03:14:06.825 PM
+[[32minfo[39m]: Registration endpoint hit... : 2025-06-20 03:14:19.538 PM
+[[33mwarn[39m]: Validation error "email" must be a valid email : 2025-06-20 03:14:19.552 PM
+[[32minfo[39m]: Registration endpoint hit... : 2025-06-20 03:14:35.857 PM
+[[32minfo[39m]: Job added to queue for emmanuelgetange48@gmail.com : 2025-06-20 03:14:49.035 PM
+[[32minfo[39m]: 📨 Processing job for: emmanuelgetange48@gmail.com : 2025-06-20 03:14:49.317 PM
+[[31merror[39m]: 😢 Failed to send email: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials a640c23a62f3a-ae053ee4bfdsm158282866b.65 - gsmtp : 2025-06-20 03:14:52.557 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 03:20:40.057 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 03:20:40.788 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 03:20:40.795 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 03:20:42.219 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 03:20:42.233 PM
+[[32minfo[39m]: Job added to queue for emmanuelgetange48@gmail.com : 2025-06-20 03:20:47.270 PM
+[[32minfo[39m]: 📨 Processing job for: emmanuelgetange48@gmail.com : 2025-06-20 03:20:47.588 PM
+[[31merror[39m]: 😢 Failed to send email: getaddrinfo EAI_AGAIN gmail : 2025-06-20 03:20:47.649 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 03:21:15.527 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 03:21:16.152 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 03:21:16.158 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 03:21:16.827 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 03:21:16.833 PM
+[[32minfo[39m]: Job added to queue for emmanuelgetange48@gmail.com : 2025-06-20 03:21:21.904 PM
+[[32minfo[39m]: 📨 Processing job for: emmanuelgetange48@gmail.com : 2025-06-20 03:21:22.322 PM
+[[31merror[39m]: 😢 Failed to send email: getaddrinfo EAI_AGAIN gmail : 2025-06-20 03:21:22.374 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 03:21:53.739 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 03:21:56.898 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 03:21:56.910 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 03:21:57.341 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 03:21:57.448 PM
+[[32minfo[39m]: Job added to queue for emmanuelgetange48@gmail.com : 2025-06-20 03:22:04.532 PM
+[[32minfo[39m]: 📨 Processing job for: emmanuelgetange48@gmail.com : 2025-06-20 03:22:04.817 PM
+[[31merror[39m]: 😢 Failed to send email: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials ffacd0b85a97d-3a6d0f1057esm1972857f8f.10 - gsmtp : 2025-06-20 03:22:10.131 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 03:35:56.539 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 03:35:57.279 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 03:35:57.287 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 03:35:57.959 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 03:35:58.301 PM
+[[32minfo[39m]: Job added to queue for emmanuelgetange48@gmail.com : 2025-06-20 03:36:06.246 PM
+[[32minfo[39m]: 📨 Processing job for: emmanuelgetange48@gmail.com : 2025-06-20 03:36:06.536 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 03:38:01.466 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 03:38:02.164 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 03:38:02.172 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 03:38:02.888 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 03:38:02.891 PM
+[[32minfo[39m]: 📨 Processing job for: emmanuelgetange48@gmail.com : 2025-06-20 03:38:03.537 PM
+[[31merror[39m]: 😢 Failed to send email: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials a640c23a62f3a-ae053ecbe7dsm156179066b.49 - gsmtp : 2025-06-20 03:38:06.801 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 03:38:25.176 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 03:38:25.993 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 03:38:26.000 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 03:38:26.561 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 03:38:26.573 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 03:51:41.263 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 03:51:42.028 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 03:51:42.036 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 03:51:42.681 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 03:51:42.976 PM
+[[32minfo[39m]: Job added to queue for emmanuelgetange48@gmail.com : 2025-06-20 03:51:48.528 PM
+[[32minfo[39m]: 📨 Processing job for: emmanuelgetange48@gmail.com : 2025-06-20 03:51:48.780 PM
+[[31merror[39m]: 😢 Failed to send email: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials ffacd0b85a97d-3a6d0f18215sm1983453f8f.29 - gsmtp : 2025-06-20 03:51:52.393 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 03:52:41.610 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 03:52:42.465 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 03:52:42.473 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 03:52:43.180 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 03:52:43.231 PM
+[[32minfo[39m]: Job added to queue for emmanuelgetange48@gmail.com : 2025-06-20 03:52:50.823 PM
+[[32minfo[39m]: 📨 Processing job for: emmanuelgetange48@gmail.com : 2025-06-20 03:52:51.101 PM
+[[31merror[39m]: 😢 Failed to send email: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5b1f17b1804b1-453646d7fe5sm24576205e9.16 - gsmtp : 2025-06-20 03:52:54.247 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 04:01:44.576 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 04:01:45.465 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 04:01:45.473 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 04:01:46.197 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 04:01:46.250 PM
+[[32minfo[39m]: Job added to queue for emmanuelgetange48@gmail.com : 2025-06-20 04:01:52.543 PM
+[[32minfo[39m]: 📨 Processing job for: emmanuelgetange48@gmail.com : 2025-06-20 04:01:52.836 PM
+[[32minfo[39m]: 💌 Email sent: "250 2.0.0 OK  1750424516 ffacd0b85a97d-3a6d0f18152sm1990573f8f.27 - gsmtp" : 2025-06-20 04:01:56.228 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 04:05:06.144 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 04:05:06.971 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 04:05:06.979 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 04:05:07.546 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 04:05:07.833 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 04:07:11.309 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 04:07:12.184 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 04:07:12.199 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 04:07:51.031 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 04:07:51.752 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 04:07:51.758 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 04:07:52.390 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 04:07:52.681 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 04:10:53.290 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 04:10:54.190 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 04:10:54.198 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 04:11:03.062 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 04:11:03.959 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 04:11:03.970 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 04:11:04.416 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 04:11:04.756 PM
+[[32minfo[39m]: Job added to queue for emmanuelgetange48@gmail.com : 2025-06-20 04:11:10.532 PM
+[[32minfo[39m]: 📨 Processing job for: emmanuelgetange48@gmail.com : 2025-06-20 04:11:10.817 PM
+[[32minfo[39m]: 💌 Email sent: "250 2.0.0 OK  1750425074 a640c23a62f3a-ae05407f52dsm162810466b.105 - gsmtp" : 2025-06-20 04:11:14.476 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 04:13:06.532 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 04:13:07.406 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 04:13:07.413 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 04:13:08.160 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 04:13:08.241 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 04:15:10.381 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 04:15:11.372 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 04:15:11.379 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 04:15:12.392 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 04:15:12.654 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 04:16:03.206 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 04:16:03.898 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 04:16:03.905 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 04:16:04.683 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 04:16:04.687 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 04:16:19.284 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 04:16:20.155 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 04:16:20.164 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 04:16:20.737 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 04:16:20.746 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 04:17:08.082 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 04:17:08.846 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 04:17:08.853 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 04:17:09.501 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 04:17:09.798 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 04:18:30.923 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 04:18:32.491 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 04:18:32.497 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 04:18:32.712 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 04:18:33.632 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 04:20:53.798 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 04:20:54.541 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 04:20:54.553 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 04:20:55.181 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 04:20:55.549 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 04:21:24.816 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 04:21:25.820 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 04:21:25.832 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 04:21:26.600 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 04:21:26.603 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 04:24:48.596 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 04:24:49.286 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 04:24:49.292 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 04:24:50.299 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 04:24:50.302 PM
+[[32minfo[39m]: Job added to queue for +254756735004 : 2025-06-20 04:25:14.838 PM
+[[32minfo[39m]: 💌 Processing job for :+254756735004 : 2025-06-20 04:25:15.129 PM
+[[32minfo[39m]: 💌 SMS sent successfully : 2025-06-20 04:25:16.009 PM
+[[32minfo[39m]: 💌 SMS sent: {"SMSMessageData":{"Message":"Sent to 1/1 Total Cost: KES 0.8000","Recipients":[{"cost":"KES 0.8000","messageId":"ATXid_c38f92c91ba34fc859f751af84237cc3","messageParts":1,"number":"+254756735004","status":"Success","statusCode":100}]}} : 2025-06-20 04:25:16.236 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 04:26:25.583 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 04:26:26.352 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 04:26:26.361 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 04:26:27.353 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 04:26:27.583 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 04:26:54.898 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 04:26:55.707 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 04:26:55.713 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 04:26:56.453 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 04:26:56.556 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 04:28:27.489 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 04:28:28.330 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 04:28:28.340 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 04:28:29.058 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 04:28:29.123 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 04:28:45.186 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 04:28:46.049 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 04:28:46.056 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 04:28:46.845 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 04:28:46.856 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 04:29:24.535 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 04:29:25.489 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 04:29:25.500 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 04:29:43.364 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 04:29:44.224 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 04:29:44.230 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 04:29:44.918 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 04:29:44.928 PM
+[[32minfo[39m]: Registration endpoint hit... : 2025-06-20 04:30:00.949 PM
+[[32minfo[39m]: Registration endpoint hit... : 2025-06-20 04:30:08.890 PM
+[[31merror[39m]: Internal server error Cannot read properties of undefined (reading 'email') : 2025-06-20 04:30:09.164 PM
+[[32minfo[39m]: Registration endpoint hit... : 2025-06-20 04:30:27.409 PM
+[[31merror[39m]: Internal server error Cannot read properties of undefined (reading 'email') : 2025-06-20 04:30:27.688 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 04:34:48.680 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 04:35:02.100 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 04:35:02.858 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 04:35:02.868 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 04:35:03.722 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 04:35:03.908 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 04:35:30.906 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 04:35:31.934 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 04:35:31.941 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 04:35:32.729 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 04:35:32.733 PM
+[[32minfo[39m]: Registration endpoint hit... : 2025-06-20 04:35:41.703 PM
+[[32minfo[39m]: Registration endpoint hit... : 2025-06-20 04:35:46.090 PM
+[[32minfo[39m]: 🌊 Connected to the production database successfully... : 2025-06-20 04:36:54.742 PM
+[[32minfo[39m]: 🔐 Auth server is running on port : 3001 : 2025-06-20 04:36:54.764 PM
+[[32minfo[39m]: 🍃 Redis connected successfully : 2025-06-20 04:36:54.837 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 04:36:55.236 PM
+[[32minfo[39m]: 🐇 Connected to RabbitMQ.. : 2025-06-20 04:36:57.153 PM

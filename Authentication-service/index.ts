@@ -14,6 +14,8 @@ import { corsOptions } from "./configs/cors-config"
 
 import userRoutes from "./routes/userRoute"
 import { connectToRabbitMQ } from "./utils/rabbitMQ"
+import './utils/sms'; // ✅ Triggers processor
+import './utils/email';
 
 dotenv.config()
 
@@ -102,21 +104,20 @@ app.use((err: CustomeError, req:Request, res:Response, next:NextFunction)=>{
     })
 })
 
-process.on("uncaughtException", (err) => {
-  console.error("Uncaught Exception:", err.message);
-  process.exit(1); // Exit to prevent an unstable state
-});
-
-process.on("unhandledRejection", (err: any) => {
-  console.error("Unhandled Promise Rejection:", err.message);
-  process.exit(1);
-});
-
 async function startServer() {
     await connectDatabase();
-    await connectToRabbitMQ()
     app.listen(PORT, ()=>{
         logger.info(`🔐 Auth server is running on port : ${PORT}`)
     })
 }
-startServer()
+startServer();
+
+process.on("uncaughtException", (err) => {
+  console.error("Uncaught Exception:", err);
+  process.exit(1); // Exit to prevent an unstable state
+});
+
+process.on("unhandledRejection", (err: any) => {
+  console.error("Unhandled Promise Rejection:", err);
+  process.exit(1);
+});

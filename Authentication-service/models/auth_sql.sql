@@ -47,9 +47,9 @@ CREATE TABLE IF NOT EXISTS refreshToken (
 
 CREATE TABLE IF NOT EXISTS user_verification (
     id SERIAL PRIMARY KEY,
-    user_id INTEGER NOT NULL,
-    email_token TEXT,
-    phone_token TEXT,
+    user_id INTEGER NOT NULL UNIQUE, -- 🔥 Make this unique
+    email_token TEXT DEFAULT NULL,
+    phone_token TEXT DEFAULT NULL,
     email_expires_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     phone_expires_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     

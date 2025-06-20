@@ -23,3 +23,12 @@ export const generateToken = async(user:any)=>{
 
     return { access_token, refreshToken }
 }
+
+export const resetToken = () => {
+  const token = crypto.randomInt(11111, 99999);
+
+  const hashedToken = crypto.createHash('sha256').update(token.toString()).digest('hex');
+  const expiresAt = new Date(Date.now() + 10 * 60 * 1000);
+
+  return { token, expiresAt, hashedToken };
+};
