@@ -26,7 +26,16 @@ export const connectToRabbitMQ = async()=>{
     }
 }
 
-export const publishEmailJob = async(data: any)=>{
+interface emailData{
+    email: string;
+    name: string;
+    userId: number;
+    subject: string;
+    message: string;
+
+    otp: number
+}
+export const publishEmailJob = async(data: emailData)=>{
     try {
         if(!channel){
             await connectToRabbitMQ()
@@ -42,7 +51,13 @@ export const publishEmailJob = async(data: any)=>{
     }
 }
 
-export const publishSMSJob = async(data: any)=>{
+interface smsData{
+    phone_number: string;
+    name: string;
+    message: string;
+    userId: number;
+}
+export const publishSMSJob = async(data: smsData)=>{
     try {
         if(!channel){
             await connectToRabbitMQ()
@@ -52,7 +67,7 @@ export const publishSMSJob = async(data: any)=>{
             persistent: true
         });
 
-        logger.info(`Job added to queue for ${data.email}`)
+        logger.info(`Job added to queue for ${data.phone_number}`)
     } catch (error) {
         logger.error(`Error adding Job to a queue`)
     }
@@ -91,3 +106,5 @@ export const consumeEvent = async(routingKey: string, callback:any)=>{
         logger.error(`Error consuming an event: ${routingKey}`)
     }
 }
+
+export default channel;
