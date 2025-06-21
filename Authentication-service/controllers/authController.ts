@@ -110,6 +110,8 @@ export const Registration = async (req: Request, res: Response, next: NextFuncti
 
 export const sendEmailToken = async(req:Request, res:Response, next:NextFunction) =>{
     try {
+        logger.info(`Email verification endpoint hit...`);
+
         const { email } = req.body;
 
         if(!email){
@@ -152,6 +154,8 @@ export const sendEmailToken = async(req:Request, res:Response, next:NextFunction
 
 export const verifySMS = async(req:Request, res:Response, next:NextFunction) =>{
     try {
+        logger.info(`SMS verification endpoint hit...`);
+
         const { phone_number } = req.body;
 
         if(!phone_number){
