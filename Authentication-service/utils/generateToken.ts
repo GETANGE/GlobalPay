@@ -25,10 +25,12 @@ export const generateToken = async(user:any)=>{
 }
 
 export const resetToken = () => {
-  const token = crypto.randomInt(11111, 99999);
+    const token = crypto.randomInt(11111, 99999);
 
-  const hashedToken = crypto.createHash('sha256').update(token.toString()).digest('hex');
-  const expiresAt = new Date(Date.now() + 10 * 60 * 1000);
+    const hashedToken = crypto.createHash('sha256').update(token.toString()).digest('hex');
+    console.log(hashedToken)
+    
+    const expiresAt = new Date(Date.now()+ 10 * 60 * 1000).toISOString();
 
   return { token, expiresAt, hashedToken };
 };

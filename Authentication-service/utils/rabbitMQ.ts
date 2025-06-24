@@ -26,16 +26,18 @@ export const connectToRabbitMQ = async()=>{
     }
 }
 
-interface emailData{
+interface EmailData{
     email: string;
     name: string;
     userId: number;
     subject: string;
     message: string;
 
-    otp: number
+    otp: number,
+    hashedToken: string;
+    expiresAt: string;
 }
-export const publishEmailJob = async(data: emailData)=>{
+export const publishEmailJob = async(data: EmailData)=>{
     try {
         if(!channel){
             await connectToRabbitMQ()
@@ -51,13 +53,13 @@ export const publishEmailJob = async(data: emailData)=>{
     }
 }
 
-interface smsData{
+interface SmsData{
     phone_number: string;
     name: string;
     message: string;
     userId: number;
 }
-export const publishSMSJob = async(data: smsData)=>{
+export const publishSMSJob = async(data: SmsData)=>{
     try {
         if(!channel){
             await connectToRabbitMQ()
