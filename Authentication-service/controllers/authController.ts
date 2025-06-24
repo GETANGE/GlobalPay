@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import APIError from "./errorHandler";
 import logger from "../utils/logger";
 import bcrypt from "bcrypt"
+import crypto from "crypto"
 import { registration_validation } from "../utils/validation";
 import client from "../configs/db-config";
 import { getClientDeviceIp } from "../middlewares/deviceIp";
@@ -129,7 +130,7 @@ export const sendEmailToken = async(req:Request, res:Response, next:NextFunction
             return next(new APIError(`User does not exist`, 404))
         }
 
-        const { token } = resetToken();
+        const { token, hashedToken, expiresAt } = resetToken();
 
         // send Token(add to queue)
         await publishEmailJob({
@@ -138,7 +139,9 @@ export const sendEmailToken = async(req:Request, res:Response, next:NextFunction
             userId: user.rows[0].id,
             subject: "GlobalPay Email Verification",
             message: `Please verify your email address by using the One-Time Password (OTP) provided below.`,
-            otp: token
+            otp: token,
+            hashedToken,
+            expiresAt
         });
 
         res.status(200).json({
@@ -152,7 +155,7 @@ export const sendEmailToken = async(req:Request, res:Response, next:NextFunction
     }
 }
 
-export const verifySMS = async(req:Request, res:Response, next:NextFunction) =>{
+export const sendSMSToken = async(req:Request, res:Response, next:NextFunction) =>{
     try {
         logger.info(`SMS verification endpoint hit...`);
 
@@ -194,3 +197,107 @@ export const verifySMS = async(req:Request, res:Response, next:NextFunction) =>{
         return next(new APIError(`Internal server error`, 500))
     }
 }
+
+export const verifyEmailToken = async ( req: Request, res: Response, next: NextFunction) => {
+  try {
+    const token = req.params.token;
+
+    if (!token) {
+      return next(new APIError("Email token is required", 400));
+    }
+
+    const hashedToken = crypto
+      .createHash("sha256")
+      .update(token.toString())
+      .digest("hex");
+
+    logger.info(`🔐 Hashed Email Token: ${hashedToken}`);
+
+    const selectQuery = {
+      text: `SELECT * FROM email_verification WHERE email_token = $1`,
+      values: [hashedToken],
+    };
+
+    const result = await client.query(selectQuery);
+    const record = result.rows[0];
+
+    console.log(result.rows[0])
+
+    if (!record) {
+      return next(new APIError("Invalid or expired email token", 404));
+    }
+
+    const expiry = new Date(record.email_expires_at);
+    logger.info(`🕓 NOW: ${new Date().toISOString()} | 📅 EXPIRES AT: ${expiry.toISOString()}`);
+
+    if (expiry < new Date()) {
+      return next(new APIError("Email token has expired", 400));
+    }
+
+    const updateQuery = {
+      text: `UPDATE email_verification SET email_token = NULL WHERE email_token = $1`,
+      values: [hashedToken],
+    };
+
+    await client.query(updateQuery);
+
+    res.status(200).json({
+      status: "success",
+      message: "✅ Email verified successfully",
+    });
+  } catch (error: any) {
+    logger.error(`❌ Error verifying email token: ${error.message}`);
+    return next(new APIError("Internal server error", 500));
+  }
+};
+
+export const verifySmsToken = async ( req: Request, res: Response, next: NextFunction ) => {
+  try {
+    const token = req.params.token;
+
+    if (!token) {
+      return next(new APIError("SMS token is required", 400));
+    }
+
+    const hashedToken = crypto
+      .createHash("sha256")
+      .update(token.toString())
+      .digest("hex");
+
+    logger.info(`🔐 Hashed SMS Token: ${hashedToken}`);
+
+    const selectQuery = {
+      text: `SELECT * FROM sms_verification WHERE phone_token = $1`,
+      values: [hashedToken],
+    };
+
+    const result = await client.query(selectQuery);
+    const record = result.rows[0];
+
+    if (!record) {
+      return next(new APIError("Invalid or expired SMS token", 404));
+    }
+
+    const expiry = new Date(record.phone_expires_at);
+    logger.info(`🕓 NOW: ${new Date().toISOString()} | 📅 EXPIRES AT: ${expiry.toISOString()}`);
+
+    if (expiry < new Date()) {
+      return next(new APIError("SMS token has expired", 400));
+    }
+
+    const updateQuery = {
+      text: `UPDATE sms_verification SET phone_token = NULL WHERE phone_token = $1`,
+      values: [hashedToken],
+    };
+
+    await client.query(updateQuery);
+
+    res.status(200).json({
+      status: "success",
+      message: "✅ SMS verified successfully",
+    });
+  } catch (error: any) {
+    logger.error(`❌ Error verifying SMS token: ${error.message}`);
+    return next(new APIError("Internal server error", 500));
+  }
+};
