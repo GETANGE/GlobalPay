@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "GlobalPay",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

@@ -4,6 +4,8 @@ on:
     push:
         branches:
             - main
+        paths:
+            - '**'
     pull_request:
         types: [opened, closed, auto_merge_enabled]
     workflow_dispatch:
