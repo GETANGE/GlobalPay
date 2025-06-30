@@ -87,3 +87,7 @@ ALTER COLUMN email_expires_at TYPE TIMESTAMPTZ;
 -- ✅ Alter `sms_verification` table
 ALTER TABLE sms_verification
 ALTER COLUMN phone_expires_at TYPE TIMESTAMPTZ;
+
+ALTER TABLE refreshToken
+  ADD COLUMN refresh_token TEXT DEFAULT NULL,
+  ALTER COLUMN expires_at TYPE TIMESTAMPTZ;
