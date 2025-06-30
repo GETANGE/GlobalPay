@@ -7,7 +7,7 @@ import { registration_validation } from "../utils/validation";
 import client from "../configs/db-config";
 import { getClientDeviceIp } from "../middlewares/deviceIp";
 import { publishEmailJob, publishSMSJob } from "../utils/rabbitMQ";
-import { resetToken } from "../utils/generateToken";
+import { generateToken, resetToken } from "../utils/generateToken";
 
 export const Registration = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -301,3 +301,68 @@ export const verifySmsToken = async ( req: Request, res: Response, next: NextFun
     return next(new APIError("Internal server error", 500));
   }
 };
+
+export const login = async(req:Request, res:Response, next:NextFunction)=>{
+  try {
+    logger.info(`Login endpoint hit...`);
+
+    const { email, currentPassword } = req.body;
+
+    if(!email || !currentPassword){
+      return next(new APIError(`Please provide you email or password`, 401))
+    }
+
+    const query ={
+      text:"SELECT id, username, email, password, role FROM users WHERE email = $1",
+      values:[email]
+    }
+
+    const result = await client.query(query);
+
+    if(!result){
+      return next(new APIError(`This user does ot exist`, 400))
+    }
+
+    const user = result.rows[0];
+
+    //compare passwords
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+
+    if(!isMatch){
+      return next(new APIError(`Password do not match`, 400))
+    }
+
+    // generate accessToken and refreshToken
+    const { access_token, refresh_token } = await generateToken({
+      id:user.id,
+      username:user.username,
+      email: user.email
+    });
+
+    // send response
+    res.status(200).json({
+      status:"LoggedIn successfully",
+      access_token:access_token,
+      refresh_token: refresh_token,
+      user: {
+          id: user.id,
+          username: user.username,
+          email: user.email,
+          role: user.role,
+        }
+    })
+
+  } catch (error:any) {
+    logger.error(`Internal server error: ${error.message}`)
+    return next(new APIError(`Internal server error`, 500))
+  }
+}
+
+export const protectRoute = async(req:Request, res:Response, next:NextFunction)=>{
+  try {
+    const authHeaders = req.headers.authorization
+  } catch (error:any) {
+    logger.error(`Internal server error : ${error}`)
+    return next(new APIError(`Internal server error`, 500))
+  }
+}
