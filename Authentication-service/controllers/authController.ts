@@ -314,7 +314,7 @@ export const login = async(req:Request, res:Response, next:NextFunction)=>{
 
     const query ={
       text:"SELECT id, username, email, password, role FROM users WHERE email = $1",
-      value:[email]
+      values:[email]
     }
 
     const result = await client.query(query);
@@ -362,7 +362,7 @@ export const protectRoute = async(req:Request, res:Response, next:NextFunction)=
   try {
     const authHeaders = req.headers.authorization
   } catch (error:any) {
-    logger.error(`Internal server error`)
+    logger.error(`Internal server error : ${error}`)
     return next(new APIError(`Internal server error`, 500))
   }
 }

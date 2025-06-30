@@ -36,7 +36,7 @@ export const generateToken = async (user: userData) => {
         UPDATE refreshToken
         SET access_token = $2,
             refresh_token = $3,
-            expiresAt = $4
+            expires_at = $4
         WHERE user_id = $1`,
       values: [user.id, access_token, refresh_token, expiresAt]
     };
@@ -48,7 +48,7 @@ export const generateToken = async (user: userData) => {
   } else {
     // Insert new token
     const insertQuery = {
-      text: `INSERT INTO refreshToken (user_id, access_token, refresh_token, expiresAt)
+      text: `INSERT INTO refreshToken (user_id, access_token, refresh_token, expires_at)
              VALUES ($1, $2, $3, $4)`,
       values: [user.id, access_token, refresh_token, expiresAt]
     };

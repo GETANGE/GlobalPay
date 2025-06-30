@@ -23,6 +23,9 @@ CREATE TABLE IF NOT EXISTS users (
     notification_preference VARCHAR(50)
 );
 
+CREATE INDEX idx_users_email ON users(email);
+
+
 -- Change the column types to TIMESTAMPTZ (aka TIMESTAMP WITH TIME ZONE)
 ALTER TABLE users
   ALTER COLUMN created_at TYPE TIMESTAMPTZ USING created_at AT TIME ZONE 'UTC',
