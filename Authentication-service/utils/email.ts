@@ -63,53 +63,71 @@ export const sendMail = async (options: Options) => {
 };
 
 // Email queue processor
-let channel : Channel;
+let channel: Channel;
 
 const processEmailJobs = async () => {
   try {
-     channel = await connectToRabbitMQ();
+    channel = await connectToRabbitMQ();
 
     await channel.assertQueue("email_queue", { durable: true });
 
-    channel.consume("email_queue", async (msg:any) => {
+    channel.consume("email_queue", async (msg: any) => {
       if (!msg) return;
 
       try {
         const data = JSON.parse(msg.content.toString());
-        const { email, name, subject, message, otp, from, userId } = data;
+        const { email, name, subject, message, otp, from, userId, hashedToken, expiresAt } = data;
 
 <<<<<<< Updated upstream
         logger.info(`📨 Processing job for: ${email}`);
+        console.log("✅ Data received in worker:", { email, hashedToken, expiresAt });
+
 =======
 >>>>>>> Stashed changes
         const result = await sendMail({ email, name, subject, message, otp, from });
 
-        // now save to the database
-        const { hashedToken, expiresAt } = resetToken();
+        // Insert or update email_verification table
+        const checkQuery = {
+          text: `SELECT id FROM email_verification WHERE user_id = $1`,
+          values: [userId],
+        };
 
-                const insertQuery = {
-                    text: `
-                        INSERT INTO user_verification (user_id, email_token, email_expires_at) 
-                        VALUES ($1, $2, $3) 
-                        ON CONFLICT (user_id) DO UPDATE
-                        SET email_token = EXCLUDED.email_token,
-                            email_expires_at = EXCLUDED.email_expires_at
-                        RETURNING *
-                    `,
-                    values: [userId, hashedToken, expiresAt]
-                };
-        
-                await client.query(insertQuery);
+        const existing = await client.query(checkQuery);
+
+        if (existing.rows.length > 0) {
+          // UPDATE
+          const updateQuery = {
+            text: `
+              UPDATE email_verification
+              SET email_token = $2,
+                  email_expires_at = $3,
+                  created_at = CURRENT_TIMESTAMP
+              WHERE user_id = $1
+            `,
+            values: [userId, hashedToken, expiresAt],
+          };
+          await client.query(updateQuery);
+        } else {
+          // INSERT
+          const insertQuery = {
+            text: `
+              INSERT INTO email_verification (user_id, email_token, email_expires_at)
+              VALUES ($1, $2, $3)
+            `,
+            values: [userId, hashedToken, expiresAt],
+          };
+          await client.query(insertQuery);
+        }
 
         logger.info(`💌 Email sent: ${JSON.stringify(result.info.response)}`);
         channel.ack(msg);
       } catch (err: any) {
-        logger.error(`😢 Failed to send email: ${err.message}`);
+        logger.error(`😢 Failed to process email job: ${err.message}`);
         channel.nack(msg, false, false); // don't requeue
       }
     });
-  } catch (err:any) {
-    logger.error(`😢 Failed to connect to RabbitMQ or process email jobs: ${err.message}`);
+  } catch (err: any) {
+    logger.error(`❌ Failed to connect to RabbitMQ or set up email processor: ${err.message}`);
   }
 };
 

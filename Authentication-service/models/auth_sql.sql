@@ -23,6 +23,16 @@ CREATE TABLE IF NOT EXISTS users (
     notification_preference VARCHAR(50)
 );
 
+CREATE INDEX idx_users_email ON users(email);
+
+
+-- Change the column types to TIMESTAMPTZ (aka TIMESTAMP WITH TIME ZONE)
+ALTER TABLE users
+  ALTER COLUMN created_at TYPE TIMESTAMPTZ USING created_at AT TIME ZONE 'UTC',
+  ALTER COLUMN updated_at TYPE TIMESTAMPTZ USING updated_at AT TIME ZONE 'UTC',
+  ALTER COLUMN last_login TYPE TIMESTAMPTZ USING last_login AT TIME ZONE 'UTC';
+
+
 ALTER TABLE users
 ALTER COLUMN national_id TYPE VARCHAR(200)
 
@@ -45,16 +55,42 @@ CREATE TABLE IF NOT EXISTS refreshToken (
         ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS user_verification (
+DROP TABLE IF EXISTS user_verification;
+
+CREATE TABLE email_verification (
     id SERIAL PRIMARY KEY,
-    user_id INTEGER NOT NULL UNIQUE, -- 🔥 Make this unique
-    email_token TEXT DEFAULT NULL,
-    phone_token TEXT DEFAULT NULL,
-    email_expires_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    phone_expires_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    
+    user_id INTEGER NOT NULL UNIQUE,
+    email_token TEXT,
+    email_expires_at TIMESTAMP DEFAULT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
     CONSTRAINT fk_user
         FOREIGN KEY (user_id)
         REFERENCES users(id)
         ON DELETE CASCADE
 );
+
+CREATE TABLE sms_verification (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL UNIQUE,
+    phone_token TEXT,
+    phone_expires_at TIMESTAMP DEFAULT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_user
+        FOREIGN KEY (user_id)
+        REFERENCES users(id)
+        ON DELETE CASCADE
+);
+
+-- ✅ Alter `email_verification` table
+ALTER TABLE email_verification
+ALTER COLUMN email_expires_at TYPE TIMESTAMPTZ;
+
+-- ✅ Alter `sms_verification` table
+ALTER TABLE sms_verification
+ALTER COLUMN phone_expires_at TYPE TIMESTAMPTZ;
+
+ALTER TABLE refreshToken
+  ADD COLUMN refresh_token TEXT DEFAULT NULL,
+  ALTER COLUMN expires_at TYPE TIMESTAMPTZ;
