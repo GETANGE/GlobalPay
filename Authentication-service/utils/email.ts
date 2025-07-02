@@ -78,12 +78,9 @@ const processEmailJobs = async () => {
         const data = JSON.parse(msg.content.toString());
         const { email, name, subject, message, otp, from, userId, hashedToken, expiresAt } = data;
 
-<<<<<<< Updated upstream
         logger.info(`📨 Processing job for: ${email}`);
         console.log("✅ Data received in worker:", { email, hashedToken, expiresAt });
 
-=======
->>>>>>> Stashed changes
         const result = await sendMail({ email, name, subject, message, otp, from });
 
         // Insert or update email_verification table
