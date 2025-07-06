@@ -3,7 +3,6 @@ import dotenv from "dotenv"
 import logger from "./logger";
 import { connectToRabbitMQ } from "./rabbitMQ";
 import type { Channel } from 'amqplib';
-import { resetToken } from "./generateToken";
 import client from "../configs/db-config";
 
 dotenv.config()
@@ -21,8 +20,6 @@ type Options = {
 const emailTemplate = (name: string, message: string, otp?: number): string => `
   <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; color: #333;">
     <h2 style="color: #007bff;">Hello ${name},</h2>
-    
-    <p>Thank you for registering with <strong>GlobalPay</strong>.</p>
 
     <p>${message}</p>
 
@@ -77,9 +74,6 @@ const processEmailJobs = async () => {
       try {
         const data = JSON.parse(msg.content.toString());
         const { email, name, subject, message, otp, from, userId, hashedToken, expiresAt } = data;
-
-        logger.info(`📨 Processing job for: ${email}`);
-        console.log("✅ Data received in worker:", { email, hashedToken, expiresAt });
 
         const result = await sendMail({ email, name, subject, message, otp, from });
 

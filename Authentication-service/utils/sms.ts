@@ -5,7 +5,6 @@ import APIError from "../controllers/errorHandler";
 import { connectToRabbitMQ } from "./rabbitMQ";
 import type { Channel } from 'amqplib';
 import client from "../configs/db-config";
-import { resetToken } from "./generateToken";
 
 dotenv.config()
 
@@ -66,30 +65,44 @@ const processSMSJobs = async()=>{
 
             try {
                 const data = JSON.parse(msg.content.toString());
-                const { phone_number, message, from, userId } = data;
+                const { phone_number, message, from, userId ,hashedToken, expiresAt} = data;
 
-                logger.info(`💌 Processing job for :${data.phone_number}`)
-                const result = await sendSMS(phone_number, message, from);
+                logger.info(`💌 Processing sms job `)
+                await sendSMS(phone_number, message, from);
 
-                // insert to the database
-                const { hashedToken, expiresAt } = resetToken();
-                
-                const insertQuery = {
-                    text: `
-                        INSERT INTO user_verification (user_id, phone_token, phone_expires_at) 
-                        VALUES ($1, $2, $3) 
-                        ON CONFLICT (user_id) DO UPDATE
-                        SET phone_token = EXCLUDED.phone_token,
-                            phone_expires_at = EXCLUDED.phone_expires_at
-                        RETURNING *
-                    `,
-                    values: [userId, hashedToken, expiresAt]
+                // Insert or update sms_verification table
+                const checkQuery = {
+                    text: `SELECT id FROM sms_verification WHERE user_id = $1`,
+                    values: [userId],
+                };
+
+                const existing = await client.query(checkQuery);
+
+                if(existing.rows.length > 0){
+                    const updateQuery = {
+                        text: `
+                        UPDATE sms_verification
+                        SET phone_token = $2,
+                            phone_expires_at = $3,
+                            created_at = CURRENT_TIMESTAMPZ
+                        WHERE user_id = $1
+                        `,
+                        values: [userId, hashedToken, expiresAt],
+                    };
+                    await client.query(updateQuery);
+                }else{
+                    const insertQuery = {
+                        text: `
+                            INSERT INTO sms_verification (user_id, phone_token, phone_expires_at) 
+                            VALUES ($1, $2, $3) 
+                        `,
+                        values: [userId, hashedToken, expiresAt]
+                    }
+
+                    await client.query(insertQuery);
                 }
-
-                await client.query(insertQuery);                
-
-                logger.info(`💌 SMS sent: ${JSON.stringify(result)}`)
                 channel.ack(msg)
+
             } catch (error:any) {
                 logger.error(`😢 Failed to send sms: ${error.message}`);
                 channel.nack(msg, false, false) // do not requeue
