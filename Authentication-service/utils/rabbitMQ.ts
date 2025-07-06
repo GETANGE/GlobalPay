@@ -47,7 +47,7 @@ export const publishEmailJob = async(data: EmailData)=>{
             persistent: true
         });
 
-        logger.info(`Job added to queue for ${data.email}`)
+        logger.info(`Email job added to queue .`)
     } catch (error) {
         logger.error(`Error adding Job to a queue`)
     }
@@ -71,7 +71,7 @@ export const publishSMSJob = async(data: SmsData)=>{
             persistent: true
         });
 
-        logger.info(`Job added to queue for ${data.phone_number}`)
+        logger.info(`SMS job added to queue .`)
     } catch (error) {
         logger.error(`Error adding Job to a queue`)
     }
