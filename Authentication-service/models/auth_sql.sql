@@ -83,6 +83,19 @@ CREATE TABLE sms_verification (
         ON DELETE CASCADE
 );
 
+CREATE TABLE password_resets (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL UNIQUE,
+    reset_token TEXT,
+    expires_at TIMESTAMPTZ DEFAULT NULL,
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_user
+        FOREIGN KEY (user_id)
+        REFERENCES users(id)
+        ON DELETE CASCADE
+);
+
 -- ✅ Alter `email_verification` table
 ALTER TABLE email_verification
 ALTER COLUMN email_expires_at TYPE TIMESTAMPTZ;

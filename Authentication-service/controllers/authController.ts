@@ -2,12 +2,22 @@ import { NextFunction, Request, Response } from "express";
 import APIError from "./errorHandler";
 import logger from "../utils/logger";
 import bcrypt from "bcrypt"
+import jwt from "jsonwebtoken"
+import dotenv from "dotenv"
 import crypto from "crypto"
 import { registration_validation } from "../utils/validation";
 import client from "../configs/db-config";
 import { getClientDeviceIp } from "../middlewares/deviceIp";
 import { publishEmailJob, publishSMSJob } from "../utils/rabbitMQ";
 import { generateToken, resetToken } from "../utils/generateToken";
+
+dotenv.config()
+
+const getSubject = (type: "reset" | "welcome") => {
+  return type === "reset"
+    ? "Reset Your Password – GlobalPay"
+    : "Welcome to GlobalPay – Let’s Get Started!";
+};
 
 export const Registration = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -137,7 +147,7 @@ export const sendEmailToken = async(req:Request, res:Response, next:NextFunction
             email: email,
             name: user.rows[0].username,
             userId: user.rows[0].id,
-            subject: "GlobalPay Email Verification",
+            subject: getSubject("welcome"),
             message: `Please verify your email address by using the One-Time Password (OTP) provided below.`,
             otp: token,
             hashedToken,
@@ -166,7 +176,7 @@ export const sendSMSToken = async(req:Request, res:Response, next:NextFunction) 
         }
 
         const userData = {
-            name: 'fetch-user',
+            name: 'fetch-single-user',
             text: 'SELECT id, username FROM users WHERE phone_number = $1',
             values: [phone_number]
         }
@@ -177,7 +187,7 @@ export const sendSMSToken = async(req:Request, res:Response, next:NextFunction) 
             return next(new APIError(`User does not exist`, 404))
         }
 
-        const { token } = resetToken();
+        const { token, hashedToken, expiresAt } = resetToken();
 
         // send Token
         await publishSMSJob({
@@ -185,6 +195,8 @@ export const sendSMSToken = async(req:Request, res:Response, next:NextFunction) 
             name: user.rows[0].username,
             userId: user.rows[0].id,
             message: `Please verify your Phonenumber by using the One-Time Password (OTP) provided below. ${token}`,
+            hashedToken:hashedToken,
+            expiresAt: expiresAt
         });
 
         res.status(200).json({
@@ -292,6 +304,11 @@ export const verifySmsToken = async ( req: Request, res: Response, next: NextFun
 
     await client.query(updateQuery);
 
+    // update user data (phone_verification)
+    const text = `UPDATE users SET is_phone_verified = $1 WHERE id=$2`;
+    const values = [true, record.id]
+
+    await client.query(text, values);
     res.status(200).json({
       status: "success",
       message: "✅ SMS verified successfully",
@@ -358,11 +375,98 @@ export const login = async(req:Request, res:Response, next:NextFunction)=>{
   }
 }
 
-export const protectRoute = async(req:Request, res:Response, next:NextFunction)=>{
+export const protectRoute = async(req:any, res:Response, next:NextFunction)=>{
   try {
-    const authHeaders = req.headers.authorization
+    const authHeaders = req.headers.authorization;
+
+    if(!authHeaders || !authHeaders?.includes('Bearer')){
+      return next(new APIError(`You are not logged In (Authorizations).`, 403))
+    }
+
+    const token = authHeaders.split(" ")[1];
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET as string) as { id: number };
+    const userId =decodedToken.id;
+
+    if(!userId){
+      return next(new APIError(`Invalid token`, 403))
+    }
+
+    const text = `SELECT id, username, email, role FROM users WHERE id = $1`;
+    const values =[userId]
+
+    const result = await client.query(text, values);
+
+    if(result.rows.length === 0){
+      return next(new APIError(`User not found`, 404))
+    }
+
+    req.user = result.rows[0]
   } catch (error:any) {
-    logger.error(`Internal server error : ${error}`)
-    return next(new APIError(`Internal server error`, 500))
+    if(error.name === 'JsonWebTokenError'){
+      return next(new APIError(`Invalid or expired Token`, 401))
+    }else{
+      logger.error(`Internal server error : ${error}`)
+      return next(new APIError(`Internal server error`, 500))
+    }
   }
 }
+
+export const restrictTo = (...role:string[])=>{
+  return(req:any, res:Response, next:NextFunction)=>{
+    if(!role.includes(req.user.role)){
+      return next(new APIError(`You are not authorized to perform this action`, 403))
+    }
+    next();
+  }
+}
+
+export const forgotPassword = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return next(new APIError(`Please input your email`, 400));
+    }
+
+    const userQuery = `SELECT id, username, email FROM users WHERE email = $1`;
+    const { rows } = await client.query(userQuery, [email]);
+
+    if (rows.length === 0) {
+      return next(new APIError(`User with email ${email} does not exist`, 404));
+    }
+
+    const userData = rows[0];
+
+    const { token, hashedToken, expiresAt } = resetToken();
+
+    // Delete existing token if present
+    const deleteQuery = `DELETE FROM password_resets WHERE user_id = $1`;
+    await client.query(deleteQuery, [userData.id]);
+
+    // Insert new token
+    const insertQuery = `
+      INSERT INTO password_resets (user_id, reset_token, expires_at)
+      VALUES ($1, $2, $3)
+    `;
+    await client.query(insertQuery, [userData.id, hashedToken, expiresAt]);
+
+    await publishEmailJob({
+      email: userData.email,
+      name: userData.username,
+      userId: userData.id,
+      message: `We received a request to reset your password. Use the OTP below to proceed.`,
+      subject: getSubject("reset"),
+      otp: token,
+      hashedToken,
+      expiresAt,
+    });
+
+    res.status(200).json({
+      status: "success",
+      message: `OTP sent to ${email}`,
+    });
+  } catch (error) {
+    logger.error(`Forgot Password Error: ${error}`);
+    return next(new APIError(`Internal server error`, 500));
+  }
+};

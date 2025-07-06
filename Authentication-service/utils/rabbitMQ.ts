@@ -58,6 +58,8 @@ interface SmsData{
     name: string;
     message: string;
     userId: number;
+    hashedToken: string;
+    expiresAt: string
 }
 export const publishSMSJob = async(data: SmsData)=>{
     try {
