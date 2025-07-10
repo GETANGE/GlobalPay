@@ -10,14 +10,9 @@ import client from "../configs/db-config";
 import { getClientDeviceIp } from "../middlewares/deviceIp";
 import { publishEmailJob, publishSMSJob } from "../utils/rabbitMQ";
 import { generateToken, resetToken } from "../utils/generateToken";
+import { getSubject, getUser } from "../helperFunctions/user";
 
 dotenv.config()
-
-const getSubject = (type: "reset" | "welcome") => {
-  return type === "reset"
-    ? "Reset Your Password – GlobalPay"
-    : "Welcome to GlobalPay – Let’s Get Started!";
-};
 
 export const Registration = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -253,6 +248,12 @@ export const verifyEmailToken = async ( req: Request, res: Response, next: NextF
 
     await client.query(updateQuery);
 
+    // update user data (phone_verification)
+    const text = `UPDATE users SET is_email_verified = $1 WHERE id=$2`;
+    const values = [true, record.id]
+
+    await client.query(text, values);
+
     res.status(200).json({
       status: "success",
       message: "✅ Email verified successfully",
@@ -468,5 +469,106 @@ export const forgotPassword = async (req: Request, res: Response, next: NextFunc
   } catch (error) {
     logger.error(`Forgot Password Error: ${error}`);
     return next(new APIError(`Internal server error`, 500));
+  }
+};
+
+export const resetPassword = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { token, newPassword } = req.body;
+
+    if (!token || !newPassword) {
+      return next(new APIError('Token and new password are required', 400));
+    }
+
+    const hashedToken = crypto.createHash('sha256').update(token.toString()).digest('hex');
+
+    const resetQuery = `SELECT * FROM password_resets WHERE reset_token = $1`;
+    const resetResult = await client.query(resetQuery, [hashedToken]);
+
+    if (resetResult.rows.length === 0) {
+      return next(new APIError('Invalid or expired reset token', 400));
+    }
+
+    const tokenRow = resetResult.rows[0];
+    const expiry = new Date(tokenRow.expires_at);
+    logger.info(`🕓 NOW: ${new Date().toISOString()} | 📅 EXPIRES AT: ${expiry.toISOString()}`);
+
+    if (expiry < new Date()) {
+      return next(new APIError('Reset token has expired', 400));
+    }
+
+    const userQuery = `SELECT * FROM users WHERE id = $1`;
+    const userResult = await client.query(userQuery, [tokenRow.user_id]);
+
+    if (userResult.rows.length === 0) {
+      return next(new APIError('User associated with this token does not exist', 404));
+    }
+
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+
+    const updateQuery = `UPDATE users SET password = $1 WHERE id = $2`;
+    await client.query(updateQuery, [hashedNewPassword, tokenRow.user_id]);
+
+    await client.query(`DELETE FROM password_resets WHERE reset_token = $1`, [hashedToken]);
+
+    res.status(200).json({
+      success: true,
+      message: 'Password reset successfully',
+    });
+
+  } catch (error) {
+    logger.error(`Reset password error: ${error}`);
+    return next(new APIError('Internal server error', 500));
+  }
+};
+
+export const updatePassword = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { email, currentPassword, newPassword } = req.body;
+
+    if (!email || !currentPassword || !newPassword) {
+      return next(new APIError('Email, current password, and new password are required.', 400));
+    }
+
+    if (typeof email !== 'string' || typeof currentPassword !== 'string' || typeof newPassword !== 'string') {
+      return next(new APIError('All fields must be strings.', 400));
+    }
+
+    const trimmedEmail = email.trim().toLowerCase();
+
+    const userData = await getUser({ email: trimmedEmail });
+
+    if (!userData) {
+      return next(new APIError('User not found.', 404));
+    }
+
+    const isMatch = await bcrypt.compare(currentPassword, userData.password);
+
+    if (!isMatch) {
+      return next(new APIError('Current password is incorrect.', 400));
+    }
+
+    const isSamePassword = await bcrypt.compare(newPassword, userData.password);
+    if (isSamePassword) {
+      return next(new APIError('New password must be different from the old password.', 400));
+    }
+
+    if (newPassword.length < 8) {
+      return next(new APIError('New password must be at least 8 characters long.', 400));
+    }
+
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+
+    const updateQuery = `UPDATE users SET password = $1 WHERE id = $2`;
+    await client.query(updateQuery, [hashedNewPassword, userData.id]);
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Password updated successfully 😀'
+    });
+
+  } catch (error) {
+    logger.error('Error updating user password:', error);
+    return next(new APIError('Internal server error.', 500));
   }
 };

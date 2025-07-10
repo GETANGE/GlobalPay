@@ -1,5 +1,5 @@
 import express from "express"
-import { forgotPassword, login, Registration, sendEmailToken, sendSMSToken, verifyEmailToken, verifySmsToken } from "../controllers/authController";
+import { forgotPassword, login, Registration, resetPassword, sendEmailToken, sendSMSToken, updatePassword, verifyEmailToken, verifySmsToken } from "../controllers/authController";
 
 const router = express.Router();
 
@@ -10,4 +10,6 @@ router.post("/verify", sendSMSToken)
 router.get("/verify/sms/:token", verifySmsToken)
 router.get("/verify/email/:token", verifyEmailToken)
 router.post("/forgotPassword", forgotPassword)
+router.patch("/resetPassword", resetPassword)
+router.patch("/updatePassword", updatePassword)
 export default router;
