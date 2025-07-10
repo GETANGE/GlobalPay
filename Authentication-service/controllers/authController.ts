@@ -10,14 +10,9 @@ import client from "../configs/db-config";
 import { getClientDeviceIp } from "../middlewares/deviceIp";
 import { publishEmailJob, publishSMSJob } from "../utils/rabbitMQ";
 import { generateToken, resetToken } from "../utils/generateToken";
+import { getSubject, getUser } from "../helperFunctions/user";
 
 dotenv.config()
-
-const getSubject = (type: "reset" | "welcome") => {
-  return type === "reset"
-    ? "Reset Your Password – GlobalPay"
-    : "Welcome to GlobalPay – Let’s Get Started!";
-};
 
 export const Registration = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -527,10 +522,53 @@ export const resetPassword = async (req: Request, res: Response, next: NextFunct
   }
 };
 
-export const updatePassword = async (req:Request, res:Response, next:NextFunction)=>{
+export const updatePassword = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    
+    const { email, currentPassword, newPassword } = req.body;
+
+    if (!email || !currentPassword || !newPassword) {
+      return next(new APIError('Email, current password, and new password are required.', 400));
+    }
+
+    if (typeof email !== 'string' || typeof currentPassword !== 'string' || typeof newPassword !== 'string') {
+      return next(new APIError('All fields must be strings.', 400));
+    }
+
+    const trimmedEmail = email.trim().toLowerCase();
+
+    const userData = await getUser({ email: trimmedEmail });
+
+    if (!userData) {
+      return next(new APIError('User not found.', 404));
+    }
+
+    const isMatch = await bcrypt.compare(currentPassword, userData.password);
+
+    if (!isMatch) {
+      return next(new APIError('Current password is incorrect.', 400));
+    }
+
+    const isSamePassword = await bcrypt.compare(newPassword, userData.password);
+    if (isSamePassword) {
+      return next(new APIError('New password must be different from the old password.', 400));
+    }
+
+    if (newPassword.length < 8) {
+      return next(new APIError('New password must be at least 8 characters long.', 400));
+    }
+
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+
+    const updateQuery = `UPDATE users SET password = $1 WHERE id = $2`;
+    await client.query(updateQuery, [hashedNewPassword, userData.id]);
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Password updated successfully 😀'
+    });
+
   } catch (error) {
-    logger.error(`Error updating user password`)
+    logger.error('Error updating user password:', error);
+    return next(new APIError('Internal server error.', 500));
   }
-}
+};
