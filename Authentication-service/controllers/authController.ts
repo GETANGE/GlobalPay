@@ -253,6 +253,12 @@ export const verifyEmailToken = async ( req: Request, res: Response, next: NextF
 
     await client.query(updateQuery);
 
+    // update user data (phone_verification)
+    const text = `UPDATE users SET is_email_verified = $1 WHERE id=$2`;
+    const values = [true, record.id]
+
+    await client.query(text, values);
+
     res.status(200).json({
       status: "success",
       message: "✅ Email verified successfully",
@@ -470,3 +476,61 @@ export const forgotPassword = async (req: Request, res: Response, next: NextFunc
     return next(new APIError(`Internal server error`, 500));
   }
 };
+
+export const resetPassword = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { token, newPassword } = req.body;
+
+    if (!token || !newPassword) {
+      return next(new APIError('Token and new password are required', 400));
+    }
+
+    const hashedToken = crypto.createHash('sha256').update(token.toString()).digest('hex');
+
+    const resetQuery = `SELECT * FROM password_resets WHERE reset_token = $1`;
+    const resetResult = await client.query(resetQuery, [hashedToken]);
+
+    if (resetResult.rows.length === 0) {
+      return next(new APIError('Invalid or expired reset token', 400));
+    }
+
+    const tokenRow = resetResult.rows[0];
+    const expiry = new Date(tokenRow.expires_at);
+    logger.info(`🕓 NOW: ${new Date().toISOString()} | 📅 EXPIRES AT: ${expiry.toISOString()}`);
+
+    if (expiry < new Date()) {
+      return next(new APIError('Reset token has expired', 400));
+    }
+
+    const userQuery = `SELECT * FROM users WHERE id = $1`;
+    const userResult = await client.query(userQuery, [tokenRow.user_id]);
+
+    if (userResult.rows.length === 0) {
+      return next(new APIError('User associated with this token does not exist', 404));
+    }
+
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+
+    const updateQuery = `UPDATE users SET password = $1 WHERE id = $2`;
+    await client.query(updateQuery, [hashedNewPassword, tokenRow.user_id]);
+
+    await client.query(`DELETE FROM password_resets WHERE reset_token = $1`, [hashedToken]);
+
+    res.status(200).json({
+      success: true,
+      message: 'Password reset successfully',
+    });
+
+  } catch (error) {
+    logger.error(`Reset password error: ${error}`);
+    return next(new APIError('Internal server error', 500));
+  }
+};
+
+export const updatePassword = async (req:Request, res:Response, next:NextFunction)=>{
+  try {
+    
+  } catch (error) {
+    logger.error(`Error updating user password`)
+  }
+}
