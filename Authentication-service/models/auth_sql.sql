@@ -32,6 +32,9 @@ ALTER TABLE users
   ALTER COLUMN updated_at TYPE TIMESTAMPTZ USING updated_at AT TIME ZONE 'UTC',
   ALTER COLUMN last_login TYPE TIMESTAMPTZ USING last_login AT TIME ZONE 'UTC';
 
+ALTER TABLE users ADD COLUMN webauthn_user_id VARCHAR(255) UNIQUE;
+
+ALTER TABLE users ADD COLUMN current_challange VARCHAR(255)
 
 ALTER TABLE users
 ALTER COLUMN national_id TYPE VARCHAR(200)
@@ -105,5 +108,24 @@ ALTER TABLE sms_verification
 ALTER COLUMN phone_expires_at TYPE TIMESTAMPTZ;
 
 ALTER TABLE refreshToken
-  ADD COLUMN refresh_token TEXT DEFAULT NULL,
+--   ADD COLUMN refresh_token TEXT DEFAULT NULL,
   ALTER COLUMN expires_at TYPE TIMESTAMPTZ;
+
+
+CREATE TABLE IF NOT EXISTS passkeys (
+    id VARCHAR(255) PRIMARY KEY,  -- credential ID (Base64URL)
+    public_key BYTEA NOT NULL,    -- raw public key
+    user_id INTEGER NOT NULL,     -- foreign key to users
+    webauthn_user_id VARCHAR(255) NOT NULL,  -- same as in `users`, if you want per-user isolation
+    counter BIGINT DEFAULT 0,
+    device_type VARCHAR(32) CHECK (device_type IN ('singleDevice', 'multiDevice')),
+    backed_up BOOLEAN DEFAULT false,
+    transports VARCHAR(255), -- CSV string like 'usb,nfc,internal'
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_user 
+        FOREIGN KEY (user_id) 
+        REFERENCES users(id) 
+        ON DELETE CASCADE
+);
