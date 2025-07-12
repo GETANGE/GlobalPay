@@ -36,6 +36,8 @@ ALTER TABLE users ADD COLUMN webauthn_user_id VARCHAR(255) UNIQUE;
 
 ALTER TABLE users ADD COLUMN current_challange VARCHAR(255)
 
+ALTER TABLE users ADD COLUMN login_challange VARCHAR(255)
+
 ALTER TABLE users
 ALTER COLUMN national_id TYPE VARCHAR(200)
 

@@ -1,4 +1,4 @@
-import { AuthenticatorTransportFuture, generateRegistrationOptions ,verifyRegistrationResponse} from '@simplewebauthn/server';
+import { AuthenticatorTransportFuture, generateAuthenticationOptions, generateRegistrationOptions ,verifyAuthenticationResponse,verifyRegistrationResponse} from '@simplewebauthn/server';
 import dotenv from "dotenv"
 import jwt from 'jsonwebtoken'
 import { NextFunction, Request, Response } from 'express';
@@ -6,6 +6,8 @@ import logger from '../utils/logger';
 import APIError from './errorHandler';
 import { getUser } from '../helperFunctions/userHelper';
 import client from '../configs/db-config';
+import { getChallenge, getCurrentRegistrationOptions, getUserPasskeys, updatePasskeyCounter } from '../utils/passkey';
+import { generateToken } from '../utils/generateToken';
 
 dotenv.config()
 
@@ -26,43 +28,6 @@ interface Passkey {
   backedUp: boolean;
   transports?: string[];
 }
-
-// Get user's previously registered passkeys
-export const getUserPasskeys = async (user: { id?: number }) => {
-  const text = `SELECT * FROM passkeys WHERE user_id = $1`;
-  const values = [user.id];
-
-  try {
-    const result = await client.query(text, values);
-
-    return result.rows.map((row) => ({
-        id: row.id,
-        publicKey: new Uint8Array(row.public_key),
-        user: {
-            id: row.user_id,
-            username: '', // optional
-        },
-        webauthnUserID: row.webauthn_user_id,
-        counter: row.counter,
-        deviceType: row.device_type,
-        backedUp: row.backed_up,
-        transports: row.transports?.split(',') as AuthenticatorTransportFuture[] | undefined,
-    }));
-  } catch (err) {
-    console.error('Error fetching passkeys:', err);
-    throw err;
-  }
-};
-
-export const getCurrentRegistrationOptions = async (userId: number) => {
-  const text = `SELECT current_challange FROM users WHERE user_id = $1 ORDER BY created_at DESC LIMIT 1`;
-  const result = await client.query(text, [userId]);
-
-  if (result.rows.length === 0) return null;
-
-  return result.rows[0].options;
-};
-
 
 // Registration Options Endpoint
 export const passkeyRegister = async (req: Request, res: Response, next: NextFunction) => {
@@ -164,6 +129,8 @@ export const verifyPasskey = async(req: Request, res:Response, next:NextFunction
             credentialBackedUp
         } = registrationInfo
 
+        const transports = body.response.transports
+
         // ✅ 5. Save passkey to DB
         const insertQuery = {
             text: `
@@ -174,7 +141,8 @@ export const verifyPasskey = async(req: Request, res:Response, next:NextFunction
                 webauthn_user_id,
                 counter,
                 device_type,
-                backed_up
+                backed_up,
+                transports
                 ) VALUES ($1, $2, $3, $4, $5, $6, $7)
             `,
             values: [
@@ -185,14 +153,124 @@ export const verifyPasskey = async(req: Request, res:Response, next:NextFunction
                 counter,
                 credentialDeviceType,
                 credentialBackedUp,
+                transports.join(',') || null
             ],
     };
 
     await client.query(insertQuery);
 
     logger.info(`✅ Registered passkey for user: ${userData.username}`);
+    res.status(201).json({ 
+        status: 'success', 
+        verified: true 
+    });
     } catch (error) {
         logger.error(`Error verifying passkey: ${error}`)
         return next(new APIError(`Internal Server Error`, 500))
     }
+}
+
+export const getLoginOptions = async(req:Request, res:Response, next:NextFunction)=>{
+  try {
+    const { email }= req.body;
+
+    if(!email){
+      return next(new APIError(`Please provide your email`, 400))
+    }
+
+    const user = await getUser({ email: email });
+    if(!user){
+      return next(new APIError(`User not found`, 400))
+    }
+
+    const passkeys: Passkey[] = await getUserPasskeys(user);
+
+    const options = await generateAuthenticationOptions({
+      rpID: rpID,
+      timeout: 60000,
+      allowCredentials: passkeys.map((key) => ({
+        id: key.id,
+        type: 'public-key',
+        transports: key.transports as AuthenticatorTransportFuture[] || []
+      })),
+      userVerification: 'preferred'
+    })
+
+    // save the challenge in DB
+    const storeChallengeQuery = `
+      UPDATE users SET login_challange = $1, updated_at = NOW() WHERE id = $2
+    `;
+    await client.query(storeChallengeQuery, [options.challenge, user.id]);
+
+    res.status(200).json({
+      status:'success',
+      options
+    })
+  } catch (error) {
+    logger.error(`Error getting loginOptions ${error}`)
+    return next(new APIError(`Internal server error`, 500))
+  }
+}
+
+export const verifyPasskeyLogin = async(req:Request, res:Response, next:NextFunction)=>{
+  try {
+    const { body } = req
+
+    // get credentialID and match it to a stored passkey
+    const credentialID = body.rawId;
+    const dbPasskey = await getUserPasskeys(credentialID);
+
+    if(!dbPasskey){
+      return next(new APIError(`Passkey not found`, 400))
+    }
+
+    //Load expected challenge
+    const expectedChallenge = await getChallenge(dbPasskey[0].id);
+
+    const verification = await verifyAuthenticationResponse({
+      response: body,
+      expectedChallenge,
+      expectedOrigin: origin,
+      expectedRPID: rpID,
+      credential:{
+        id: dbPasskey[0].id,
+        publicKey: dbPasskey[0].publicKey,
+        counter: dbPasskey[0].counter,
+        transports: dbPasskey[0].transports
+      }
+    })
+
+    const { verified, authenticationInfo } = verification;
+
+    if(!verified){
+      return next(new APIError(`Authentication failed!`, 401))
+    }
+
+    // update counter in DB to prevent replay attacks
+    await updatePasskeyCounter(dbPasskey[0].id, authenticationInfo.newCounter);
+
+    // generate JWT token
+    const userData = await getUser({ id: dbPasskey[0].user.id})
+
+    const { access_token, refresh_token} = await generateToken({
+      id: userData.id,
+      username: userData.username,
+      email: userData.email
+    })
+
+    res.status(200).json({
+      status:"LoggedIn successfully",
+      access_token:access_token,
+      refresh_token: refresh_token,
+      user:{
+        id: userData.id,
+        username: userData.username,
+        email: userData.email,
+        role: userData.role
+      }
+    })
+  } catch (error) {
+    logger.error(`Errror logging passkey ${error}`);
+    return next(new APIError(`Internal server error`, 500))
+  }
 }
