@@ -10,7 +10,7 @@ import client from "../configs/db-config";
 import { getClientDeviceIp } from "../middlewares/deviceIp";
 import { publishEmailJob, publishSMSJob } from "../utils/rabbitMQ";
 import { generateToken, resetToken } from "../utils/generateToken";
-import { getSubject, getUser } from "../helperFunctions/user";
+import { getSubject, getUser } from "../helperFunctions/userHelper";
 
 dotenv.config()
 
@@ -379,14 +379,17 @@ export const login = async(req:Request, res:Response, next:NextFunction)=>{
 export const protectRoute = async(req:any, res:Response, next:NextFunction)=>{
   try {
     const authHeaders = req.headers.authorization;
+    console.log(authHeaders)
 
     if(!authHeaders || !authHeaders?.includes('Bearer')){
       return next(new APIError(`You are not logged In (Authorizations).`, 403))
     }
 
     const token = authHeaders.split(" ")[1];
-    const decodedToken = jwt.verify(token, process.env.JWT_SECRET as string) as { id: number };
-    const userId =decodedToken.id;
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET as string) as { userId: number };
+    const userId =decodedToken.userId;
+
+    console.log(userId)
 
     if(!userId){
       return next(new APIError(`Invalid token`, 403))
@@ -401,7 +404,9 @@ export const protectRoute = async(req:any, res:Response, next:NextFunction)=>{
       return next(new APIError(`User not found`, 404))
     }
 
-    req.user = result.rows[0]
+    req.user = result.rows[0];
+
+    next()
   } catch (error:any) {
     if(error.name === 'JsonWebTokenError'){
       return next(new APIError(`Invalid or expired Token`, 401))
