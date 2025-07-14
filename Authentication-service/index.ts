@@ -11,7 +11,7 @@ import cors from "cors";
 import { Redis } from "ioredis";
 import rateLimit from "express-rate-limit";
 import { RateLimiterMemory } from "rate-limiter-flexible";
-import { githubStrategy } from "./helperFunctions/passport";
+import { githubStrategy, googleStrategy } from "./helperFunctions/passport";
 import RedisStore from "rate-limit-redis";
 import logger from "./utils/logger";
 import { connectDatabase } from "./configs/db-config";
@@ -28,6 +28,7 @@ dotenv.config();
 const PORT = (process.env.AUTH_PORT as string) || 3001;
 
 githubStrategy();
+googleStrategy();
 
 const app = express();
 

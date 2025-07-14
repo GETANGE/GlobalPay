@@ -1,6 +1,7 @@
 import passport from "passport";
 import dotenv from "dotenv";
 import { Strategy as GitHubStrategy } from "passport-github2";
+import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import client from "../configs/db-config";
 
 dotenv.config();
@@ -12,7 +13,6 @@ export const githubStrategy = () => {
         clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
         callbackURL: process.env.GITHUB_CALLBACK_URL as string,
       },
-
       async ( accessToken: string, refreshToken: string, profile: {
           id: any;
           username: string;
@@ -53,37 +53,60 @@ export const githubStrategy = () => {
           const fullName = profile.displayName || " ";
           const [first_name, last_name] = fullName.split(" ");
 
-          // Check if user already exists
-          const text = `SELECT * FROM users WHERE github_id = $1`;
-          const values = [githubId];
-          const existingUser = await client.query(text, values);
+          const existing = await client.query(`SELECT * FROM users WHERE github_id = $1`, [githubId]);
 
-          let user;
-
-          if (existingUser.rows.length === 0) {
-            // Insert new user
-            const insertText = `
-              INSERT INTO users (username, email, github_id, first_name, last_name)
-              VALUES ($1, $2, $3, $4, $5)
-              RETURNING *
-            `;
-            const insertValues = [
-              username,
-              email,
-              githubId,
-              first_name,
-              last_name,
-            ];
-            const result = await client.query(insertText, insertValues);
-
-            user = result.rows[0];
-          } else {
-            user = existingUser.rows[0];
+          if (existing.rows.length > 0) {
+            return done(null, existing.rows[0]);
           }
 
-          return done(null, user);
+          const insert = `
+            INSERT INTO users (username, email, github_id, first_name, last_name)
+            VALUES ($1, $2, $3, $4, $5)
+            RETURNING *
+          `;
+          const values = [username, email, githubId, first_name, last_name];
+          const result = await client.query(insert, values);
+          return done(null, result.rows[0]);
         } catch (error) {
           return done(error as Error, null);
+        }
+      }
+    )
+  );
+};
+
+export const googleStrategy = () => {
+  passport.use(
+    new GoogleStrategy(
+      {
+        clientID: process.env.GOOGLE_CLIENT_ID as string,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+        callbackURL: process.env.GOOGLE_CALLBACK_URL as string,
+      },
+      async (accessToken, refreshToken, profile, done) => {
+        try {
+          const googleId = profile.id;
+          const email = profile.emails?.[0]?.value;
+          const fullName = profile.displayName || "";
+          const [first_name = "", last_name = ""] = fullName.split(" ");
+          const username = profile.username || email?.split('@')[0] || googleId;
+
+          const existing = await client.query(`SELECT * FROM users WHERE google_id = $1`, [googleId]);
+
+          if (existing.rows.length > 0) {
+            return done(null, existing.rows[0]);
+          }
+
+          const insert = `
+            INSERT INTO users (username, email, google_id, first_name, last_name)
+            VALUES ($1, $2, $3, $4, $5)
+            RETURNING *
+          `;
+          const values = [username, email, googleId, first_name, last_name];
+          const result = await client.query(insert, values);
+          return done(null, result.rows[0]);
+        } catch (error) {
+          return done(error as Error);
         }
       }
     )

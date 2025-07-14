@@ -2,7 +2,7 @@ import express from "express"
 import { forgotPassword, login, protectRoute, Registration, resetPassword, sendEmailToken, sendSMSToken, updatePassword, verifyEmailToken, verifySmsToken } from "../controllers/authController";
 import { getLoginOptions, passkeyRegister, verifyPasskey, verifyPasskeyLogin } from "../controllers/biometricsController";
 import passport from "passport";
-import { githubCallback } from "../controllers/OAuth2Controller";
+import { githubCallback, googleCallback } from "../controllers/OAuth2Controller";
 
 const router = express.Router();
 
@@ -22,5 +22,8 @@ router.post("/login-passkey", verifyPasskeyLogin)
 
 router.get("/github", passport.authenticate('github', { scope: ['user:email']}));
 router.get("/github/callback", githubCallback)
+
+router.get("/google", passport.authenticate('google', { scope: ['profile', 'email']}));
+router.get('/google/callback', googleCallback)
 
 export default router;
