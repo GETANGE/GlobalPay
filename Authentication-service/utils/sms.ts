@@ -47,7 +47,6 @@ export const sendSMS = async (
     }
 
     const response = await sms.send(payload);
-    logger.info(`💌 SMS sent successfully`);
 
     return response;
   } catch (error) {
@@ -89,7 +88,7 @@ const processSMSJobs = async () => {
                         UPDATE sms_verification
                         SET phone_token = $2,
                             phone_expires_at = $3,
-                            created_at = CURRENT_TIMESTAMPZ
+                            created_at = CURRENT_TIMESTAMP AT TIME ZONE 'Africa/Nairobi'
                         WHERE user_id = $1
                         `,
             values: [userId, hashedToken, expiresAt],
@@ -106,6 +105,8 @@ const processSMSJobs = async () => {
 
           await client.query(insertQuery);
         }
+
+        logger.info(`💌 SMS sent successfully`);
         channel.ack(msg);
       } catch (error: any) {
         logger.error(`😢 Failed to send sms: ${error.message}`);
