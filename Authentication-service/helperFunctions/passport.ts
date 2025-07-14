@@ -40,7 +40,6 @@ export const githubStrategy = () => {
             );
 
             const emails = await emailResponse.json();
-            console.log(emails);
 
             // Find primary and verified email
             const primaryEmail = emails.find(
