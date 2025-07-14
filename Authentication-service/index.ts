@@ -1,114 +1,129 @@
-import express, { type Request, type Response, type NextFunction} from "express"
-import helmet from "helmet"
-import dotenv from "dotenv"
-import morgan from "morgan"
-import cors from "cors"
-import { Redis } from "ioredis"
+import express, {
+  type Request,
+  type Response,
+  type NextFunction,
+} from "express";
+import helmet from "helmet";
+import dotenv from "dotenv";
+import morgan from "morgan";
+import passport from "passport";
+import cors from "cors";
+import { Redis } from "ioredis";
 import rateLimit from "express-rate-limit";
 import { RateLimiterMemory } from "rate-limiter-flexible";
-import RedisStore from "rate-limit-redis"
-import logger from "./utils/logger"
-import APIError from "./controllers/errorHandler"
-import { connectDatabase } from "./configs/db-config"
-import { corsOptions } from "./configs/cors-config"
+import { githubStrategy, googleStrategy } from "./helperFunctions/passport";
+import RedisStore from "rate-limit-redis";
+import logger from "./utils/logger";
+import { connectDatabase } from "./configs/db-config";
+import { corsOptions } from "./configs/cors-config";
 
-import userRoutes from "./routes/userRoute"
-import { connectToRabbitMQ } from "./utils/rabbitMQ"
-import './utils/sms'; // ✅ Triggers processor
-import './utils/email';
+import userRoutes from "./routes/userRoute";
+import { connectToRabbitMQ } from "./utils/rabbitMQ";
+import "./utils/sms"; // ✅ Triggers processor
+import "./utils/email";
+import APIError from "./utils/APIError";
 
-dotenv.config()
+dotenv.config();
 
-const PORT =process.env.AUTH_PORT as string || 3001
+const PORT = (process.env.AUTH_PORT as string) || 3001;
+
+githubStrategy();
+googleStrategy();
 
 const app = express();
 
 app.use(helmet());
+app.use(passport.initialize());
 app.use(express.json());
-app.use(morgan('dev'));
-app.use(cors(corsOptions))
+app.use(morgan("dev"));
+app.use(cors(corsOptions));
 
-const redisClient = new Redis(process.env.REDIS_URL as string)
+const redisClient = new Redis(process.env.REDIS_URL as string);
 
-redisClient.on('error', (error)=>{
-    logger.warn(`Error connecting to redis`, error)
-})
+redisClient.on("error", (error) => {
+  logger.warn(`Error connecting to redis`, error);
+});
 
-redisClient.on('connect', ()=>{
-    logger.info(`🍃 Redis connected successfully`)
-})
+redisClient.on("connect", () => {
+  logger.info(`🍃 Redis connected successfully`);
+});
 
 // Prevent DDoS aatacks
 const rateLimiter = new RateLimiterMemory({
-    keyPrefix: 'middleware',
-    points: 10,
-    duration: 1
-})
+  keyPrefix: "middleware",
+  points: 10,
+  duration: 1,
+});
 
-app.use((req:any, res:Response, next:NextFunction)=>{
-    rateLimiter.consume(req.ip)
-        .then(()=> next())
-        .catch(()=>{
-            logger.warn(`Global rate limit exceeded for IP:${req.ip}`)
-            return next(new APIError(`Too many requests`, 429))
-        })
-})
+app.use((req: any, res: Response, next: NextFunction) => {
+  rateLimiter
+    .consume(req.ip)
+    .then(() => next())
+    .catch(() => {
+      logger.warn(`Global rate limit exceeded for IP:${req.ip}`);
+      return next(new APIError(`Too many requests`, 429));
+    });
+});
 
 //IP-based rate limiting
 const SensitiveEndopointRatelimit = rateLimit({
-    windowMs: 15 * 60 * 1000,
-    limit: 100,
-    standardHeaders: true,
-    legacyHeaders: false,
-    handler: (req:Request, res:Response, next:NextFunction) => {
-        logger.warn(`⛔ Sensitive endpoint rate limit exceeded for IP: ${req.ip}`)
-        return next(new APIError(`Too many requests`, 429))
+  windowMs: 15 * 60 * 1000,
+  limit: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+  handler: (req: Request, res: Response, next: NextFunction) => {
+    logger.warn(`⛔ Sensitive endpoint rate limit exceeded for IP: ${req.ip}`);
+    return next(new APIError(`Too many requests`, 429));
+  },
+  store: new RedisStore({
+    sendCommand: (...args: [string, ...string[]]): Promise<any> => {
+      return redisClient.call(...args);
     },
-    store: new RedisStore({
-        sendCommand: (...args: [string, ...string[]]): Promise<any> => {
-            return redisClient.call(...args);
-        }
-    }),
-    skip: () => !redisClient.status
-})
+  }),
+  skip: () => !redisClient.status,
+});
 
-app.use(SensitiveEndopointRatelimit)
+app.use(SensitiveEndopointRatelimit);
 
-app.use('/auth', userRoutes)
+app.use("/auth", userRoutes);
 
-app.get('/', (req:Request, res:Response) => {
-    res.status(200).json({
-        status:'success',
-        message: 'Authentication-service health-check'
-    })
-})
+app.get("/", (req: Request, res: Response) => {
+  res.status(200).json({
+    status: "success",
+    message: "Authentication-service health-check",
+  });
+});
 
 // Handling unhandled routes
 app.use((req: Request, res: Response, next: NextFunction) => {
-  next(new APIError(`This route ${req.originalUrl} is not yet defined...`, 404));
+  next(
+    new APIError(`This route ${req.originalUrl} is not yet defined...`, 404)
+  );
 });
 
-interface CustomeError{
-    statusCode: number;
-    status: string;
-    message: string
+interface CustomeError {
+  statusCode: number;
+  status: string;
+  message: string;
 }
 
-app.use((err: CustomeError, req:Request, res:Response, next:NextFunction)=>{
-    let status = err.status || 'Internal server error'
-    let statusCode = err.statusCode || 500
+app.use(
+  (err: CustomeError, req: Request, res: Response, next: NextFunction) => {
+    let status = err.status || "Internal server error";
+    let statusCode = err.statusCode || 500;
 
     res.status(statusCode).json({
-        status: status,
-        message: err.message
-    })
-})
+      status: status,
+      message: err.message,
+    });
+  }
+);
 
 async function startServer() {
-    await connectDatabase();
-    app.listen(PORT, ()=>{
-        logger.info(`🔐 Auth server is running on port : ${PORT}`)
-    })
+  await connectDatabase();
+  app.listen(PORT, () => {
+    logger.info(`🔐 Auth server is running on port : ${PORT}`);
+  });
 }
 startServer();
 
