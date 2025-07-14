@@ -3,11 +3,9 @@ name: Deploy-to-VPS-workflow
 on:
     push:
         branches:
-            - master
+            - main
         paths:
             - '**'
-    pull_request:
-        types: [opened, closed, auto_merge_enabled]
     workflow_dispatch:
 
 jobs:

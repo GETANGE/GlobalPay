@@ -6,8 +6,6 @@ on:
             - fraud
         paths:
             - '**'
-    pull_request:
-        types: [opened, closed, auto_merge_enabled]
     workflow_dispatch:
 
 jobs:

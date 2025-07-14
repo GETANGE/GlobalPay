@@ -55,15 +55,21 @@ export const githubStrategy = () => {
           const existing = await client.query(`SELECT * FROM users WHERE github_id = $1`, [githubId]);
 
           if (existing.rows.length > 0) {
+            await client.query(`UPDATE users SET last_login = CURRENT_TIMESTAMP AT TIME ZONE 'Africa/Nairobi' WHERE github_id = $1`, [githubId])
             return done(null, existing.rows[0]);
           }
 
+          const kyc_status: string = 'pending'
+          const currency: string = 'KES'
+          const notification_preference: string = 'email'
+
           const insert = `
-            INSERT INTO users (username, email, github_id, first_name, last_name)
-            VALUES ($1, $2, $3, $4, $5)
+            INSERT INTO users (username, email, github_id, first_name, last_name, kyc_status, currency, notification_preference)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
             RETURNING *
           `;
-          const values = [username, email, githubId, first_name, last_name];
+          const values = [username, email, githubId, first_name, last_name, kyc_status, currency, notification_preference];
+
           const result = await client.query(insert, values);
           return done(null, result.rows[0]);
         } catch (error) {
@@ -93,15 +99,21 @@ export const googleStrategy = () => {
           const existing = await client.query(`SELECT * FROM users WHERE google_id = $1`, [googleId]);
 
           if (existing.rows.length > 0) {
+            await client.query(`UPDATE users SET last_login = CURRENT_TIMESTAMP AT TIME ZONE 'Africa/Nairobi' WHERE google_id = $1`, [googleId])
             return done(null, existing.rows[0]);
           }
 
+          const kyc_status: string = 'pending'
+          const currency: string = 'KES'
+          const notification_preference: string = 'email'
+
           const insert = `
-            INSERT INTO users (username, email, google_id, first_name, last_name)
-            VALUES ($1, $2, $3, $4, $5)
+            INSERT INTO users (username, email, google_id, first_name, last_name, kyc_status, currency, notification_preference)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
             RETURNING *
           `;
-          const values = [username, email, googleId, first_name, last_name];
+          const values = [username, email, googleId, first_name, last_name, kyc_status, currency, notification_preference];
+
           const result = await client.query(insert, values);
           return done(null, result.rows[0]);
         } catch (error) {
