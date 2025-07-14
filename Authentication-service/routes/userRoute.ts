@@ -1,6 +1,8 @@
 import express from "express"
 import { forgotPassword, login, protectRoute, Registration, resetPassword, sendEmailToken, sendSMSToken, updatePassword, verifyEmailToken, verifySmsToken } from "../controllers/authController";
 import { getLoginOptions, passkeyRegister, verifyPasskey, verifyPasskeyLogin } from "../controllers/biometricsController";
+import passport from "passport";
+import { githubCallback } from "../controllers/OAuth2Controller";
 
 const router = express.Router();
 
@@ -17,5 +19,8 @@ router.get("/get-passkey", protectRoute, passkeyRegister)
 router.post("/verify-passkey", verifyPasskey)
 router.post("/options-passkey", getLoginOptions)
 router.post("/login-passkey", verifyPasskeyLogin)
+
+router.get("/github", passport.authenticate('github', { scope: ['user:email']}));
+router.get("/github/callback", githubCallback)
 
 export default router;
