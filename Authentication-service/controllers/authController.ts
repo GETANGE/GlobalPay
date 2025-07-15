@@ -378,7 +378,7 @@ export const login = async (
     const result = await client.query(query);
 
     if (!result) {
-      return next(new APIError(`This user does ot exist`, 400));
+      return next(new APIError(`This user does not exist`, 400));
     }
 
     const user = result.rows[0];
@@ -422,7 +422,6 @@ export const protectRoute = async (
 ) => {
   try {
     const authHeaders = req.headers.authorization;
-    console.log(authHeaders);
 
     if (!authHeaders || !authHeaders?.includes("Bearer")) {
       return next(new APIError(`You are not logged In (Authorizations).`, 403));
@@ -433,9 +432,12 @@ export const protectRoute = async (
       token,
       process.env.JWT_SECRET as string
     ) as { userId: number };
-    const userId = decodedToken.userId;
 
-    console.log(userId);
+    if (!decodedToken || !decodedToken.userId) {
+      return next(new APIError("Token expired or invalid.", 400));
+    }
+
+    const userId = decodedToken.userId;
 
     if (!userId) {
       return next(new APIError(`Invalid token`, 403));
@@ -455,8 +457,10 @@ export const protectRoute = async (
     next();
   } catch (error: any) {
     if (error.name === "JsonWebTokenError") {
-      return next(new APIError(`Invalid or expired Token`, 401));
-    } else {
+      return next(new APIError(`Invalid token. Please log in again! 😊`, 401));
+    } else if (error.name === "TokenExpiredError") {
+      return next(new APIError(`Token expired. Please log in again! 😊`, 401))
+    }else{
       logger.error(`Internal server error : ${error}`);
       return next(new APIError(`Internal server error`, 500));
     }

@@ -113,11 +113,11 @@ CREATE TABLE password_resets (
         ON DELETE CASCADE
 );
 
--- ✅ Alter `email_verification` table
+-- Alter `email_verification` table
 ALTER TABLE email_verification
 ALTER COLUMN email_expires_at TYPE TIMESTAMPTZ;
 
--- ✅ Alter `sms_verification` table
+-- Alter `sms_verification` table
 ALTER TABLE sms_verification
 ALTER COLUMN phone_expires_at TYPE TIMESTAMPTZ;
 
