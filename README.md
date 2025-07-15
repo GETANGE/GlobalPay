@@ -212,11 +212,11 @@ POST /accounts/verify   - Verify account
 
 ```bash
 # Run tests for all services
-npm run test:all
+pnpm run test:all
 
 # Run tests for specific service
 cd Authentication-service
-npm test
+pnpm test
 ```
 
 ## 📊 Monitoring and Logging
