@@ -19,9 +19,10 @@ import { corsOptions } from "./configs/cors-config";
 
 import userRoutes from "./routes/userRoute";
 import { connectToRabbitMQ } from "./utils/rabbitMQ";
-import "./utils/sms"; // ✅ Triggers processor
+import "./utils/sms"; //Triggers processor
 import "./utils/email";
 import APIError from "./utils/APIError";
+import { Errorhandlers } from "./controllers/errorHandlingController";
 
 dotenv.config();
 
@@ -101,23 +102,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   );
 });
 
-interface CustomeError {
-  statusCode: number;
-  status: string;
-  message: string;
-}
-
-app.use(
-  (err: CustomeError, req: Request, res: Response, next: NextFunction) => {
-    let status = err.status || "Internal server error";
-    let statusCode = err.statusCode || 500;
-
-    res.status(statusCode).json({
-      status: status,
-      message: err.message,
-    });
-  }
-);
+app.use(Errorhandlers);
 
 async function startServer() {
   await connectDatabase();

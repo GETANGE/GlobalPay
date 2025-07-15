@@ -5,3 +5,7 @@ MaxRetriesPerRequestError: Reached the max retries per request limit (which is 2
     at Socket.emit (node:events:518:28)
     at Socket.emit (node:domain:489:12)
     at TCP.<anonymous> (node:net:351:12) : 2025-07-06 07:30:30.232 PM
+[[31merror[39m]: unhandledRejection: Reached the max retries per request limit (which is 20). Refer to "maxRetriesPerRequest" option for details.
+MaxRetriesPerRequestError: Reached the max retries per request limit (which is 20). Refer to "maxRetriesPerRequest" option for details.
+    at /home/emmanuel/Desktop/Projects/GlobalPay/Authentication-service/node_modules/.pnpm/ioredis@5.6.1/node_modules/ioredis/built/redis/event_handler.js:182:37
+    at processTicksAndRejections (node:internal/process/task_queues:85:11) : 2025-07-15 05:11:31.287 PM

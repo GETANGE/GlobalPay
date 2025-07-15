@@ -188,7 +188,7 @@ export const verifyPasskey = async (
 
     await client.query(insertQuery);
 
-    logger.info(`✅ Registered passkey for user: ${userData.username}`);
+    logger.info(`Registered passkey for user: ${userData.username}`);
     res.status(201).json({
       status: "success",
       verified: true,

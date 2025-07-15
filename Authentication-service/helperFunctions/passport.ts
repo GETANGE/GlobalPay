@@ -7,70 +7,96 @@ import client from "../configs/db-config";
 dotenv.config();
 
 export const githubStrategy = () => {
-  passport.use( new GitHubStrategy(
+  passport.use(
+    new GitHubStrategy(
       {
         clientID: process.env.GITHUB_CLIENT_ID as string,
         clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
         callbackURL: process.env.GITHUB_CALLBACK_URL as string,
       },
-      async ( accessToken: string, refreshToken: string, profile: {
+      async (
+        accessToken: string,
+        refreshToken: string,
+        profile: {
           id: any;
           username: string;
           displayName?: string;
           emails: { value: string }[];
         },
-        done: (arg0: Error | null, arg1: null) => any
+        done: (error: Error | null, user: any) => any
       ) => {
         try {
           const githubId = profile.id;
           const username = profile.username;
           let email = profile.emails?.[0]?.value;
 
+          //If no email, fetch from GitHub API
           if (!email) {
-            // Manually fetch emails from GitHub API
-            const emailResponse = await fetch(
-              "https://api.github.com/user/emails",
-              {
-                headers: {
-                  Authorization: `token ${accessToken}`,
-                  "User-Agent": "Node.js",
-                  Accept: "application/vnd.github+json",
-                },
-              }
-            );
+            const emailResponse = await fetch("https://api.github.com/user/emails", {
+              headers: {
+                Authorization: `token ${accessToken}`,
+                "User-Agent": "Node.js",
+                Accept: "application/vnd.github+json",
+              },
+            });
 
             const emails = await emailResponse.json();
-
-            // Find primary and verified email
-            const primaryEmail = emails.find(
-              (e: any) => e.primary && e.verified
-            );
+            const primaryEmail = emails.find((e: any) => e.primary && e.verified);
             email = primaryEmail?.email;
           }
 
-          // Extract fullnames
-          const fullName = profile.displayName || " ";
-          const [first_name, last_name] = fullName.split(" ");
-
-          const existing = await client.query(`SELECT * FROM users WHERE github_id = $1`, [githubId]);
-
-          if (existing.rows.length > 0) {
-            await client.query(`UPDATE users SET last_login = CURRENT_TIMESTAMP AT TIME ZONE 'Africa/Nairobi' WHERE github_id = $1`, [githubId])
-            return done(null, existing.rows[0]);
+          if (!email) {
+            return done(new Error("GitHub account does not have a verified primary email"), null);
           }
 
-          const kyc_status: string = 'pending'
-          const currency: string = 'KES'
-          const notification_preference: string = 'email'
+          // Parse name
+          const fullName = profile.displayName || "";
+          const [first_name = "", last_name = ""] = fullName.split(" ");
 
-          const insert = `
-            INSERT INTO users (username, email, github_id, first_name, last_name, kyc_status, currency, notification_preference)
+          //Check if user with email exists
+          const { rows } = await client.query(`SELECT * FROM users WHERE email = $1`, [email]);
+          const existingUser = rows[0];
+
+          if (existingUser) {
+            //If GitHub ID is not linked, update it
+            if (!existingUser.github_id) {
+              await client.query(
+                `UPDATE users SET github_id = $1, last_login = CURRENT_TIMESTAMP AT TIME ZONE 'Africa/Nairobi' WHERE email = $2`,
+                [githubId, email]
+              );
+              existingUser.github_id = githubId; // reflect in returned user
+            } else {
+              // Just update last_login
+              await client.query(
+                `UPDATE users SET last_login = CURRENT_TIMESTAMP AT TIME ZONE 'Africa/Nairobi' WHERE email = $1`,
+                [email]
+              );
+            }
+
+            return done(null, existingUser);
+          }
+
+          //No user exists — insert new one
+          const insertQuery = `
+            INSERT INTO users (
+              username, email, github_id, first_name, last_name,
+              kyc_status, currency, notification_preference
+            )
             VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
             RETURNING *
           `;
-          const values = [username, email, githubId, first_name, last_name, kyc_status, currency, notification_preference];
+          const values = [
+            username,
+            email,
+            githubId,
+            first_name,
+            last_name,
+            "pending",      // kyc_status
+            "KES",          // currency
+            "email"         // notification_preference
+          ];
 
-          const result = await client.query(insert, values);
+          const result = await client.query(insertQuery, values);
           return done(null, result.rows[0]);
         } catch (error) {
           return done(error as Error, null);
@@ -96,25 +122,53 @@ export const googleStrategy = () => {
           const [first_name = "", last_name = ""] = fullName.split(" ");
           const username = profile.username || email?.split('@')[0] || googleId;
 
-          const existing = await client.query(`SELECT * FROM users WHERE google_id = $1`, [googleId]);
-
-          if (existing.rows.length > 0) {
-            await client.query(`UPDATE users SET last_login = CURRENT_TIMESTAMP AT TIME ZONE 'Africa/Nairobi' WHERE google_id = $1`, [googleId])
-            return done(null, existing.rows[0]);
+          if (!email) {
+            return done(new Error("Google account does not have an email"));
           }
 
-          const kyc_status: string = 'pending'
-          const currency: string = 'KES'
-          const notification_preference: string = 'email'
+          // Check for existing user by email
+          const { rows } = await client.query(`SELECT * FROM users WHERE email = $1`, [email]);
 
-          const insert = `
-            INSERT INTO users (username, email, google_id, first_name, last_name, kyc_status, currency, notification_preference)
+          const existingUser = rows[0];
+
+          // If user exists
+          if (existingUser) {
+            // Update google_id if not already set
+            if (!existingUser.google_id) {
+              await client.query(`UPDATE users SET google_id = $1, last_login = CURRENT_TIMESTAMP AT TIME ZONE 'Africa/Nairobi' WHERE email = $2`,[googleId, email]
+              );
+              existingUser.google_id = googleId; // ensure updated object
+            } else {
+              // Just update last_login
+              await client.query(`UPDATE users SET last_login = CURRENT_TIMESTAMP AT TIME ZONE 'Africa/Nairobi' WHERE email = $1`, [email]
+              );
+            }
+
+            return done(null, existingUser);
+          }
+
+          // New user - insert
+          const result = await client.query(
+            `
+            INSERT INTO users (
+              username, email, google_id, first_name, last_name,
+              kyc_status, currency, notification_preference
+            )
             VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-            RETURNING *
-          `;
-          const values = [username, email, googleId, first_name, last_name, kyc_status, currency, notification_preference];
+            RETURNING *;
+          `,
+            [
+              username,
+              email,
+              googleId,
+              first_name,
+              last_name,
+              "pending",      // kyc_status
+              "KES",          // currency
+              "email"         // notification_preference
+            ]
+          );
 
-          const result = await client.query(insert, values);
           return done(null, result.rows[0]);
         } catch (error) {
           return done(error as Error);
