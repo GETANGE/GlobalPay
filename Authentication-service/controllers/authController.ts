@@ -14,6 +14,18 @@ import APIError from "../utils/APIError";
 
 dotenv.config();
 
+// cache validation
+const invalidateUserCache = async (req: Request, userId: string | number) => {
+  const userKey = `user:${userId}`;
+  await req.redisClient.del(userKey);
+
+  // Delete all paginated users cache
+  const keys = await req.redisClient.keys("users:*");
+  if (keys.length > 0) {
+    await req.redisClient.del(...keys);
+  }
+};
+
 export const Registration = async (
   req: Request,
   res: Response,
@@ -133,10 +145,16 @@ export const Registration = async (
     };
 
     const newUser = await client.query(insertQuery);
+    const insertedUser = newUser.rows[0];
+    const safeUser = { ...insertedUser }; // prevents mutating the original object(data)
+    delete safeUser.password;
+
+    // invalidate the cache
+    await invalidateUserCache(req, newUser.rows[0].id)
 
     res.status(201).json({
       status: "success",
-      data: newUser.rows[0],
+      data: safeUser,
     });
   } catch (error: any) {
     logger.error(`Internal server error`, error);
@@ -559,9 +577,6 @@ export const resetPassword = async (
 
     const tokenRow = resetResult.rows[0];
     const expiry = new Date(tokenRow.expires_at);
-    logger.info(
-      `🕓 NOW: ${new Date().toISOString()} | 📅 EXPIRES AT: ${expiry.toISOString()}`
-    );
 
     if (expiry < new Date()) {
       return next(new APIError("Reset token has expired", 400));

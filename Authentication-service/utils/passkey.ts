@@ -47,6 +47,6 @@ export const getChallenge = async (loginId: number) => {
 };
 
 export const updatePasskeyCounter = async( passkey: string, newCounter: any) =>{
-    const text = `UPDATE SET counter = $1, updated_at = NOW() WHERE id= $2`;
+    const text = `UPDATE SET counter = $1, updated_at = CURRENT_TIMESTAMP AT TIME ZONE 'Africa/Nairobi' WHERE id= $2`;
     await client.query(text, [newCounter, passkey])
 }
