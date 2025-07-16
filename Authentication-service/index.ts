@@ -23,6 +23,7 @@ import "./utils/sms"; //Triggers processor
 import "./utils/email";
 import APIError from "./utils/APIError";
 import { Errorhandlers } from "./controllers/errorHandlingController";
+import { attachRedis } from "./middlewares/attachRedis";
 
 dotenv.config();
 
@@ -86,7 +87,7 @@ const SensitiveEndopointRatelimit = rateLimit({
 
 app.use(SensitiveEndopointRatelimit);
 
-app.use("/auth", userRoutes);
+app.use("/auth", attachRedis(redisClient), userRoutes);
 
 app.get("/", (req: Request, res: Response) => {
   res.status(200).json({
