@@ -389,7 +389,7 @@ export const login = async (
     }
 
     const query = {
-      text: "SELECT id, username, email, password, role FROM users WHERE email = $1",
+      text: "SELECT id, username, email, password, role, active FROM users WHERE email = $1",
       values: [email],
     };
 
@@ -400,6 +400,10 @@ export const login = async (
     }
 
     const user = result.rows[0];
+
+    if (user.active === false) {
+      return next(new APIError("This account has been deactivated. Please contact customer support for assistance.", 403));
+    }
 
     //compare passwords
     const isMatch = await bcrypt.compare(currentPassword, user.password);

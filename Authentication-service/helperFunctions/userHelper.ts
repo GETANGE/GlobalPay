@@ -11,8 +11,8 @@ export const getUser = async ({ id, email }: userData) => {
   }
 
   const query = id
-    ? 'SELECT * FROM users WHERE id = $1'
-    : 'SELECT * FROM users WHERE email = $1';
+    ? 'SELECT id, username, email, role FROM users WHERE id = $1'
+    : 'SELECT id, username, email, role FROM users WHERE email = $1';
 
   const value = id || email;
 
