@@ -1,7 +1,12 @@
 import { NextFunction, Request, Response } from "express";
+import jwt from "jsonwebtoken"
+import dotenv from "dotenv"
 import logger from "../utils/logger";
 import APIError from "../utils/APIError";
 import client from "../configs/db-config";
+import { getUser } from "../helperFunctions/userHelper";
+
+dotenv.config()
 
 // cache validation
 const invalidateUserCache = async (req: Request, userId: string | number) => {
@@ -53,7 +58,7 @@ export const getAllUsers = async (req: Request, res: Response, next: NextFunctio
       };
   
     // Cache the result
-    await req.redisClient.setex(cachedKey, 60, JSON.stringify(result)); // TTL: 60 seconds
+    await req.redisClient.setex(cachedKey, 3600, JSON.stringify(result)); // TTL: 1 hr
   
     res.status(200).json({
         status: "success",
@@ -90,7 +95,7 @@ export const getSingleUser = async(req:Request, res:Response, next:NextFunction)
         const user = result.rows[0]
 
         // Cache the result
-        await req.redisClient.setex(cachedKey, 60, JSON.stringify(user)); // TTL: 60 seconds
+        await req.redisClient.setex(cachedKey, 3600, JSON.stringify(user)); // TTL: 1 hr
 
         res.status(200).json({
             status:"success",
@@ -101,4 +106,96 @@ export const getSingleUser = async(req:Request, res:Response, next:NextFunction)
         logger.error(`Error getting a single user`);
         return next(new APIError(`Internal server error`, 500))
     }
+}
+
+export const deleteUser = async(req:any, res:Response, next:NextFunction)=>{
+  try {
+    const id = req.params;
+    
+    const user = await getUser({ id: id});
+
+    if(!user){
+      return next(new APIError(`User not found`, 500))
+    }
+
+    const userQuery = `DELETE FROM users WHERE id = $1`
+    const values = [id]
+
+    await client.query(userQuery, values)
+
+    //invalidate cache
+    await invalidateUserCache(req, id)
+
+    res.status(200).json({
+      status: "success",
+      message: `User ${user.username} deleted successfully`
+    })
+  } catch (error) {
+    logger.error(`Error deleting user account: ${error}`)
+    return next(new APIError(`Internal server error`, 500))
+  }
+}
+
+export const deactivateUser = async (req: any, res: Response, next: NextFunction) => {
+  try {
+    const requester = req.user; // Comes from protect middleware
+    const targetUserId = parseInt(req.params.userId);
+
+    if (isNaN(targetUserId)) {
+      return next(new APIError("Invalid user ID provided.", 400));
+    }
+
+    // Only the user themself or an admin can deactivate
+    if (requester.role !== "admin" && requester.id !== targetUserId) {
+      return next(new APIError("Unauthorized to deactivate this account.", 403));
+    }
+
+    const query = `
+      UPDATE users 
+      SET 
+        active = $3, 
+        deleted_at = CURRENT_TIMESTAMP AT TIME ZONE 'Africa/Nairobi',
+        deleted_by = $2
+      WHERE id = $1
+    `;
+
+    await client.query(query, [targetUserId, requester.username, false]); 
+
+    res.status(200).json({ 
+      status: "success",
+      message: "User deactivated successfully."
+    });
+  } catch (error) {
+    logger.error(`Error deactivating user: ${error}`);
+    return next(new APIError("Internal server error", 500));
+  }
+};
+
+export const activateUser = async(req:Request, res:Response, next:NextFunction)=>{
+  try {
+    const { userId } = req.params;
+
+    if(!userId){
+      return next(new APIError(`Invalid user ID provided.`, 400))
+    }
+
+    const query = `
+      UPDATE users 
+      SET 
+        active = $3, 
+        deleted_at = null,
+        deleted_by = $2
+      WHERE id = $1
+    `;
+
+    await client.query(query, [userId, null, true]); 
+
+    res.status(200).json({ 
+      status: "success",
+      message: "User activated successfully."
+    });
+  } catch (error) {
+    logger.error(`Error activating user: ${error}`)
+    return next(new APIError(`Internal server error`, 500))
+  }
 }
