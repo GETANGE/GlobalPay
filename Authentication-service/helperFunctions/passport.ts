@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import { Strategy as GitHubStrategy } from "passport-github2";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import client from "../configs/db-config";
+import APIError from "../utils/APIError";
 
 dotenv.config();
 
@@ -58,6 +59,10 @@ export const githubStrategy = () => {
           const existingUser = rows[0];
 
           if (existingUser) {
+            if(existingUser.active === false){
+             throw new APIError("This account has been deactivated. Please contact customer support for assistance.", 403)
+            }
+
             //If GitHub ID is not linked, update it
             if (!existingUser.github_id) {
               await client.query(
@@ -133,6 +138,10 @@ export const googleStrategy = () => {
 
           // If user exists
           if (existingUser) {
+            if(existingUser.active === false){
+             throw new APIError("This account has been deactivated. Please contact customer support for assistance.", 403)
+            }
+            
             // Update google_id if not already set
             if (!existingUser.google_id) {
               await client.query(`UPDATE users SET google_id = $1, last_login = CURRENT_TIMESTAMP AT TIME ZONE 'Africa/Nairobi' WHERE email = $2`,[googleId, email]
