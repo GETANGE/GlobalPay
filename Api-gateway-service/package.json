@@ -15,7 +15,9 @@
     "@types/helmet": "^4.0.0",
     "@types/ioredis": "^5.0.0",
     "@types/rate-limit-redis": "^3.0.0",
-    "@types/winston": "^2.4.4"
+    "@types/winston": "^2.4.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
@@ -33,11 +35,10 @@
     "morgan": "^1.10.0",
     "nodemon": "^3.1.10",
     "rate-limit-redis": "^4.2.1",
-    "ts-node": "^10.9.2",
     "winston": "^3.17.0"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "packageManager": "pnpm@10.11.0"
+  "packageManager": "pnpm@10.13.1"
 }

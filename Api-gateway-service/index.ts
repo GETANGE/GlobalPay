@@ -64,7 +64,8 @@ app.get('/', (req:Request, res:Response) =>{
 })
 
 // Forward Proxies 
-app.use("/api/v1", proxy(process.env.IDENTITY_SERVICE_URL as string, {
+app.use("/api/v1/auth", proxy(process.env.IDENTITY_SERVICE_URL as string, {
+    proxyReqPathResolver: req => `/auth${req.url}`,
     // modify the outgoing request options before the proxy sends it to the target service.
     proxyReqOptDecorator:(proxyReqOpts:any, srcReq:any) =>{
         proxyReqOpts.headers["Content-type"] = "application/json"
