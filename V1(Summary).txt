@@ -1,0 +1,16 @@
+GlobalPay/
+│
+├── Account-service              → Wallets, balances, internal transfers
+├── Authentication-service      → User auth (login, signup, tokens)
+├── Fraud-detection-service     → Anomaly detection, velocity checks, AML rules
+├── Payment-service             → External payments (e.g., card, mobile money, banks)
+├── Transaction-service         → Ledger entries, money movement logs
+├── Notification-service        → Emails, SMS, push notifications, webhooks
+├── Search-service              → Possibly search across txns/users (Elasticsearch?)
+├── Api-gateway-service         → Unified entry point, routing, rate-limiting, auth-check
+│
+├── docker-compose.yaml         → Spinning up all services with networking
+├── GlobalPay.drawio            → Your architecture diagram (Draw.io file)
+└── README.md                   → Main documentation
+
+npm install geoip-lite

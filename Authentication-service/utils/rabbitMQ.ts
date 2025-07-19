@@ -12,9 +12,16 @@ const EXCHANGE_NAME: string ='global_pay_events'
 const EMAIL_QUEUE: string = "email_queue"
 const SMS_QUEUE: string = "sms_queue"
 
+let env = process.env.RABBITMQ_URL || "development" 
+
+const rabbitMQ_url = 
+    env === "production"
+        ? process.env.RABBITMQ_URL_PROD
+        : process.env.RABBITMQ_URL_DEV
+
 export const connectToRabbitMQ = async()=>{
     try {
-        connection = await amqp.connect(process.env.RABBITMQ_URL as string);
+        connection = await amqp.connect( rabbitMQ_url as string);
         channel = await connection.createChannel();
 
         await channel.assertExchange(EXCHANGE_NAME, 'topic', { durable: true });
