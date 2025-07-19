@@ -37,10 +37,19 @@ const app = express();
 app.use(helmet());
 app.use(passport.initialize());
 app.use(express.json());
+app.set("trust proxy", true);
 app.use(morgan("dev"));
 app.use(cors(corsOptions));
 
-const redisClient = new Redis(process.env.REDIS_URL as string);
+const env = process.env.NODE_ENV || "development";
+
+const redisUrl =
+  env === "production"
+    ? process.env.REDIS_URL_PROD
+    : process.env.REDIS_URL_DEV;
+
+const redisClient = new Redis(redisUrl as string);
+
 
 redisClient.on("error", (error) => {
   logger.warn(`Error connecting to redis`, error);

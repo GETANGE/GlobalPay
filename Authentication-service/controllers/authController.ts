@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import crypto from "crypto";
+import requestIp from 'request-ip'
 import { registration_validation } from "../utils/validation";
 import client from "../configs/db-config";
 import { getClientDeviceIp } from "../middlewares/deviceIp";
@@ -25,6 +26,11 @@ const invalidateUserCache = async (req: Request, userId: string | number) => {
     await req.redisClient.del(...keys);
   }
 };
+
+function normalizeIp(ip: string | null): string | null {
+  if (!ip) return null;
+  return ip.replace(/^::ffff:/, "");
+}
 
 export const Registration = async (
   req: Request,
@@ -62,7 +68,7 @@ export const Registration = async (
       notification_preference = "email",
     } = req.body;
 
-    const loginIp = req.ip;
+    const loginIp = normalizeIp(requestIp.getClientIp(req));
     const deviceIp = getClientDeviceIp(req);
 
     // Required fields check

@@ -1,0 +1,116 @@
+services:
+  # ===================================
+  # Postgres for Authentication Service
+  # ===================================
+  postgres-auth:
+    image: postgres:15
+    container_name: postgres-auth
+    environment:
+      POSTGRES_USER: auth_user
+      POSTGRES_PASSWORD: auth_pass
+      POSTGRES_DB: auth_db
+    ports:
+      - "5434:5432"
+    volumes:
+      - pgdata-auth:/var/lib/postgresql/data
+    networks:
+      - globalpay-net
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U auth_user -d auth_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # =========================
+  # API Gateway Service
+  # =========================
+  gateway-service:
+    build:
+      context: ./Api-gateway-service
+    container_name: gateway-service
+    env_file:
+      - ./Api-gateway-service/.env
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - postgres-auth
+      - redis
+      - rabbitmq
+    networks:
+      - globalpay-net
+    restart: always
+
+  # =========================
+  # Authentication Service
+  # =========================
+  authentication-service:
+    build:
+      context: ./Authentication-service
+    container_name: auth-service
+    env_file:
+      - ./Authentication-service/.env
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://auth_user:auth_pass@postgres-auth:5432/auth_db
+      - REDIS_URL=redis://redis:6379
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
+    depends_on:
+      postgres-auth:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - globalpay-net
+    restart: always
+
+  # =========================
+  # Shared Redis Instance
+  # =========================
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    ports:
+      - "6385:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - globalpay-net
+    restart: always
+
+  # =========================
+  # Shared RabbitMQ Instance
+  # =========================
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"     # AMQP protocol
+      - "15672:15672"   # Management UI
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    healthcheck:  # Added healthcheck
+      test: ["CMD", "rabbitmq-diagnostics", "status"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - globalpay-net
+    restart: always
+
+networks:
+  globalpay-net:
+
+volumes:
+  pgdata-auth:
