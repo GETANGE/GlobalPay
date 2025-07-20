@@ -9,36 +9,27 @@ const env = process.env.NODE_ENV as string;
 let client: Client;
 
 if (env === "production") {
-  client = new Client({
-    user: process.env.DATABASE_PROD_USERNAME as string,
-    password: process.env.DATABASE_PROD_PASSWORD as string,
-    host: process.env.DATABASE_PROD_HOST as string,
-    port: Number(process.env.DATABASE_PROD_PORT),
-    database: process.env.DATABASE_PROD_NAME as string,
-  });
+  const connectionString = process.env.DATABASE_URL
+
+  client = new Client({connectionString})
+
 } else if (env === "staging") {
-  client = new Client({
-    user: process.env.DATABASE_STAGE_USERNAME as string,
-    password: process.env.DATABASE_STAGE_PASSWORD as string,
-    host: process.env.DATABASE_STAGE_HOST as string,
-    port: Number(process.env.DATABASE_STAGE_PORT),
-    database: process.env.DATABASE_STAGE_NAME as string,
-  });
+  const connectionString = process.env.DATABASE_URL_STAGING
+
+  client = new Client({ connectionString })
+
 } else {
   // Default to development
-  client = new Client({
-    user: process.env.DATABASE_DEV_USERNAME as string,
-    password: process.env.DATABASE_DEV_PASSWORD as string,
-    host: process.env.DATABASE_DEV_HOST as string,
-    port: Number(process.env.DATABASE_DEV_PORT),
-    database: process.env.DATABASE_DEV_NAME as string,
-  });
+  const connectionString = process.env.DATABASE_URL_DEV
+
+  client = new Client({ connectionString })
+
 }
 
 export const connectDatabase = async () => {
   try {
     await client.connect();
-    logger.info(`🌊 Connected to the ${env} database successfully...`);
+    logger.info(`🍂 Connected to the ${env} database successfully...`);
   } catch (error) {
     logger.warn("😢 Database connection error", error);
   }
