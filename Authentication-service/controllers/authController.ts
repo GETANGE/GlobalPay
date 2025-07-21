@@ -8,7 +8,7 @@ import requestIp from 'request-ip'
 import { registration_validation } from "../utils/validation";
 import client from "../configs/db-config";
 import { getClientDeviceIp } from "../middlewares/deviceIp";
-import { publishEmailJob, publishSMSJob } from "../utils/rabbitMQ";
+import { publishEmailJob, publishEvent, publishSMSJob } from "../utils/rabbitMQ";
 import { generateToken, resetToken } from "../utils/generateToken";
 import { getSubject, getUser } from "../helperFunctions/userHelper";
 import APIError from "../utils/APIError";
@@ -157,6 +157,14 @@ export const Registration = async (
 
     // invalidate the cache
     await invalidateUserCache(req, newUser.rows[0].id)
+
+    if( newUser.rows[0].role === "user"){
+      // publish an event to creat account
+      await publishEvent("account.created", {
+        userId: newUser.rows[0].id,
+        username: newUser.rows[0].username
+      })
+    }
 
     res.status(201).json({
       status: "success",

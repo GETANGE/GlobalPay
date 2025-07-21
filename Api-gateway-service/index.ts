@@ -26,8 +26,15 @@ app.use(morgan('dev'))
 
 app.use(cors(corsOptions));
 
+const env = process.env.NODE_ENV || "development";
+
+const redis_url =
+    env === "production"
+    ? process.env.REDIS_URL_PROD
+    : process.env.REDIS_URL_DEV
+
 // IP-based Rate limiting
-const redisClient = new Redis(process.env.REDIS_URL as string)
+const redisClient = new Redis( redis_url as string)
 
 redisClient.on('error', (error)=>{
     logger.warn(`Error connecting to redis`, error)
@@ -63,12 +70,25 @@ app.get('/', (req:Request, res:Response) =>{
     })
 })
 
+const isProd = process.env.NODE_ENV || "development";
+
+const identity_url =
+    isProd === "production"
+    ? process.env.IDENTITY_SERVICE_URL_PROD
+    : process.env.IDENTITY_SERVICE_URL_DEV
+
 // Forward Proxies 
-app.use("/api/v1/auth", proxy(process.env.IDENTITY_SERVICE_URL as string, {
+app.use("/api/v1/auth", proxy(identity_url as string, {
     proxyReqPathResolver: req => `/auth${req.url}`,
     // modify the outgoing request options before the proxy sends it to the target service.
     proxyReqOptDecorator:(proxyReqOpts:any, srcReq:any) =>{
         proxyReqOpts.headers["Content-type"] = "application/json"
+
+        if (srcReq.user) {
+            proxyReqOpts.headers["x-user-id"] = srcReq.user.id;
+            proxyReqOpts.headers["x-user-role"] = srcReq.user.role;
+        }
+
         return proxyReqOpts
     },
     // handle errors from the proxy itself
@@ -117,5 +137,5 @@ process.on("unhandledRejection", (err: any) => {
 
 app.listen(PORT, ()=>{
     logger.info(`🦈 Api-gateway is listening on port: ${PORT}`)
-    logger.info(`🔐 Aunthentification Service URL: ${process.env.IDENTITY_SERVICE_URL}`)
+    logger.info(`🔐 Aunthentification Service URL: ${identity_url}`)
 })
