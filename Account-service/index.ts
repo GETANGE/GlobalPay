@@ -11,6 +11,9 @@ import logger from "./utils/logger";
 import { corsOptions } from "./configs/cors-config"
 import APIError from "./utils/APIError"
 import { connectDatabase } from "./configs/db-config"
+import { Errorhandlers } from "./controllers/errorHandlingController"
+import { connectToRabbitMQ, consumeEvent } from "./utils/RabbitMQ"
+import { handleAccountCreation } from "./eventHandlers/wallet.events"
 
 dotenv.config()
 
@@ -90,11 +93,15 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 
 async function startServer() {
   await connectDatabase();
+  await consumeEvent("account.created", handleAccountCreation);
   app.listen(PORT, () => {
     logger.info(`🏦 Account server is running on port : ${PORT}`);
   });
 }
 startServer();
+
+// error handling
+app.use(Errorhandlers);
 
 process.on("uncaughtException", (err) => {
   console.error("Uncaught Exception:", err);

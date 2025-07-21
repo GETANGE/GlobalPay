@@ -37,7 +37,7 @@ const app = express();
 app.use(helmet());
 app.use(passport.initialize());
 app.use(express.json());
-app.set("trust proxy", true);
+// app.set("trust proxy", true);
 app.use(morgan("dev"));
 app.use(cors(corsOptions));
 

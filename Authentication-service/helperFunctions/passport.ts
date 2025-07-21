@@ -4,6 +4,7 @@ import { Strategy as GitHubStrategy } from "passport-github2";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import client from "../configs/db-config";
 import APIError from "../utils/APIError";
+import { publishEvent } from "../utils/rabbitMQ";
 
 dotenv.config();
 
@@ -102,6 +103,14 @@ export const githubStrategy = () => {
           ];
 
           const result = await client.query(insertQuery, values);
+
+        if( result.rows[0].role === "user"){
+          // publish an event to creat account
+          await publishEvent("account.created", {
+            userId: result.rows[0].id,
+            username: result.rows[0].username
+          })
+        }
           return done(null, result.rows[0]);
         } catch (error) {
           return done(error as Error, null);
@@ -177,6 +186,14 @@ export const googleStrategy = () => {
               "email"         // notification_preference
             ]
           );
+
+        if( result.rows[0].role === "user"){
+          // publish an event to creat account
+          await publishEvent("account.created", {
+            userId: result.rows[0].id,
+            username: result.rows[0].username
+          })
+        }
 
           return done(null, result.rows[0]);
         } catch (error) {
