@@ -19,6 +19,7 @@ export const githubCallback = (req: Request, res: Response, next: NextFunction )
           id: user.id,
           username: user.username,
           email: user.email,
+          role: user.role
         });
 
         return res.status(200).json({
@@ -56,6 +57,7 @@ export const googleCallback = (req: Request, res: Response, next: NextFunction) 
         id: user.id,
         username: user.username,
         email: user.email,
+        role: user.role
       });
 
       return res.status(200).json({

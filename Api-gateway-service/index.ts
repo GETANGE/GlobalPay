@@ -11,6 +11,7 @@ import { corsOptions } from "./configs/cors-config";
 import { rateLimit } from "express-rate-limit";
 import APIError from "./controllers/errorHandler";
 import RedisStore from "rate-limit-redis";
+import { validateToken } from "./middlewares/authMiddleware";
 
 dotenv.config()
 
@@ -103,7 +104,30 @@ app.use("/api/v1/auth", proxy(identity_url as string, {
     }
 }))
 
-// Handling unhandled routes
+app.use("/api/v1/account", validateToken, proxy(process.env.ACCOUNT_SERVICE_URL_PROD as string, {
+  proxyReqPathResolver: req => `/account${req.url}`,
+  proxyReqOptDecorator: (proxyReqOpts: any, srcReq: any) => {
+    // console.log("Forwarding headers with user:", srcReq.user);
+    proxyReqOpts.headers["Content-type"] = "application/json";
+
+    if (srcReq.user) {
+      proxyReqOpts.headers["x-user-id"] = srcReq.user.userId;
+      proxyReqOpts.headers["x-user-role"] = srcReq.user.role;
+    }
+
+    return proxyReqOpts;
+  },
+  proxyErrorHandler: (err: Error, res: Response, next: NextFunction) => {
+    logger.error(`Proxy error: ${err.message}`);
+    return next(new APIError(`Internal server error`, 400));
+  },
+  userResDecorator: (proxyRes: any, proxyResData: any, userReq: any, userRes: any) => {
+    logger.info(`Response received from AccountService`);
+    return proxyResData;
+  }
+}));
+
+
 app.use((req: Request, res: Response, next: NextFunction) => {
   next(new APIError(`This route ${req.originalUrl} is not yet defined...`, 404));
 });
