@@ -14,6 +14,9 @@ import { connectDatabase } from "./configs/db-config"
 import { Errorhandlers } from "./controllers/errorHandlingController"
 import { connectToRabbitMQ, consumeEvent } from "./utils/RabbitMQ"
 import { handleAccountCreation } from "./eventHandlers/wallet.events"
+import { attachRedis } from "./middlewares/attatchRedis";
+
+import accountRoute from "./routes/account.routes"
 
 dotenv.config()
 
@@ -83,6 +86,8 @@ app.get('/health', (req:Request, res:Response)=>{
         message: "Account-service health-check"
     })
 })
+
+app.use('/account', attachRedis(redisClient), accountRoute)
 
 // Handling unhandled routes
 app.use((req: Request, res: Response, next: NextFunction) => {

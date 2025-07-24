@@ -23,3 +23,16 @@ export const authenticateRequest = async (
 
   next();
 };
+
+// configurable middleware
+export const authorizeRoles = (...roles: string[]) => {
+  return (req: any, res: Response, next: NextFunction) => {
+    const user = req.user;
+
+    if (!user || !roles.includes(user.role)) {
+      return next(new APIError("Access denied. Insufficient permissions.", 403));
+    }
+
+    next();
+  };
+};

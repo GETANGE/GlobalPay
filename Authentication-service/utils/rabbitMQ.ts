@@ -25,7 +25,7 @@ export const connectToRabbitMQ = async()=>{
         channel = await connection.createChannel();
 
         await channel.assertExchange(EXCHANGE_NAME, 'topic', { durable: true });
-        logger.info(`🐇 Connected to RabbitMQ..`);
+        // logger.info(`🐇 Connected to RabbitMQ..`);
 
         return channel;
     } catch (error) {
@@ -39,7 +39,6 @@ interface EmailData{
     userId: number;
     subject: string;
     message: string;
-
     otp: number,
     hashedToken: string;
     expiresAt: string;

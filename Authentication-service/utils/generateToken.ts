@@ -10,10 +10,11 @@ interface userData {
   id: number;
   username: string;
   email: string;
+  role: string
 }
 
 export const generateToken = async (user: userData) => {
-  const access_token = jwt.sign({ userId: user.id, username: user.username, email: user.email }, process.env.JWT_SECRET as string,
+  const access_token = jwt.sign({ userId: user.id, username: user.username, email: user.email , role: user.role}, process.env.JWT_SECRET as string,
     { expiresIn: '15m' }
   );
 

@@ -293,6 +293,7 @@ export const verifyPasskeyLogin = async (
       id: userData.id,
       username: userData.username,
       email: userData.email,
+      role: userData.role
     });
 
     res.status(200).json({

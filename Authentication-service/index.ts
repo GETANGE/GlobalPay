@@ -24,6 +24,8 @@ import "./utils/email";
 import APIError from "./utils/APIError";
 import { Errorhandlers } from "./controllers/errorHandlingController";
 import { attachRedis } from "./middlewares/attachRedis";
+import { startRPCServer } from "./messaging/rpcServer";
+import { getAllUserData, getSingleUserData } from "./eventHandlers/auth.events";
 
 dotenv.config();
 
@@ -37,7 +39,6 @@ const app = express();
 app.use(helmet());
 app.use(passport.initialize());
 app.use(express.json());
-// app.set("trust proxy", true);
 app.use(morgan("dev"));
 app.use(cors(corsOptions));
 
@@ -116,6 +117,9 @@ app.use(Errorhandlers);
 
 async function startServer() {
   await connectDatabase();
+  await startRPCServer("auth-service.get-users-by-ids", getAllUserData)
+  await startRPCServer("auth-service.get-user-by-id", getSingleUserData)
+  
   app.listen(PORT, () => {
     logger.info(`🔐 Auth server is running on port : ${PORT}`);
   });
