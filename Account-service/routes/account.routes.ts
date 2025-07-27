@@ -1,5 +1,5 @@
 import express from "express"
-import { getAllAccounts, getSingleAccount } from "../controllers/account.controller";
+import { getAllAccounts, getSingleAccount } from "../controllers/accountController";
 import { authenticateRequest, authorizeRoles } from "../middlewares/authMiddleware";
 
 const router = express.Router()
