@@ -4,7 +4,7 @@ import { connectToRabbitMQ } from "../utils/RabbitMQ";
 
 let channel: Channel;
 
-export const startRPCServer = async ( queueName: string, handler: (data: any) => Promise<any> ) => {
+export const startRPCServer = async ( queueName: string, callback: (data: any) => Promise<any> ) => {
   try {
     if (!channel) {
       channel = await connectToRabbitMQ();
@@ -17,7 +17,7 @@ export const startRPCServer = async ( queueName: string, handler: (data: any) =>
 
     const consumerTag = await channel.consume(queueName, async (msg) => {
       if (!msg) {
-        console.error('Received null message');
+        logger.error('Received null message');
         return;
       }
 
@@ -25,8 +25,8 @@ export const startRPCServer = async ( queueName: string, handler: (data: any) =>
         // Parse incoming message
         const data = JSON.parse(msg.content.toString());
         
-        // Process with handler
-        const reply = await handler(data);
+        // Process with event callback handler
+        const reply = await callback(data);
 
         // Send response back to client
         channel!.sendToQueue( msg.properties.replyTo, Buffer.from(JSON.stringify({success: true, data: reply })),
@@ -38,7 +38,7 @@ export const startRPCServer = async ( queueName: string, handler: (data: any) =>
         // Acknowledge message only after successful processing
         channel!.ack(msg);
       } catch (error) {
-        console.error(`Error processing RPC request: ${error}`);
+        logger.error(`Error processing RPC request: ${error}`);
 
 
         if (msg.properties.replyTo) { channel!.sendToQueue( msg.properties.replyTo, Buffer.from(JSON.stringify({
