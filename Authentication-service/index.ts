@@ -116,13 +116,18 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 app.use(Errorhandlers);
 
 async function startServer() {
-  await connectDatabase();
-  await startRPCServer("auth-service.get-users-by-ids", getAllUserData)
-  await startRPCServer("auth-service.get-user-by-id", getSingleUserData)
-  
-  app.listen(PORT, () => {
-    logger.info(`🔐 Auth server is running on port : ${PORT}`);
-  });
+  try {
+    await connectDatabase();
+    await startRPCServer("auth-service.get-users-by-ids", getAllUserData);
+    await startRPCServer("auth-service.get-user-by-id", getSingleUserData);
+
+    app.listen(PORT, () => {
+      logger.info(`🔐 Auth server is running on port : ${PORT}`);
+    });
+  } catch (err) {
+    logger.error("🔥 Failed to start server:", err);
+    process.exit(1);
+  }
 }
 startServer();
 
