@@ -9,7 +9,7 @@ const env = process.env.NODE_ENV as string;
 let client: Client;
 
 if (env === "production") {
-  const connectionString = process.env.DATABASE_URL
+  const connectionString = process.env.DATABASE_URL_PROD
 
   client = new Client({connectionString})
 

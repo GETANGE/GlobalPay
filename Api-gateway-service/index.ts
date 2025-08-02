@@ -78,6 +78,11 @@ const identity_url =
     ? process.env.IDENTITY_SERVICE_URL_PROD
     : process.env.IDENTITY_SERVICE_URL_DEV
 
+const account_url = 
+    isProd === "production"
+    ? process.env.ACCOUNT_SERVICE_URL_PROD
+    : process.env.ACCOUNT_SERVICE_URL_DEV
+
 // Forward Proxies 
 app.use("/api/v1/auth", proxy(identity_url as string, {
     proxyReqPathResolver: req => `/auth${req.url}`,
@@ -104,7 +109,7 @@ app.use("/api/v1/auth", proxy(identity_url as string, {
     }
 }))
 
-app.use("/api/v1/account", validateToken, proxy(process.env.ACCOUNT_SERVICE_URL_PROD as string, {
+app.use("/api/v1/account", validateToken, proxy(account_url as string, {
   proxyReqPathResolver: req => `/account${req.url}`,
   proxyReqOptDecorator: (proxyReqOpts: any, srcReq: any) => {
     // console.log("Forwarding headers with user:", srcReq.user);
@@ -162,4 +167,5 @@ process.on("unhandledRejection", (err: any) => {
 app.listen(PORT, ()=>{
     logger.info(`🦈 Api-gateway is listening on port: ${PORT}`)
     logger.info(`🔐 Aunthentification Service URL: ${identity_url}`)
+    logger.info(`💳 Account Service URL: ${account_url}`)
 })
