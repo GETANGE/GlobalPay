@@ -10,4 +10,4 @@ CREATE TABLE wallets (
     updated_at TIMESTAMPTZ DEFAULT (CURRENT_TIMESTAMP AT TIME ZONE 'Africa/Nairobi')
 );
 
-DROP TABLE wallets
+DROP TABLE wallets;
