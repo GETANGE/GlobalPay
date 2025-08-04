@@ -96,6 +96,9 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   );
 });
 
+// error handling
+app.use(Errorhandlers);
+
 async function startServer() {
   await connectDatabase();
   await consumeEvent("account.created", handleAccountCreation);
@@ -104,9 +107,6 @@ async function startServer() {
   });
 }
 startServer();
-
-// error handling
-app.use(Errorhandlers);
 
 process.on("uncaughtException", (err) => {
   console.error("Uncaught Exception:", err);

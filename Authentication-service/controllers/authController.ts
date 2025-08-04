@@ -409,7 +409,7 @@ export const login = async (
 
     const result = await client.query(query);
 
-    if (!result) {
+    if (!result || !result.rows || result.rows.length === 0) {
       return next(new APIError(`This user does not exist`, 400));
     }
 

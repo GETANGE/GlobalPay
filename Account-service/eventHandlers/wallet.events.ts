@@ -16,7 +16,7 @@ export const handleAccountCreation =async (event: any)=>{
 
         await client.query(userQuery, values)
         logger.info(`Account created for ${username}`)
-    } catch (error) {
-        logger.error(`Error occured while creating user account`, error)
+    } catch (error:any) {
+        logger.error(`Error creating account for ${username}: ${error.message}`, error);
     }
 }

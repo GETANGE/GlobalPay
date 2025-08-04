@@ -10,11 +10,12 @@ let channel: any =null
 const EXCHANGE_NAME: string ='global_pay_events'
 
 
-const isProduction = process.env.NODE_ENV === "production";
+let env = process.env.RABBITMQ_URL || "development" 
 
-const rabbitMQ_url = isProduction
-  ? process.env.RABBITMQ_URL_PROD
-  : process.env.RABBITMQ_URL_DEV;
+const rabbitMQ_url = 
+    env === "production"
+        ? process.env.RABBITMQ_URL_PROD
+        : process.env.RABBITMQ_URL_DEV
 
 export const connectToRabbitMQ = async()=>{
     try {
@@ -43,25 +44,33 @@ export const publishEvent = async(routingKey: string, message: any) => {
     }
 }
 
-export const consumeEvent = async(routingKey: string, callback:any)=>{
-    try {
-        if(!channel){
-            await connectToRabbitMQ()
-        }
-        const queue = await channel.assertQueue("", { exclusive: true})
-        await channel.bindQueue(queue.queue, EXCHANGE_NAME, routingKey)
-        channel.consume(queue.queue, (message:any)=>{
-            if(message !== null){
-                const content = JSON.parse(message.content.toString())
-                callback(content)
-                channel.ack(message)
-            }
-        })
-
-        logger.info(`Subscribed to Event :${routingKey}`)
-    } catch (error) {
-        logger.error(`Error consuming an event: ${routingKey}`)
+export const consumeEvent = async (routingKey: string, callback: (msg: any) => Promise<void>) => {
+  try {
+    if (!channel) {
+      await connectToRabbitMQ();
     }
-}
+
+    const queue = await channel.assertQueue("", { exclusive: true });
+    await channel.bindQueue(queue.queue, EXCHANGE_NAME, routingKey);
+
+    channel.consume(queue.queue, async (message: any) => {
+      if (message !== null) {
+        try {
+          const content = JSON.parse(message.content.toString());
+          logger.info(`📩 Received message for event ${routingKey}: ${JSON.stringify(content)}`);
+          await callback(content);
+          channel.ack(message);
+        } catch (err) {
+          logger.error(`Error handling message: ${err}`);
+        }
+      }
+    });
+
+    logger.info(`⛳ Subscribed to Event :${routingKey}`);
+  } catch (error) {
+    logger.error(`Error consuming an event: ${routingKey}`, error);
+  }
+};
+
 
 export default channel;

@@ -23,6 +23,31 @@ services:
       retries: 5
       start_period: 10s
 
+  # ===================================
+  # Postgres for Authentication Service
+  # ===================================
+  postgres-account:
+    image: postgres:15
+    container_name: postgres-account
+    environment:
+      POSTGRES_USER: account_user
+      POSTGRES_PASSWORD: account_pass
+      POSTGRES_DB: account_db
+    ports:
+      - "5435:5432"
+    volumes:
+      - pgdata-account:/var/lib/postgresql/data
+    networks:
+      - globalpay-net
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U account_user -d account_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+
   # =========================
   # API Gateway Service
   # =========================
@@ -38,6 +63,7 @@ services:
       - NODE_ENV=production
     depends_on:
       - postgres-auth
+      - postgres-account
       - redis
       - rabbitmq
     networks:
@@ -57,11 +83,38 @@ services:
       - "3001:3001"
     environment:
       - NODE_ENV=production
-      - DATABASE_URL=postgresql://auth_user:auth_pass@postgres-auth:5432/auth_db
-      - REDIS_URL=redis://redis:6379
-      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
+      - DATABASE_URL_PROD=postgresql://auth_user:auth_pass@postgres-auth:5432/auth_db
+      - REDIS_URL_PROD=redis://redis:6379
+      - RABBITMQ_URL_PROD=amqp://guest:guest@rabbitmq:5672
     depends_on:
       postgres-auth:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - globalpay-net
+    restart: always
+
+  # =========================
+  # Account Service
+  # =========================
+  account-service:
+    build:
+      context: ./Account-service
+    container_name: account-service
+    env_file:
+      - ./Account-service/.env
+    ports:
+      - "3002:3002"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL_PROD=postgresql://account_user:account_pass@postgres-account:5432/account_db
+      - REDIS_URL_PROD=redis://redis:6379
+      - RABBITMQ_URL_PROD=amqp://guest:guest@rabbitmq:5672
+    depends_on:
+      postgres-account:
         condition: service_healthy
       redis:
         condition: service_healthy
@@ -114,3 +167,4 @@ networks:
 
 volumes:
   pgdata-auth:
+  pgdata-account:

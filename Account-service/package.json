@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "NODE_ENV=development bun run --watch index.ts",
     "build": "bun build index.ts --outdir dist",
-    "start": "NODE_ENV=production bun run dist/index.js"
+    "start": "NODE_ENV=production bun run index.ts"
   },
   "devDependencies": {
     "@types/bun": "latest"
