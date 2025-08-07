@@ -4,13 +4,13 @@ import APIError from "../utils/APIError";
 import client from "../configs/db-config";
 import { sendRPCRequest } from "../messaging/rpcClient";
 
-const cacheInvalidation = async(req:Request, accountId: string | number)=>{
-    const accountKey = `account:${accountId}`;
-    await req.redisClient.del(accountKey)
+const cacheInvalidation = async(req:Request, walletId: string | number)=>{
+    const walletKey = `wallet:${walletId}`;
+    await req.redisClient.del(walletKey)
 
-    const keys = await req.redisClient.keys("accounts:*");
+    const keys = await req.redisClient.keys("wallets:*");
     if(keys.length > 0){
-        await req.redisClient.del(accountKey)
+        await req.redisClient.del(...keys)
     }
 }
 
@@ -20,7 +20,7 @@ export const getAllAccounts = async (req: Request, res: Response, next: NextFunc
         const limit = parseInt(req.query.limit as string) || 10;
         const offset = (page - 1) * limit;
 
-        const cachedKey = `accounts:${page}:${limit}`;
+        const cachedKey = `wallets:${page}:${limit}`;
         const cachedAccounts = await req.redisClient.get(cachedKey);
 
         if (cachedAccounts) {
@@ -63,15 +63,15 @@ export const getAllAccounts = async (req: Request, res: Response, next: NextFunc
             user: users[wallet.user_id] || null,
         }));
 
-        const countQuery = `SELECT COUNT(*) AS total_accounts FROM wallets`;
+        const countQuery = `SELECT COUNT(*) AS total_wallets FROM wallets`;
         const counterResult = await client.query(countQuery);
-        const total_accounts = parseInt(counterResult.rows[0].total_accounts);
+        const total_wallets = parseInt(counterResult.rows[0].total_wallets);
 
         const result = {
             data: enrichedWallets,
             currentPage: page,
-            totalPages: Math.ceil(total_accounts / limit),
-            totalAccounts: total_accounts,
+            totalPages: Math.ceil(total_wallets / limit),
+            totalAccounts: total_wallets,
         };
 
         await req.redisClient.setex(cachedKey, 3600, JSON.stringify(result));
@@ -89,9 +89,9 @@ export const getAllAccounts = async (req: Request, res: Response, next: NextFunc
 
 export const getSingleAccount = async(req:Request, res:Response, next:NextFunction) =>{
     try {
-        const { account_id } = req.params;
+        const { wallet_id } = req.params;
 
-        const cachedKey = `account:${account_id}`
+        const cachedKey = `wallet:${wallet_id}`
         const cachedAccount = await req.redisClient.get(cachedKey)
 
         if(cachedAccount){
@@ -110,9 +110,13 @@ export const getSingleAccount = async(req:Request, res:Response, next:NextFuncti
         }
 
         const userQuery = `SELECT * FROM wallets WHERE wallet_id = $1`
-        const values = [account_id]
+        const values = [wallet_id]
 
         const userData = await client.query(userQuery, values)
+
+        if(userData.rows.length === 0 ){
+            return next (new APIError(`Wallet account does not exist`, 400))
+        }
 
         // Request User data from Auth service(via RPC)
         let user: any;
@@ -121,7 +125,8 @@ export const getSingleAccount = async(req:Request, res:Response, next:NextFuncti
 
         try {
             const userDataResponse = await sendRPCRequest("auth-service.get-user-by-id", { userId }, 5000)
-            user = userDataResponse
+            user = userDataResponse.data
+
         } catch (error) {
             logger.error(`Failed to fetch user data from Auth Service: ${error}`);
             return next(new APIError(`Failed to fetch user data from Auth Service`, 400))
@@ -145,18 +150,39 @@ export const getSingleAccount = async(req:Request, res:Response, next:NextFuncti
     }
 }
 
-export const updateAccount = async(req:Request, res:Response, next:NextFunction) =>{
+export const updateAccount = async (req: any, res: Response, next: NextFunction) => {
     try {
-        
-    } catch (error) {
-        
-    }
-}
+        const { wallet_id } = req.params;
+        const { currency } = req.body;
+        const user = req.user;
 
-export const deleteAccount = async(req:Request, res:Response, next:NextFunction) =>{
-    try {
-        
+        if (!wallet_id) {
+            return next(new APIError(`Wallet id is required`, 400));
+        }
+
+        const walletQuery = `SELECT wallet_id, user_id, currency FROM wallets WHERE wallet_id = $1`;
+        const result = await client.query(walletQuery, [wallet_id]);
+        const wallet = result.rows[0];
+
+        if (!wallet) {
+            return next(new APIError(`Wallet not found`, 404));
+        }
+
+        if (String(wallet.user_id) !== String(user.id) && user.role.toLowerCase() !== "admin") {
+            return next(new APIError(`Not allowed to perform this action`, 401));
+        }
+
+        const currencyQuery = `UPDATE wallets SET currency = $1 WHERE wallet_id = $2`;
+        await client.query(currencyQuery, [currency, wallet_id]);
+        await cacheInvalidation(req, wallet_id);
+
+        return res.status(200).json({
+            status: "success",
+            message: "Currency updated successfully"
+        });
+
     } catch (error) {
-        
+        logger.error(`Error updating currency type: ${error}`);
+        return next(new APIError(`Internal server error`, 500));
     }
-}
+};
