@@ -13,7 +13,7 @@ import APIError from "./utils/APIError"
 import { connectDatabase } from "./configs/db-config"
 import { Errorhandlers } from "./controllers/errorHandlingController"
 import { connectToRabbitMQ, consumeEvent } from "./utils/RabbitMQ"
-import { handleAccountCreation } from "./eventHandlers/wallet.events"
+import { handleAccountCreation, handleAccountDeactivation } from "./eventHandlers/wallet.events"
 import { attachRedis } from "./middlewares/attatchRedis";
 
 import accountRoute from "./routes/account.routes"
@@ -102,6 +102,8 @@ app.use(Errorhandlers);
 async function startServer() {
   await connectDatabase();
   await consumeEvent("account.created", handleAccountCreation);
+  await consumeEvent("account.deactivate", handleAccountDeactivation);
+  
   app.listen(PORT, () => {
     logger.info(`🏦 Account server is running on port : ${PORT}`);
   });

@@ -5,6 +5,7 @@ import logger from "../utils/logger";
 import APIError from "../utils/APIError";
 import client from "../configs/db-config";
 import { getUser } from "../helperFunctions/userHelper";
+import { publishEvent } from "../utils/rabbitMQ";
 
 dotenv.config()
 
@@ -145,6 +146,10 @@ export const deactivateUser = async (req: any, res: Response, next: NextFunction
       return next(new APIError("Invalid user ID provided.", 400));
     }
 
+    // get userData from the table
+    const userData = await getUser({ id: targetUserId })
+    const username = userData.username
+
     // Only the user themself or an admin can deactivate
     if (requester.role !== "admin" && requester.id !== targetUserId) {
       return next(new APIError("Unauthorized to deactivate this account.", 403));
@@ -160,6 +165,14 @@ export const deactivateUser = async (req: any, res: Response, next: NextFunction
     `;
 
     await client.query(query, [targetUserId, requester.username, false]); 
+
+    // invalidate cache
+    await invalidateUserCache(req, targetUserId)
+
+    await publishEvent("account.deactivate", {
+      targetUserId,
+      username
+    })
 
     res.status(200).json({ 
       status: "success",
