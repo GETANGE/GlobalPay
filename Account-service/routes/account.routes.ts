@@ -1,11 +1,28 @@
-import express from "express"
+import express from "express";
+import multer from "multer";
 import { getAllAccounts, getSingleAccount, updateAccount } from "../controllers/walletController";
 import { authenticateRequest, authorizeRoles } from "../middlewares/authMiddleware";
+import APIError from "../utils/APIError";
+import { national_id } from "../controllers/kyc_controller";
 
-const router = express.Router()
+const router = express.Router();
+
+const storage = multer.memoryStorage();
+
+const upload = multer({
+    storage,
+    fileFilter: (req, file, callback) =>{
+        if(!file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|PDF|pdf)$/)){
+            return callback(new APIError(`Only image and PDF are supported`, 400))
+        }else{
+            callback(null, true)
+        }
+    }
+})
 
 router.get('/stats', authenticateRequest, authorizeRoles('admin'), getAllAccounts)
 router.get('/stats/:wallet_id', authenticateRequest, getSingleAccount)
 router.patch('/wallet/:wallet_id', authenticateRequest, authorizeRoles('admin', 'user'), updateAccount)
+router.post("/kyc/national-id", authenticateRequest, upload.single("file"), national_id);
 
 export default router;

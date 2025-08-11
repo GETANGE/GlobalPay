@@ -49,6 +49,9 @@ export const publishEmailJob = async(data: EmailData)=>{
             await connectToRabbitMQ()
         }
 
+        // ensure the queue exists
+        channel.assertQueue(EMAIL_QUEUE, { durable : true});
+        
         channel.sendToQueue(EMAIL_QUEUE, Buffer.from(JSON.stringify(data)), {
             persistent: true
         });
