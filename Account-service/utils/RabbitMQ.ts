@@ -6,11 +6,12 @@ dotenv.config();
 
 let connection = null;
 let channel: any =null
+let DocsQueue = 'kyc_queue'
 
 const EXCHANGE_NAME: string ='global_pay_events'
 
 
-let env = process.env.RABBITMQ_URL || "development" 
+let env = process.env.RABBITMQ_URL_PROD || "development" 
 
 const rabbitMQ_url = 
     env === "production"
@@ -28,6 +29,28 @@ export const connectToRabbitMQ = async()=>{
         return channel;
     } catch (error) {
         logger.error(`Error connecting to RabbitMQ : ${error}`)
+    }
+}
+
+export const publish_kyc_job = async (data:any) =>{
+    try {
+        if(!channel){
+          await connectToRabbitMQ()
+        }
+
+        // ensure the queue exists
+        channel.assertQueue(DocsQueue, { durable: true });
+
+        // convert the payload to a string
+        const messageBuffer = Buffer.from(JSON.stringify(data));
+
+        // send to queue
+        channel.sendToQueue(DocsQueue, Buffer.from(messageBuffer), {
+          persistent : true
+        })
+        logger.info(`KYC job added to queue .`)
+    } catch (error) {
+      logger.error(`Error adding KYC job to queue`)
     }
 }
 
