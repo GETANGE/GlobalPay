@@ -1,16 +1,7 @@
-
-
-// kra_pin
-// national_id
-// bank_proof
-// passport_photo
-//
-
 import type{ Request, Response, NextFunction } from "express";
-import sharp from "sharp";
 import APIError from "../utils/APIError";
 import logger from "../utils/logger";
-import { publish_kyc_job } from "../utils/RabbitMQ";
+import { publish_kyc_job_banking, publish_kyc_job_id, publish_kyc_job_kra, publish_kyc_job_passport } from "../utils/RabbitMQ";
 
 export const national_id = async (req: any, res: Response, next: NextFunction) => {
   try {
@@ -21,28 +12,15 @@ export const national_id = async (req: any, res: Response, next: NextFunction) =
       return next(new APIError(`Please provide your national ID`, 400));
     }
 
-    // Process image in memory
-    const processedImage = await sharp(file.buffer)
-      .resize({
-        width: 1200,
-        height: 800,
-        fit: "inside",
-        withoutEnlargement: true
-      })
-      .rotate()
-      .toFormat("jpeg", { quality: 80 })
-      .toBuffer();
+    let data = { file, user };
 
-    // Prepare data for the queue
-    const kycData = {
-      userId: user.id,
-      documentType: "NATIONAL_ID",
-      fileBuffer: processedImage,
-      mimeType: "image/jpeg"
-    };
-
-    // Push job to queue for verification + cloudinary upload
-    await publish_kyc_job(kycData);
+    try {
+      await publish_kyc_job_id(data);
+    } catch (error) {
+        logger.error("Failed to push to queue", error);
+        console.log(error)
+        return next(new APIError("Failed to push to queue", 500));
+    }
 
     res.status(200).json({
         status: "success",
@@ -55,3 +33,92 @@ export const national_id = async (req: any, res: Response, next: NextFunction) =
   }
 };
 
+export const passport = async (req: any, res: Response, next: NextFunction) => {
+  try {
+    const file = req.file;
+    const user = req.user;
+
+    if (!file) {
+      return next(new APIError(`Please provide your passport`, 400));
+    }
+
+    let data = { file, user };
+
+    try {
+      await publish_kyc_job_passport(data);
+    } catch (error) {
+        logger.error("Failed to push to queue", error);
+        console.log(error)
+        return next(new APIError("Failed to push to queue", 500));
+    }
+
+    res.status(200).json({
+        status: "success",
+        message: "Passport docs received and queued for verification"
+    });
+
+  } catch (error) {
+    logger.error(`Error processing passport docs: ${error}`);
+    return next(new APIError(`Internal server error`, 500));
+  }
+};
+
+export const kra = async (req: any, res: Response, next: NextFunction) => {
+  try {
+    const file = req.file;
+    const user = req.user;
+
+    if (!file) {
+      return next(new APIError(`Please provide your kra pin docs`, 400));
+    }
+
+    let data = { file, user };
+
+    try {
+      await publish_kyc_job_kra(data);
+    } catch (error) {
+        logger.error("Failed to push to queue", error);
+        console.log(error)
+        return next(new APIError("Failed to push to queue", 500));
+    }
+
+    res.status(200).json({
+        status: "success",
+        message: "KRA docs received and queued for verification"
+    });
+
+  } catch (error) {
+    logger.error(`Error processing KRA docs: ${error}`);
+    return next(new APIError(`Internal server error`, 500));
+  }
+};
+
+export const banking = async (req: any, res: Response, next: NextFunction) => {
+  try {
+    const file = req.file;
+    const user = req.user;
+
+    if (!file) {
+      return next(new APIError(`Please provide your proof of banking docs`, 400));
+    }
+
+    let data = { file, user };
+
+    try {
+      await publish_kyc_job_banking(data);
+    } catch (error) {
+        logger.error("Failed to push to queue", error);
+        console.log(error)
+        return next(new APIError("Failed to push to queue", 500));
+    }
+
+    res.status(200).json({
+        status: "success",
+        message: "Banking docs received and queued for verification"
+    });
+
+  } catch (error) {
+    logger.error(`Error processing Banking docs: ${error}`);
+    return next(new APIError(`Internal server error`, 500));
+  }
+};

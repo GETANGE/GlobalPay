@@ -17,13 +17,14 @@ import { handleAccountCreation, handleAccountDeactivation } from "./eventHandler
 import { attachRedis } from "./middlewares/attatchRedis";
 
 import accountRoute from "./routes/account.routes"
+import "./utils/cloudinary"
 
 dotenv.config()
 
 const PORT = process.env.PORT || 3002
 const app = express();
 
-app.use(express.json())
+app.use(express.json({ limit: '10mb' })); 
 app.use(helmet())
 app.use(morgan("dev"))
 app.use(cors(corsOptions))
