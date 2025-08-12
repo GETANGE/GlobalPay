@@ -1,12 +1,12 @@
 import amqp from "amqplib"
 import dotenv from "dotenv"
 import logger from "./logger";
+import { QUEUES } from "./queue";
 
 dotenv.config();
 
 let connection = null;
 let channel: any =null
-let DocsQueue = 'kyc_queue'
 
 const EXCHANGE_NAME: string ='global_pay_events'
 
@@ -24,7 +24,7 @@ export const connectToRabbitMQ = async()=>{
         channel = await connection.createChannel();
 
         await channel.assertExchange(EXCHANGE_NAME, 'topic', { durable: true });
-        logger.info(`🐇 Connected to RabbitMQ..`);
+        // logger.info(`🐇 Connected to RabbitMQ..`);
 
         return channel;
     } catch (error) {
@@ -32,23 +32,53 @@ export const connectToRabbitMQ = async()=>{
     }
 }
 
-export const publish_kyc_job = async (data:any) =>{
+const kyc_job = async(data:any, queue: string )=>{
     try {
         if(!channel){
           await connectToRabbitMQ()
         }
 
-        // ensure the queue exists
-        channel.assertQueue(DocsQueue, { durable: true });
+        channel.assertQueue(queue, { durable: true });
 
         // convert the payload to a string
         const messageBuffer = Buffer.from(JSON.stringify(data));
 
-        // send to queue
-        channel.sendToQueue(DocsQueue, Buffer.from(messageBuffer), {
+        channel.sendToQueue(queue, Buffer.from(messageBuffer), {
           persistent : true
         })
         logger.info(`KYC job added to queue .`)
+    } catch (error) {
+      logger.error(`Error adding KYC job to queue`)
+    }
+}
+
+export const publish_kyc_job_id = async (data:any) =>{
+    try {
+      await kyc_job(data, QUEUES.identity)
+    } catch (error) {
+      logger.error(`Error adding KYC job to queue`)
+    }
+}
+
+export const publish_kyc_job_passport = async (data:any) =>{
+    try {
+      await kyc_job(data, QUEUES.passport)
+    } catch (error) {
+      logger.error(`Error adding KYC job to queue`)
+    }
+}
+
+export const publish_kyc_job_banking = async (data:any) =>{
+    try {
+      await kyc_job(data, QUEUES.banking)
+    } catch (error) {
+      logger.error(`Error adding KYC job to queue`)
+    }
+}
+
+export const publish_kyc_job_kra = async (data:any) =>{
+    try {
+      await kyc_job(data, QUEUES.kra)
     } catch (error) {
       logger.error(`Error adding KYC job to queue`)
     }
