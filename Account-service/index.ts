@@ -12,7 +12,7 @@ import { corsOptions } from "./configs/cors-config"
 import APIError from "./utils/APIError"
 import { connectDatabase } from "./configs/db-config"
 import { Errorhandlers } from "./controllers/errorHandlingController"
-import { connectToRabbitMQ, consumeEvent } from "./utils/RabbitMQ"
+import { consumeEvent } from "./utils/RabbitMQ"
 import { handleAccountCreation, handleAccountDeactivation } from "./eventHandlers/wallet.events"
 import { attachRedis } from "./middlewares/attatchRedis";
 
@@ -30,12 +30,11 @@ app.use(morgan("dev"))
 app.use(cors(corsOptions))
 
 // initialize redis
-const env = process.env.NODE_ENV || "development";
 
 const redis_url =
-    env === "production"
-    ? process.env.REDIS_URL_PROD
-    : process.env.REDIS_URL_DEV;
+    process.env.NODE_ENV === "production"
+      ? process.env.REDIS_URL_PROD
+      : process.env.REDIS_URL_DEV;
 
 const redisClient = new Redis( redis_url  as string);
 

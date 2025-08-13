@@ -1,7 +1,9 @@
-import type{ Request, Response, NextFunction } from "express";
+import{ type Request, type Response, type NextFunction, text } from "express";
 import APIError from "../utils/APIError";
 import logger from "../utils/logger";
 import { publish_kyc_job_banking, publish_kyc_job_id, publish_kyc_job_kra, publish_kyc_job_passport } from "../utils/RabbitMQ";
+import client from "../configs/db-config";
+import { calculateKycTier } from "../helpers/updateKYC";
 
 export const national_id = async (req: any, res: Response, next: NextFunction) => {
   try {
@@ -120,5 +122,85 @@ export const banking = async (req: any, res: Response, next: NextFunction) => {
   } catch (error) {
     logger.error(`Error processing Banking docs: ${error}`);
     return next(new APIError(`Internal server error`, 500));
+  }
+};
+
+export const  kyc_approval_admin = async(req: any, res: Response, next: NextFunction)=>{
+  try {
+    const { docs_id } = req.params;
+    const user = req.user
+    // get kyc_docs from database
+    const query ={
+      text: `SELECT * FROM kyc_documents WHERE id = $1`,
+      values:[docs_id]
+    }
+    const result = await client.query(query)
+
+    if(result.rows.length < 0){
+      return next(new APIError(`This kyc document does not exist`, 400))
+    }
+
+    const doc = result.rows[0];
+    const newTier = calculateKycTier(doc);
+
+    // add kyc tier to the document
+    const updateQuery = {
+      text: `UPDATE kyc_documents SET kyc_status = $1, kyc_tier = $2, verified_at = NOW() WHERE id = $3 RETURNING *;`,
+      values: ['verified', newTier, docs_id]
+    }
+
+    const updated = await client.query(updateQuery);
+
+    logger.info(`KYC document ${docs_id} approved with tier ${newTier} by admin ${user.id}`);
+
+    res.status(200).json({
+      status:"success",
+      message: `KYC document approved successfully`,
+      document: updated.rows[0]
+    })
+  } catch (error) {
+    logger.error(`Error upadating KYC status`);
+    return next(new APIError(`Internal server error`, 500));
+  }
+}
+
+export const kyc_rejection_admin = async (req: any, res: Response, next: NextFunction) => {
+  try {
+    const { docs_id } = req.params;
+    const user = req.user;
+
+    const query = {
+      text: `SELECT * FROM kyc_documents WHERE id = $1`,
+      values: [docs_id]
+    };
+    const result = await client.query(query);
+
+    if (result.rows.length === 0) {
+      return next(new APIError(`This KYC document does not exist`, 404));
+    }
+
+    const updateQuery = {
+      text: `
+        UPDATE kyc_documents
+        SET kyc_status = $1,
+            kyc_tier = $2,
+            verified_at = NULL
+        WHERE id = $3
+        RETURNING *;
+      `,
+      values: ['failed', 0, docs_id]
+    };
+
+    const updated = await client.query(updateQuery);
+
+    logger.warn(`KYC document ${docs_id} rejected by admin ${user.id}`);
+
+    return res.status(200).json({
+      message: 'KYC document rejected successfully',
+      document: updated.rows[0]
+    });
+  } catch (error:any) {
+    logger.error(`Error rejecting KYC: ${error.message}`);
+    return next(new APIError(`Failed to reject KYC`, 500));
   }
 };

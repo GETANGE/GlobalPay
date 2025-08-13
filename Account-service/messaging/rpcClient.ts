@@ -26,7 +26,9 @@ export const sendRPCRequest = async ( routingKey: string, message: any, timeoutM
 
             const cleanup = (queue: string) => {
                 clearTimeout(timer);
-                channel.deleteQueue(queue).catch(() => {});
+                channel.deleteQueue(queue).catch(() => {
+                    logger.error(`${queue} deleted successfully`)
+                });
             };
 
             const consumerTag:any = await channel.consume( replyQueue.queue, (msg) => {
