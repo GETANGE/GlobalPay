@@ -12,12 +12,10 @@ const EXCHANGE_NAME: string ='global_pay_events'
 const EMAIL_QUEUE: string = "email_queue"
 const SMS_QUEUE: string = "sms_queue"
 
-let env = process.env.RABBITMQ_URL || "development" 
-
-const rabbitMQ_url = 
-    env === "production"
+const rabbitMQ_url =
+    process.env.NODE_ENV === "production"
         ? process.env.RABBITMQ_URL_PROD
-        : process.env.RABBITMQ_URL_DEV
+        : process.env.RABBITMQ_URL_DEV;
 
 export const connectToRabbitMQ = async()=>{
     try {
@@ -92,6 +90,8 @@ export const publishEvent = async(routingKey: string, message: any) => {
             await connectToRabbitMQ()
         }
 
+        await channel.assertExchange(EXCHANGE_NAME, "topic", { durable: true });
+
         channel.publish(EXCHANGE_NAME, routingKey, Buffer.from(JSON.stringify(message)));
         logger.info(`Event published: ${routingKey}`)
     } catch (error) {
@@ -104,6 +104,9 @@ export const consumeEvent = async(routingKey: string, callback:any)=>{
         if(!channel){
             await connectToRabbitMQ()
         }
+
+        await channel.assertExchange(EXCHANGE_NAME, "topic", { durable: true });
+        
         const queue = await channel.assertQueue("", { exclusive: true})
         await channel.bindQueue(queue.queue, EXCHANGE_NAME, routingKey)
         channel.consume(queue.queue, (message:any)=>{

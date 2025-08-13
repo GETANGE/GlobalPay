@@ -42,12 +42,11 @@ app.use(express.json());
 app.use(morgan("dev"));
 app.use(cors(corsOptions));
 
-const env = process.env.NODE_ENV || "development";
 
 const redisUrl =
-  env === "production"
-    ? process.env.REDIS_URL_PROD
-    : process.env.REDIS_URL_DEV;
+    process.env.NODE_ENV === "production"
+        ? process.env.REDIS_URL_PROD
+        : process.env.REDIS_URL_DEV;
 
 const redisClient = new Redis(redisUrl as string);
 

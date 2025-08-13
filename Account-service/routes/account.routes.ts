@@ -3,7 +3,7 @@ import multer from "multer";
 import { getAllAccounts, getSingleAccount, updateAccount } from "../controllers/walletController";
 import { authenticateRequest, authorizeRoles } from "../middlewares/authMiddleware";
 import APIError from "../utils/APIError";
-import { banking, kra, national_id, passport } from "../controllers/kyc_controller";
+import { banking, kra, kyc_approval_admin, kyc_rejection_admin, national_id, passport } from "../controllers/kyc_controller";
 
 const router = express.Router();
 
@@ -30,5 +30,9 @@ router.post("/kyc/national-id", authenticateRequest, upload.single("file"), nati
 router.post("/kyc/passport", authenticateRequest, upload.single("file"), passport);
 router.post("/kyc/banking", authenticateRequest, upload.single("file"), banking);
 router.post("/kyc/kra", authenticateRequest, upload.single("file"), kra);
+
+router.patch('/kyc/admin/approve', authenticateRequest, authorizeRoles('admin'), kyc_approval_admin);
+
+router.patch('/kyc/admin/reject', authenticateRequest, authorizeRoles('admin'), kyc_rejection_admin);
 
 export default router;

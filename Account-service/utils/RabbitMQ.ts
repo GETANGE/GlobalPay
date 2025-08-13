@@ -5,26 +5,34 @@ import { QUEUES } from "./queue";
 
 dotenv.config();
 
-let connection = null;
-let channel: any =null
+let connection: any;
+let channel: any;
 
 const EXCHANGE_NAME: string ='global_pay_events'
+const RECONNECT_INTERVAL = 5000;
 
-
-let env = process.env.RABBITMQ_URL_PROD || "development" 
-
-const rabbitMQ_url = 
-    env === "production"
+const rabbitMQ_url =
+    process.env.NODE_ENV === "production"
         ? process.env.RABBITMQ_URL_PROD
-        : process.env.RABBITMQ_URL_DEV
+        : process.env.RABBITMQ_URL_DEV;
+
 
 export const connectToRabbitMQ = async()=>{
     try {
-        connection = await amqp.connect( rabbitMQ_url as string);
-        channel = await connection.createChannel();
+        connection = await amqp.connect(rabbitMQ_url as string);
 
-        await channel.assertExchange(EXCHANGE_NAME, 'topic', { durable: true });
-        // logger.info(`🐇 Connected to RabbitMQ..`);
+        connection.on("error", (err:any) => {
+            logger.error("RabbitMQ connection error:", err);
+        });
+
+        connection.on("close", () => {
+            logger.warn("RabbitMQ connection closed. Reconnecting...");
+
+            setTimeout(connectToRabbitMQ, RECONNECT_INTERVAL);
+        });
+
+        channel = await connection.createChannel();
+        logger.info(`Connected to rabbitMQ: ${rabbitMQ_url}`)
 
         return channel;
     } catch (error) {
@@ -32,70 +40,49 @@ export const connectToRabbitMQ = async()=>{
     }
 }
 
-const kyc_job = async(data:any, queue: string )=>{
+const kyc_job = async (data: any, queue: string) => {
     try {
-        if(!channel){
-          await connectToRabbitMQ()
+        if (!channel) {
+            channel = await connectToRabbitMQ();
         }
 
-        channel.assertQueue(queue, { durable: true });
+        await channel.assertQueue(queue, { durable: true });
 
-        // convert the payload to a string
+        // convert payload to buffer once
         const messageBuffer = Buffer.from(JSON.stringify(data));
 
-        channel.sendToQueue(queue, Buffer.from(messageBuffer), {
-          persistent : true
-        })
-        logger.info(`KYC job added to queue .`)
-    } catch (error) {
-      logger.error(`Error adding KYC job to queue`)
-    }
-}
+        channel.sendToQueue(queue, messageBuffer, {
+            persistent: true
+        });
 
-export const publish_kyc_job_id = async (data:any) =>{
-    try {
-      await kyc_job(data, QUEUES.identity)
-    } catch (error) {
-      logger.error(`Error adding KYC job to queue`)
+        logger.info(`KYC job added to queue: ${queue}`);
+    } catch (error:any) {
+        logger.error(`Error adding KYC job to queue: ${queue} - ${error.message}`);
     }
-}
+};
 
-export const publish_kyc_job_passport = async (data:any) =>{
-    try {
-      await kyc_job(data, QUEUES.passport)
-    } catch (error) {
-      logger.error(`Error adding KYC job to queue`)
+export const publish_kyc_job_id = (data: any) => kyc_job(data, QUEUES.identity);
+export const publish_kyc_job_passport = (data: any) => kyc_job(data, QUEUES.passport);
+export const publish_kyc_job_banking = (data: any) => kyc_job(data, QUEUES.banking);
+export const publish_kyc_job_kra = (data: any) => kyc_job(data, QUEUES.kra);
+
+export const publishEvent = async (routingKey: string, message: any) => {
+  try {
+    if (!channel) {
+      await connectToRabbitMQ();
     }
-}
 
-export const publish_kyc_job_banking = async (data:any) =>{
-    try {
-      await kyc_job(data, QUEUES.banking)
-    } catch (error) {
-      logger.error(`Error adding KYC job to queue`)
-    }
-}
+    await channel.assertExchange(EXCHANGE_NAME, "topic", {
+      durable: true,
+    });
 
-export const publish_kyc_job_kra = async (data:any) =>{
-    try {
-      await kyc_job(data, QUEUES.kra)
-    } catch (error) {
-      logger.error(`Error adding KYC job to queue`)
-    }
-}
+    channel.publish(EXCHANGE_NAME, routingKey, Buffer.from(JSON.stringify(message)));
 
-export const publishEvent = async(routingKey: string, message: any) => {
-    try {
-        if(!channel){
-            await connectToRabbitMQ()
-        }
-
-        channel.publish(EXCHANGE_NAME, routingKey, Buffer.from(JSON.stringify(message)));
-        logger.info(`Event published: ${routingKey}`)
-    } catch (error) {
-        logger.error(`Error publishing an Event : ${error}`)
-    }
-}
+    logger.info(`📤 Event published: ${routingKey}`);
+  } catch (error) {
+    logger.error(`Error publishing an Event: ${error}`);
+  }
+};
 
 export const consumeEvent = async (routingKey: string, callback: (msg: any) => Promise<void>) => {
   try {
@@ -103,10 +90,12 @@ export const consumeEvent = async (routingKey: string, callback: (msg: any) => P
       await connectToRabbitMQ();
     }
 
+    await channel.assertExchange(EXCHANGE_NAME, "topic", { durable: true });
+    
     const queue = await channel.assertQueue("", { exclusive: true });
     await channel.bindQueue(queue.queue, EXCHANGE_NAME, routingKey);
 
-    channel.consume(queue.queue, async (message: any) => {
+    channel.consume(queue.queue, async (message: { content: { toString: () => string; }; } | null) => {
       if (message !== null) {
         try {
           const content = JSON.parse(message.content.toString());
@@ -124,6 +113,5 @@ export const consumeEvent = async (routingKey: string, callback: (msg: any) => P
     logger.error(`Error consuming an event: ${routingKey}`, error);
   }
 };
-
 
 export default channel;
