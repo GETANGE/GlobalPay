@@ -24,7 +24,7 @@ services:
       start_period: 10s
 
   # ===================================
-  # Postgres for Authentication Service
+  # Postgres for Account Service
   # ===================================
   postgres-account:
     image: postgres:15
@@ -46,7 +46,6 @@ services:
       timeout: 5s
       retries: 5
       start_period: 10s
-
 
   # =========================
   # API Gateway Service
@@ -153,7 +152,7 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
-    healthcheck:  # Added healthcheck
+    healthcheck:
       test: ["CMD", "rabbitmq-diagnostics", "status"]
       interval: 30s
       timeout: 10s

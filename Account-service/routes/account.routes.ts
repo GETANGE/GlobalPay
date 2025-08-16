@@ -31,8 +31,8 @@ router.post("/kyc/passport", authenticateRequest, upload.single("file"), passpor
 router.post("/kyc/banking", authenticateRequest, upload.single("file"), banking);
 router.post("/kyc/kra", authenticateRequest, upload.single("file"), kra);
 
-router.patch('/kyc/admin/approve', authenticateRequest, authorizeRoles('admin'), kyc_approval_admin);
+router.patch('/kyc/admin/approve/:docs_id', authenticateRequest, authorizeRoles('admin'), kyc_approval_admin);
 
-router.patch('/kyc/admin/reject', authenticateRequest, authorizeRoles('admin'), kyc_rejection_admin);
+router.patch('/kyc/admin/reject/:docs_id', authenticateRequest, authorizeRoles('admin'), kyc_rejection_admin);
 
 export default router;

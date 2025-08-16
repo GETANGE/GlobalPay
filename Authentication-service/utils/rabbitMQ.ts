@@ -8,6 +8,7 @@ let connection = null;
 let channel: any =null
 
 const EXCHANGE_NAME: string ='global_pay_events'
+const RECONNECT_INTERVAL = 5000;
 
 const EMAIL_QUEUE: string = "email_queue"
 const SMS_QUEUE: string = "sms_queue"
@@ -17,13 +18,23 @@ const rabbitMQ_url =
         ? process.env.RABBITMQ_URL_PROD
         : process.env.RABBITMQ_URL_DEV;
 
+
 export const connectToRabbitMQ = async()=>{
     try {
-        connection = await amqp.connect( rabbitMQ_url as string);
-        channel = await connection.createChannel();
+        connection = await amqp.connect(rabbitMQ_url as string);
 
-        await channel.assertExchange(EXCHANGE_NAME, 'topic', { durable: true });
-        // logger.info(`🐇 Connected to RabbitMQ..`);
+        connection.on("error", (err:any) => {
+            logger.error("RabbitMQ connection error:", err);
+        });
+
+        connection.on("close", () => {
+            logger.warn("RabbitMQ connection closed. Reconnecting...");
+
+            setTimeout(connectToRabbitMQ, RECONNECT_INTERVAL);
+        });
+
+        channel = await connection.createChannel();
+        logger.info(`Connected to rabbitMQ: ${rabbitMQ_url}`)
 
         return channel;
     } catch (error) {
