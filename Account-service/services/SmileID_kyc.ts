@@ -1,8 +1,8 @@
 import dotenv from "dotenv";
 import { IDApi, WebApi, Signature } from "smile-identity-core";
-import logger from "./logger";
 import type { Channel } from "amqplib";
-import { connectToRabbitMQ } from "./RabbitMQ";
+import logger from "../utils/logger";
+import { connectToRabbitMQ } from "../utils/RabbitMQ";
 
 dotenv.config();
 
