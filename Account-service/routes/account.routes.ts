@@ -4,6 +4,7 @@ import { getAllAccounts, getSingleAccount, updateAccount } from "../controllers/
 import { authenticateRequest, authorizeRoles } from "../middlewares/authMiddleware";
 import APIError from "../utils/APIError";
 import { banking, kra, kyc_approval_admin, kyc_rejection_admin, national_id, passport } from "../controllers/kyc_controller";
+import { getAllLinkedAccounts, getSingleLinkedAccount, linkAccount_token } from "../controllers/tokenController";
 
 const router = express.Router();
 
@@ -32,7 +33,10 @@ router.post("/kyc/banking", authenticateRequest, upload.single("file"), banking)
 router.post("/kyc/kra", authenticateRequest, upload.single("file"), kra);
 
 router.patch('/kyc/admin/approve/:docs_id', authenticateRequest, authorizeRoles('admin'), kyc_approval_admin);
-
 router.patch('/kyc/admin/reject/:docs_id', authenticateRequest, authorizeRoles('admin'), kyc_rejection_admin);
+
+router.get('/linked/accounts', authenticateRequest, authorizeRoles('admin'), getAllLinkedAccounts);
+router.get('linked/account/:accountId', authenticateRequest, getSingleLinkedAccount)
+router.post('/linked/account', authenticateRequest, linkAccount_token)
 
 export default router;
