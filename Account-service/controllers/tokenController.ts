@@ -2,18 +2,18 @@ import type {Request, Response, NextFunction } from "express";
 import logger from "../utils/logger";
 import APIError from "../utils/APIError";
 import { selfHostedVault } from "../services/selfHostedVault";
-import { validateCardNumber, validateCVV, validateExpirationDate } from "../helpers/cryptoHelper";
+import { linkAccount, validateCardNumber, validateCVV, validateExpirationDate } from "../helpers/cryptoHelper";
 import client from "../configs/db-config";
 
-const cacheInvalidation = async(req:Request, tokenId: string )=>{
-    const tokenKey = `token:${tokenId}`
-    await req.redisClient.del(tokenKey)
+const cacheInvalidation = async (req: Request, tokenId: string) => {
+    const tokenKey = `token:${tokenId}`;
+    await req.redisClient.del(tokenKey);
 
-    const keys = await req.redisClient.keys("tokens:*");
-    if(keys){
-        await req.redisClient.del(...keys)
+    const keys = await req.redisClient.keys("token:*"); // singular to match your naming
+    if (keys.length > 0) {
+        await req.redisClient.del(...keys);
     }
-}
+};
 
 export const getAllLinkedAccounts = async(req:Request, res:Response, next:NextFunction)=>{
     try {
@@ -64,9 +64,11 @@ export const getAllLinkedAccounts = async(req:Request, res:Response, next:NextFu
     }
 }
 
-export const linkAccount_token = async (req: Request, res: Response, next: NextFunction) => {
+export const linkAccount_token = async (req: any, res: Response, next: NextFunction) => {
     try {
-        const { number, exp, cvv } = req.body;
+        const { number, exp, cvv, type } = req.body;
+
+        const user_id = req.user
 
         if (!number || !exp || !cvv) {
             return next(new APIError('Card number, expiration date and CVV are required', 400));
@@ -90,12 +92,17 @@ export const linkAccount_token = async (req: Request, res: Response, next: NextF
             return next(new APIError(`Validation failed: ${validationErrors.join(', ')}`, 400));
         }
 
-        // Tokenize if validation passes
-        const tokenId = await selfHostedVault.tokenizeCard({
+        const cardData = {
             number: number.replace(/\s+/g, ''), // Remove spaces
             exp,
             cvv
-        });
+        }
+
+        // Tokenize if validation passes
+        const tokenId = await selfHostedVault.tokenizeCard(cardData);
+
+        // Insert into linked_accounts table
+        await linkAccount(user_id.id, type, tokenId)
 
         // invalidate the cache
         await cacheInvalidation(req, tokenId)
@@ -113,9 +120,79 @@ export const linkAccount_token = async (req: Request, res: Response, next: NextF
 
 export const getSingleLinkedAccount = async(req:Request, res:Response, next:NextFunction)=>{
     try {
-        
+        const { accountId } = req.params;
+
+        if(!accountId){
+            return next(new APIError(`AccountId is required`, 400))
+        }
+
+        const cachedKey = `token:${accountId}`;
+        const cachedToken = await req.redisClient.get(cachedKey);
+
+        if(cachedToken){
+            try {
+                const parsed = JSON.parse(cachedToken);
+
+                return res.status(200).json({
+                    status:"success",
+                    data: parsed,
+                    fromCache: true
+                })
+            } catch (error) {
+                logger.error(`Error fetching from cache`)
+                return next(new APIError(`Error fetching from the cache`, 400))
+            }
+        }
+
+        const tokenQuery= `SELECT * FROM linked_accounts WHERE id=$1`
+        const values = [accountId]
+
+        const result = await client.query(tokenQuery, values)
+
+        if(result.rows.length === 0){
+            return next(new APIError(`Linked account not found`, 404))
+        }
+
+        // cache the result
+        await req.redisClient.setex(cachedKey, 3600, JSON.stringify(result.rows[0]))
+        // send response
+
+        res.status(200).json({
+            status:"success",
+            data: result,
+            fromCache: false
+        })
+
     } catch (error) {
         logger.error(`Error occured while getting a single account`, error)
         return next(new APIError(`Internal server error`, 500))
     }
 }
+
+export const updateLinkedAccounts = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { accountId } = req.params;
+    const { number, exp, cvv } = req.body;
+
+    if (!accountId) {
+      return next(new APIError(`AccountId is required`, 400));
+    }
+
+    if (!number && !exp && !cvv) {
+      return next(new APIError(`At least one field (number, exp, cvv) is required to update`, 400));
+    }
+
+
+    // invalidate cache
+    const cachedKey = `token:${accountId}`;
+    await req.redisClient.del(cachedKey);
+
+    return res.status(200).json({
+      status: "success"
+    });
+
+  } catch (error) {
+    logger.error(`Error occurred while updating linked account`, error);
+    return next(new APIError(`Internal server error`, 500));
+  }
+};

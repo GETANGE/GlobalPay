@@ -1,12 +1,12 @@
 import crypto from "crypto";
 import dotenv from "dotenv";
 import logger from "../utils/logger";
-import { selfHostedVault as vault } from "../services/selfHostedVault";
 import client from "../configs/db-config";
 
 dotenv.config()
 
 const ALGO = "aes-256-gcm";
+const VAULT_KEY = process.env.VAULT_SECRET_KEY as string
 
 export const encryptData = async (data: string, key: string): Promise<{ encrypted: string; iv: string; tag: string }> => {
     try {
@@ -48,9 +48,8 @@ export const decryptData = async(encrypted: string, iv: string, tag:string, VAUL
     }
 }
 
-export const linkAccount = async(userId: string, cardData:any, type: "CARD" | "BANK") =>{
+export const linkAccount = async(userId: string, type: "CARD" | "BANK", tokenId: string) =>{
     try {
-        const tokenId = await vault.tokenizeCard(cardData);
 
         await client.query('BEGIN');
         await client.query({
@@ -65,6 +64,65 @@ export const linkAccount = async(userId: string, cardData:any, type: "CARD" | "B
         await client.query('ROLLBACK').catch(() => {});
         logger.error(`Linking accounts failed: ${error}`);
         throw new Error("Failed to link account");
+    }
+}
+
+const updateSQL = async()=>{
+    try {
+        // update both tables(Vault_tokens and linked_accounts) with optional table attributes
+    } catch (error) {
+        await client.query("ROLLBACK").catch(() =>{})
+        logger.error(`Error updating card data (SQL)`, error)
+    }
+}
+
+// update card data
+export const updateCardData = async(number?: any, exp?:string, cvv?:string, accountId?: number)=>{
+    try {
+        const validationErrors: string[] = [];
+
+        if(number){
+            // validate the card number
+            validateCardNumber(number);
+            validationErrors.push(`Invalid card number`);
+        }
+        if(exp){
+            // validate the expiration date
+            validateExpirationDate(exp)
+            validationErrors.push(`Invalid or expired card`)
+        }
+
+        if(cvv){
+            validateCVV(cvv, number)
+            validationErrors.push(`Invalid security code`)
+        }
+
+        // check if the card data exists first
+        const cardQuery ={
+            text:`SELECT * FROM linked_accounts WHERE id = $1`,
+            values: [accountId]
+        }
+
+        const result = await client.query(cardQuery);
+
+        // get the related token from the valt_token table
+        const vaultQuery = {
+            text: `SELECT * FROM vault_tokens WHERE token_id = $1`,
+            values: [result.rows[0].token_id]
+        }
+
+        const vaultResult = await client.query(vaultQuery)
+
+        // decrypt that Encrypted Data
+        const { encrypted, iv, tag } = JSON.parse(vaultResult.rows[0].encrypted_data);
+
+        const decryptedData = await decryptData(encrypted, iv, tag, VAULT_KEY);
+
+        const cardData = JSON.parse(decryptedData)
+
+    } catch (error) {
+        logger.error(`Failed to update card data`, error)
+        throw new Error("Failed to update card data")
     }
 }
 
