@@ -68,7 +68,7 @@ export const linkAccount_token = async (req: any, res: Response, next: NextFunct
     try {
         const { number, exp, cvv, type } = req.body;
 
-        const user_id = req.user
+        const user = req.user
 
         if (!number || !exp || !cvv) {
             return next(new APIError('Card number, expiration date and CVV are required', 400));
@@ -102,7 +102,7 @@ export const linkAccount_token = async (req: any, res: Response, next: NextFunct
         const tokenId = await selfHostedVault.tokenizeCard(cardData);
 
         // Insert into linked_accounts table
-        await linkAccount(user_id.id, type, tokenId)
+        await linkAccount(user.id, type, tokenId)
 
         // invalidate the cache
         await cacheInvalidation(req, tokenId)
@@ -169,30 +169,60 @@ export const getSingleLinkedAccount = async(req:Request, res:Response, next:Next
     }
 }
 
-export const updateLinkedAccounts = async (req: Request, res: Response, next: NextFunction) => {
+export const updateLinkedAccounts = async (req: any, res: Response, next: NextFunction) => {
   try {
     const { accountId } = req.params;
-    const { number, exp, cvv } = req.body;
+    const { number, exp, cvv, type } = req.body;
+    const user = req.user; 
 
-    if (!accountId) {
-      return next(new APIError(`AccountId is required`, 400));
+    if (!number || !exp || !cvv) {
+      return next(new APIError("Card number, expiration date and CVV are required", 400));
     }
 
-    if (!number && !exp && !cvv) {
-      return next(new APIError(`At least one field (number, exp, cvv) is required to update`, 400));
+    // validate type
+    if (!["CARD", "BANK"].includes(type)) {
+      return next(new APIError("Invalid account type", 400));
     }
 
+    const validationErrors: string[] = [];
 
-    // invalidate cache
-    const cachedKey = `token:${accountId}`;
-    await req.redisClient.del(cachedKey);
+    if (!validateCardNumber(number)) {
+      validationErrors.push("Invalid card number");
+    }
 
-    return res.status(200).json({
-      status: "success"
+    if (!validateExpirationDate(exp)) {
+      validationErrors.push("Invalid or expired card");
+    }
+
+    if (!validateCVV(cvv, number)) {
+      validationErrors.push("Invalid security code");
+    }
+
+    if (validationErrors.length > 0) {
+      return next(new APIError(`Validation failed: ${validationErrors.join(", ")}`, 400));
+    }
+
+    const cardData = {
+      number: number.replace(/\s+/g, ""), // strip spaces
+      exp,
+      cvv,
+    };
+
+    // update / insert tokenized card data
+    const tokenId = await selfHostedVault.tokenizeCard(cardData, user.id);
+
+    // update / insert linked account
+    await linkAccount(user.id, type, tokenId);
+
+    // repopulate cache with fresh data
+    await cacheInvalidation(req, tokenId)
+
+    res.status(200).json({
+      status: "success",
+      updatedToken: tokenId,
     });
-
   } catch (error) {
-    logger.error(`Error occurred while updating linked account`, error);
-    return next(new APIError(`Internal server error`, 500));
+    logger.error("Error occurred while updating linked account", error);
+    return next(new APIError("Internal server error", 500));
   }
 };
