@@ -48,83 +48,42 @@ export const decryptData = async(encrypted: string, iv: string, tag:string, VAUL
     }
 }
 
-export const linkAccount = async(userId: string, type: "CARD" | "BANK", tokenId: string) =>{
+export const linkAccount = async ( userId: string, type: "CARD" | "BANK", tokenId: string ) => {
     try {
+        await client.query("BEGIN");
 
-        await client.query('BEGIN');
-        await client.query({
-            text: `INSERT INTO linked_accounts (user_id, token_id, type, status, provider)
-            VALUES ($1, $2, $3, 'ACTIVE', 'self_vault')`,
-            values:[userId, tokenId, type]
-        })
-        await client.query('COMMIT');
+        // check if account already linked
+        const linkedAccountQuery = {
+            text: `SELECT * FROM linked_accounts WHERE user_id = $1`,
+            values: [userId],
+        };
+        const linked_account_result = await client.query(linkedAccountQuery);
 
-        return tokenId
+        if (linked_account_result.rows.length > 0) {
+            // update existing
+            await client.query({
+                text: `UPDATE linked_accounts 
+                       SET token_id = $1, type = $2, status = 'ACTIVE', provider = 'self_vault'
+                       WHERE user_id = $3`,
+                values: [tokenId, type, userId],
+            });
+        } else {
+            // insert new
+            await client.query({
+                text: `INSERT INTO linked_accounts (user_id, token_id, type, status, provider)
+                       VALUES ($1, $2, $3, 'ACTIVE', 'self_vault')`,
+                values: [userId, tokenId, type],
+            });
+        }
+
+        await client.query("COMMIT");
+        return tokenId;
     } catch (error) {
-        await client.query('ROLLBACK').catch(() => {});
+        await client.query("ROLLBACK").catch(() => {});
         logger.error(`Linking accounts failed: ${error}`);
         throw new Error("Failed to link account");
     }
-}
-
-const updateSQL = async()=>{
-    try {
-        // update both tables(Vault_tokens and linked_accounts) with optional table attributes
-    } catch (error) {
-        await client.query("ROLLBACK").catch(() =>{})
-        logger.error(`Error updating card data (SQL)`, error)
-    }
-}
-
-// update card data
-export const updateCardData = async(number?: any, exp?:string, cvv?:string, accountId?: number)=>{
-    try {
-        const validationErrors: string[] = [];
-
-        if(number){
-            // validate the card number
-            validateCardNumber(number);
-            validationErrors.push(`Invalid card number`);
-        }
-        if(exp){
-            // validate the expiration date
-            validateExpirationDate(exp)
-            validationErrors.push(`Invalid or expired card`)
-        }
-
-        if(cvv){
-            validateCVV(cvv, number)
-            validationErrors.push(`Invalid security code`)
-        }
-
-        // check if the card data exists first
-        const cardQuery ={
-            text:`SELECT * FROM linked_accounts WHERE id = $1`,
-            values: [accountId]
-        }
-
-        const result = await client.query(cardQuery);
-
-        // get the related token from the valt_token table
-        const vaultQuery = {
-            text: `SELECT * FROM vault_tokens WHERE token_id = $1`,
-            values: [result.rows[0].token_id]
-        }
-
-        const vaultResult = await client.query(vaultQuery)
-
-        // decrypt that Encrypted Data
-        const { encrypted, iv, tag } = JSON.parse(vaultResult.rows[0].encrypted_data);
-
-        const decryptedData = await decryptData(encrypted, iv, tag, VAULT_KEY);
-
-        const cardData = JSON.parse(decryptedData)
-
-    } catch (error) {
-        logger.error(`Failed to update card data`, error)
-        throw new Error("Failed to update card data")
-    }
-}
+};
 
 export const validateCardNumber = (number: string): boolean => {
     // Remove all non-digit characters
