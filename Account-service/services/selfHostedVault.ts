@@ -14,7 +14,7 @@ if (!VAULT_KEY) {
 }
 
 export const selfHostedVault: VaultAdapter = {
-    async tokenizeCard(cardData: string | Record<string, unknown>, userId?: string) {
+    async tokenizeCard(cardData: string | Record<string, unknown>, userId?: string, type?: string) {
         if (!cardData) {
             throw new Error("No card data provided");
         }
@@ -33,45 +33,62 @@ export const selfHostedVault: VaultAdapter = {
             };
             const linked_account_result = await client.query(linkedAccountQuery);
 
+            let tokenId;
+
             if (linked_account_result.rows.length === 0) {
-                throw new Error("No linked account found for user");
-            }
-
-            const tokenId = linked_account_result.rows[0].token_id;
-
-            // check vault entry
-            const vaultQuery = {
-                text: `SELECT * FROM vault_tokens WHERE token_id = $1`,
-                values: [tokenId],
-            };
-            const vault_result = await client.query(vaultQuery);
-
-            if (vault_result.rows.length > 0) {
-                // update existing vault token
-                await client.query({
-                    text: `UPDATE vault_tokens SET encrypted_data = $1 WHERE token_id = $2`,
-                    values: [JSON.stringify({ encrypted, iv, tag }), tokenId],
-                });
-            } else {
-                // insert new vault token
-                const newTokenId = `vault_${uuidv4()}`;
-                await client.query({
-                    text: `INSERT INTO vault_tokens (token_id, encrypted_data) VALUES ($1, $2)`,
-                    values: [newTokenId, JSON.stringify({ encrypted, iv, tag })],
-                });
+                // no linked account → create one
+                tokenId = `vault_${uuidv4()}`;
 
                 await client.query({
-                    text: `UPDATE linked_accounts SET token_id = $1 WHERE user_id = $2`,
-                    values: [newTokenId, userId],
+                    text: `INSERT INTO vault_tokens (token_id, encrypted_data)
+                        VALUES ($1, $2)`,
+                    values: [tokenId, JSON.stringify({ encrypted, iv, tag })],
+                });
+                
+                await client.query({
+                    text: `INSERT INTO linked_accounts (user_id, token_id, type, status, provider)
+                        VALUES ($1, $2, $3, $4, $5)`,
+                    values: [userId, tokenId, type, "ACTIVE", "self_vault"],
                 });
 
-                // return the new token
                 await client.query("COMMIT");
-                return newTokenId;
-            }
+                return tokenId;
+            } else {
+                tokenId = linked_account_result.rows[0].token_id;
 
-            await client.query("COMMIT");
-            return tokenId;
+                // check vault entry
+                const vaultQuery = {
+                    text: `SELECT * FROM vault_tokens WHERE token_id = $1`,
+                    values: [tokenId],
+                };
+                const vault_result = await client.query(vaultQuery);
+
+                if (vault_result.rows.length > 0) {
+                    // update existing vault token
+                    await client.query({
+                        text: `UPDATE vault_tokens SET encrypted_data = $1 WHERE token_id = $2`,
+                        values: [JSON.stringify({ encrypted, iv, tag }), tokenId],
+                    });
+                } else {
+                    // insert new vault token
+                    const newTokenId = `vault_${uuidv4()}`;
+                    await client.query({
+                        text: `INSERT INTO vault_tokens (token_id, encrypted_data) VALUES ($1, $2)`,
+                        values: [newTokenId, JSON.stringify({ encrypted, iv, tag })],
+                    });
+
+                    await client.query({
+                        text: `UPDATE linked_accounts SET token_id = $1 WHERE user_id = $2`,
+                        values: [newTokenId, userId],
+                    });
+
+                    await client.query("COMMIT");
+                    return newTokenId;
+                }
+
+                await client.query("COMMIT");
+                return tokenId;
+            }
         } catch (error) {
             await client.query("ROLLBACK").catch(() => {});
             logger.error(`Tokenization failed: ${error}`);
