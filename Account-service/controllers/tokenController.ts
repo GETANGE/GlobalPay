@@ -99,7 +99,7 @@ export const linkAccount_token = async (req: any, res: Response, next: NextFunct
         }
 
         // Tokenize if validation passes
-        const tokenId = await selfHostedVault.tokenizeCard(cardData);
+        const tokenId = await selfHostedVault.tokenizeCard(cardData, user.id, type);
 
         // Insert into linked_accounts table
         await linkAccount(user.id, type, tokenId)
@@ -175,6 +175,10 @@ export const updateLinkedAccounts = async (req: any, res: Response, next: NextFu
     const { number, exp, cvv, type } = req.body;
     const user = req.user; 
 
+    if(!accountId){
+        return next(new APIError(`Account_id is required`, 400))
+    }
+
     if (!number || !exp || !cvv) {
       return next(new APIError("Card number, expiration date and CVV are required", 400));
     }
@@ -209,7 +213,7 @@ export const updateLinkedAccounts = async (req: any, res: Response, next: NextFu
     };
 
     // update / insert tokenized card data
-    const tokenId = await selfHostedVault.tokenizeCard(cardData, user.id);
+    const tokenId = await selfHostedVault.tokenizeCard(cardData, user.id, type);
 
     // update / insert linked account
     await linkAccount(user.id, type, tokenId);

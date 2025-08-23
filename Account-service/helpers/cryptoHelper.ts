@@ -6,14 +6,13 @@ import client from "../configs/db-config";
 dotenv.config()
 
 const ALGO = "aes-256-gcm";
-const VAULT_KEY = process.env.VAULT_SECRET_KEY as string
 
-export const encryptData = async (data: string, key: string): Promise<{ encrypted: string; iv: string; tag: string }> => {
+export const encryptData = async (data: string, VAULT_KEY: string): Promise<{ encrypted: string; iv: string; tag: string }> => {
     try {
         const iv = crypto.randomBytes(16);
         const cipher: crypto.CipherGCM = crypto.createCipheriv(
             ALGO,
-            Buffer.from(key, "hex"), 
+            Buffer.from(VAULT_KEY, "hex"), 
             iv
         ) as crypto.CipherGCM;
 
@@ -48,7 +47,7 @@ export const decryptData = async(encrypted: string, iv: string, tag:string, VAUL
     }
 }
 
-export const linkAccount = async ( userId: string, type: "CARD" | "BANK", tokenId: string ) => {
+export const linkAccount = async ( userId: number, type: "CARD" | "BANK", tokenId: string ) => {
     try {
         await client.query("BEGIN");
 

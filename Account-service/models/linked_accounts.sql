@@ -1,3 +1,10 @@
+CREATE TABLE IF NOT EXISTS vault_tokens (
+    id SERIAL PRIMARY KEY,
+    token_id VARCHAR(64) UNIQUE NOT NULL,
+    encrypted_data TEXT NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
 CREATE TABLE IF NOT EXISTS linked_accounts (
     id SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
@@ -6,12 +13,6 @@ CREATE TABLE IF NOT EXISTS linked_accounts (
     status VARCHAR(20) DEFAULT 'ACTIVE' CHECK (status IN ('ACTIVE', 'INACTIVE', 'DELETED')),
     provider VARCHAR(50) DEFAULT 'mastercard', -- vault provider
     created_at TIMESTAMPTZ DEFAULT NOW(),
-    updated_at TIMESTAMPTZ DEFAULT NOW()
-);
-
-CREATE TABLE IF NOT EXISTS vault_tokens (
-    id SERIAL PRIMARY KEY,
-    token_id VARCHAR(64) UNIQUE NOT NULL,
-    encrypted_data TEXT NOT NULL,
-    created_at TIMESTAMPTZ DEFAULT NOW()
+    updated_at TIMESTAMPTZ DEFAULT NOW(),
+    CONSTRAINT fk_token FOREIGN KEY (token_id) REFERENCES vault_tokens(token_id) ON DELETE CASCADE
 );
