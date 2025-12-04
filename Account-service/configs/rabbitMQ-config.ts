@@ -6,7 +6,7 @@ import logger from "../utils/logger"
 dotenv.config();
 
 let connection: Connection | any = null;
-let channel: Channel | any = null;
+let channel: Channel | any = null; 
 
 const RECONNECT_INTERVAL = 5000;
 
