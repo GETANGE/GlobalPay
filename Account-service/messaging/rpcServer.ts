@@ -1,14 +1,11 @@
 import type { Channel } from "amqplib";
 import logger from "../utils/logger";
-import { connectToRabbitMQ } from "../utils/RabbitMQ";
-
-let channel: Channel;
+import { getRabbitMQChannel } from "../configs/rabbitMQ-config";
 
 export const startRPCServer = async ( queueName: string, callback: (data: any) => Promise<any> ) => {
   try {
-    if (!channel) {
-      channel = await connectToRabbitMQ();
-    }
+    
+    const channel = await getRabbitMQChannel();
 
     await channel.assertQueue(queueName, { durable: true });
 

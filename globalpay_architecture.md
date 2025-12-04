@@ -78,7 +78,7 @@
   - Tier 0: Unverified — KES 5,000 max balance
   - Tier 1: Basic ID — KES 50,000
   - Tier 2: Fully verified — Unlimited
-- Used to gate incoming funds, monthly spend, and withdrawals
+- Used to get incoming funds, monthly spend, and withdrawals
 
 **Internal API:**
 - `POST /limits/check` — returns if user can proceed with amount

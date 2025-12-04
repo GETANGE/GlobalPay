@@ -1,5 +1,4 @@
--- Active: 1750106729705@@198.199.82.69@5432@postgres
-CREATE TABLE wallets (
+CREATE TABLE IF NOT EXISTS wallets (
     wallet_id SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
     balance DECIMAL NOT NULL,
@@ -9,5 +8,3 @@ CREATE TABLE wallets (
     created_at TIMESTAMPTZ DEFAULT (CURRENT_TIMESTAMP AT TIME ZONE 'Africa/Nairobi'),
     updated_at TIMESTAMPTZ DEFAULT (CURRENT_TIMESTAMP AT TIME ZONE 'Africa/Nairobi')
 );
-
-DROP TABLE wallets;

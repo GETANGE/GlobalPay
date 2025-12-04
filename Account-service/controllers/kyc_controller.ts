@@ -1,7 +1,7 @@
 import{ type Request, type Response, type NextFunction, text } from "express";
 import APIError from "../utils/APIError";
 import logger from "../utils/logger";
-import { publish_kyc_job_banking, publish_kyc_job_id, publish_kyc_job_kra, publish_kyc_job_passport } from "../utils/RabbitMQ";
+import { publish_kyc_job_banking, publish_kyc_job_id, publish_kyc_job_kra, publish_kyc_job_passport } from "../events/queues/kyc_queues";
 import client from "../configs/db-config";
 import { calculateKycTier } from "../helpers/updateKYC";
 
