@@ -1,14 +1,9 @@
 import Africastalking from "africastalking";
 import dotenv from "dotenv";
 import logger from "./logger";
-import { connectToRabbitMQ } from "./rabbitMQ";
-import type { Channel } from "amqplib";
-import client from "../configs/db-config";
 import APIError from "./APIError";
 
 dotenv.config();
-
-const SMS_QUEUE: string = "sms_queue";
 
 interface Credentials {
   apiKey: string;
@@ -54,67 +49,3 @@ export const sendSMS = async (
     throw new APIError(`Error sending SMS`, 400);
   }
 };
-
-// SMS queue processor
-let channel: Channel;
-
-const processSMSJobs = async () => {
-  try {
-    channel = await connectToRabbitMQ();
-
-    await channel.assertQueue(SMS_QUEUE, { durable: true });
-    channel.consume(SMS_QUEUE, async (msg: any) => {
-      if (!msg) return;
-
-      try {
-        const data = JSON.parse(msg.content.toString());
-        const { phone_number, message, from, userId, hashedToken, expiresAt } =
-          data;
-
-        logger.info(`💌 Processing sms job `);
-        await sendSMS(phone_number, message, from);
-
-        // Insert or update sms_verification table
-        const checkQuery = {
-          text: `SELECT id FROM sms_verification WHERE user_id = $1`,
-          values: [userId],
-        };
-
-        const existing = await client.query(checkQuery);
-
-        if (existing.rows.length > 0) {
-          const updateQuery = {
-            text: `
-                        UPDATE sms_verification
-                        SET phone_token = $2,
-                            phone_expires_at = $3,
-                            created_at = CURRENT_TIMESTAMP AT TIME ZONE 'Africa/Nairobi'
-                        WHERE user_id = $1
-                        `,
-            values: [userId, hashedToken, expiresAt],
-          };
-          await client.query(updateQuery);
-        } else {
-          const insertQuery = {
-            text: `
-                            INSERT INTO sms_verification (user_id, phone_token, phone_expires_at) 
-                            VALUES ($1, $2, $3) 
-                        `,
-            values: [userId, hashedToken, expiresAt],
-          };
-
-          await client.query(insertQuery);
-        }
-
-        logger.info(`💌 SMS sent successfully`);
-        channel.ack(msg);
-      } catch (error: any) {
-        logger.error(`😢 Failed to send sms: ${error.message}`);
-        channel.nack(msg, false, false); // do not requeue
-      }
-    });
-  } catch (error: any) {
-    logger.error(`😢 Failed to process sms jobs: ${error.message}`);
-  }
-};
-processSMSJobs();

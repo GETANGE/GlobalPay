@@ -1,9 +1,5 @@
 import nodemailer, { TransportOptions} from "nodemailer"
 import dotenv from "dotenv"
-import logger from "./logger";
-import { connectToRabbitMQ } from "./rabbitMQ";
-import type { Channel } from 'amqplib';
-import client from "../configs/db-config";
 
 dotenv.config()
 
@@ -58,68 +54,3 @@ export const sendMail = async (options: Options) => {
   const info = await transporter.sendMail(mailOptions);
   return { message: "💌 Email sent successfully", info };
 };
-
-// Email queue processor
-let channel: Channel;
-
-const processEmailJobs = async () => {
-  try {
-    channel = await connectToRabbitMQ();
-
-    await channel.assertQueue("email_queue", { durable: true });
-
-    channel.consume("email_queue", async (msg: any) => {
-      if (!msg) return;
-
-      try {
-        const data = JSON.parse(msg.content.toString());
-        const { email, name, subject, message, otp, from, userId, hashedToken, expiresAt } = data;
-
-        const result = await sendMail({ email, name, subject, message, otp, from });
-
-        // Insert or update email_verification table
-        const checkQuery = {
-          text: `SELECT id FROM email_verification WHERE user_id = $1`,
-          values: [userId],
-        };
-
-        const existing = await client.query(checkQuery);
-
-        if (existing.rows.length > 0) {
-          // UPDATE
-          const updateQuery = {
-            text: `
-              UPDATE email_verification
-              SET email_token = $2,
-                  email_expires_at = $3,
-                  created_at = CURRENT_TIMESTAMP
-              WHERE user_id = $1
-            `,
-            values: [userId, hashedToken, expiresAt],
-          };
-          await client.query(updateQuery);
-        } else {
-          // INSERT
-          const insertQuery = {
-            text: `
-              INSERT INTO email_verification (user_id, email_token, email_expires_at)
-              VALUES ($1, $2, $3)
-            `,
-            values: [userId, hashedToken, expiresAt],
-          };
-          await client.query(insertQuery);
-        }
-
-        logger.info(`💌 Email sent: ${JSON.stringify(result.info.response)}`);
-        channel.ack(msg);
-      } catch (err: any) {
-        logger.error(`😢 Failed to process email job: ${err.message}`);
-        channel.nack(msg, false, false); // don't requeue
-      }
-    });
-  } catch (err: any) {
-    logger.error(`❌ Failed to connect to RabbitMQ or set up email processor: ${err.message}`);
-  }
-};
-
-processEmailJobs();

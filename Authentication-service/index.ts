@@ -18,14 +18,12 @@ import { connectDatabase } from "./configs/db-config";
 import { corsOptions } from "./configs/cors-config";
 
 import userRoutes from "./routes/userRoute";
-import { connectToRabbitMQ } from "./utils/rabbitMQ";
-import "./utils/sms"; //Triggers processor
-import "./utils/email";
 import APIError from "./utils/APIError";
 import { Errorhandlers } from "./controllers/errorHandlingController";
 import { attachRedis } from "./middlewares/attachRedis";
 import { startRPCServer } from "./messaging/rpcServer";
 import { getAllUserData, getSingleUserData } from "./eventHandlers/auth.events";
+import { processEmailJobConsumer, processSMSJobConsumer } from "./events/consumers/auth_consumer";
 
 dotenv.config();
 
@@ -117,6 +115,8 @@ app.use(Errorhandlers);
 async function startServer() {
   try {
     await connectDatabase();
+    await processEmailJobConsumer();
+    await processSMSJobConsumer();
     await startRPCServer("auth-service.get-users-by-ids", getAllUserData);
     await startRPCServer("auth-service.get-user-by-id", getSingleUserData);
 
