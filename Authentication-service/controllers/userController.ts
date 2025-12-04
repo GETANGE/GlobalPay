@@ -5,7 +5,7 @@ import logger from "../utils/logger";
 import APIError from "../utils/APIError";
 import client from "../configs/db-config";
 import { getUser } from "../helperFunctions/userHelper";
-import { publishEvent } from "../utils/rabbitMQ";
+import { publishEvent } from "../events/publishers/auth_publisher";
 
 dotenv.config()
 

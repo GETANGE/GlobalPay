@@ -8,7 +8,8 @@ import requestIp from 'request-ip'
 import { registration_validation } from "../utils/validation";
 import client from "../configs/db-config";
 import { getClientDeviceIp } from "../middlewares/deviceIp";
-import { publishEmailJob, publishEvent, publishSMSJob } from "../utils/rabbitMQ";
+import { publishEmailJob_queue, publishSMSJob_queue } from "../events/queues/auth_queues";
+import { publishEvent } from "../events/publishers/auth_publisher";
 import { generateToken, resetToken } from "../utils/generateToken";
 import { getSubject, getUser } from "../helperFunctions/userHelper";
 import APIError from "../utils/APIError";
@@ -204,7 +205,7 @@ export const sendEmailToken = async (
     const { token, hashedToken, expiresAt } = resetToken();
 
     // send Token(add to queue)
-    await publishEmailJob({
+    await publishEmailJob_queue({
       email: email,
       name: user.rows[0].username,
       userId: user.rows[0].id,
@@ -254,7 +255,7 @@ export const sendSMSToken = async (
     const { token, hashedToken, expiresAt } = resetToken();
 
     // send Token
-    await publishSMSJob({
+    await publishSMSJob_queue({
       phone_number: phone_number,
       name: user.rows[0].username,
       userId: user.rows[0].id,
@@ -549,7 +550,7 @@ export const forgotPassword = async (
     `;
     await client.query(insertQuery, [userData.id, hashedToken, expiresAt]);
 
-    await publishEmailJob({
+    await publishEmailJob_queue({
       email: userData.email,
       name: userData.username,
       userId: userData.id,

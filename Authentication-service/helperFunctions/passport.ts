@@ -4,7 +4,7 @@ import { Strategy as GitHubStrategy } from "passport-github2";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import client from "../configs/db-config";
 import APIError from "../utils/APIError";
-import { publishEvent } from "../utils/rabbitMQ";
+import { publishEvent } from "../events/publishers/auth_publisher";
 
 dotenv.config();
 
