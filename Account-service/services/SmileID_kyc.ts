@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 import { IDApi, WebApi, Signature } from "smile-identity-core";
 import type { Channel } from "amqplib";
 import logger from "../utils/logger";
-import { connectToRabbitMQ } from "../utils/RabbitMQ";
+import { getRabbitMQChannel } from "../configs/rabbitMQ-config";
 
 dotenv.config();
 
@@ -35,7 +35,10 @@ const { signature, timestamp } = connection.generate_signature()
 
 // confirm signature
 const confirmSignature = connection.confirm_signature( timestamp, signature);
-
+if(!confirmSignature){
+  logger.error(`KYC ID lookup failed: Signature confirmation failed`);
+  throw new Error(`KYC ID lookup failed: Signature confirmation failed`);
+}
 
 export const runBasicKYC = async( country: string, id_type: string, id_number: string ) =>{
   try {
@@ -64,12 +67,10 @@ export const runBasicKYC = async( country: string, id_type: string, id_number: s
   }
 }
 
-// ID queue processor
-let channel: Channel;
 
 const processID_kyc_jobs = async()=>{
   try {
-    channel = await connectToRabbitMQ();
+    const channel = await getRabbitMQChannel();
 
     await channel.assertQueue("docsQueue", { durable: true })
 

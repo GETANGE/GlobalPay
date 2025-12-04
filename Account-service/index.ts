@@ -16,7 +16,7 @@ import { corsOptions } from "./configs/cors-config";
 import APIError from "./utils/APIError";
 import { connectDatabase } from "./configs/db-config";
 import { Errorhandlers } from "./controllers/errorHandlingController";
-import { consumeEvent } from "./utils/RabbitMQ";
+import { consumeEvent } from "./events/consumers/account-consumer";
 import {
   handleAccountCreation,
   handleAccountDeactivation,

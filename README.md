@@ -63,7 +63,7 @@ GlobalPay follows a microservices architecture pattern with the following core s
 
 ## 📋 Prerequisites
 
-- Node.js (v18 or higher)
+- Node.js (v20 or higher)
 - Docker and Docker Compose
 - PostgreSQL
 - Redis

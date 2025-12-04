@@ -1,14 +1,11 @@
 import { v2 as cloudinary } from "cloudinary";
 import dotenv from "dotenv";
 import logger from "../utils/logger";
-import type { Channel } from "amqplib";
-import { connectToRabbitMQ } from "../utils/RabbitMQ";
 import client from "../configs/db-config";
 import { QUEUES } from "../utils/queue";
+import { getRabbitMQChannel } from "../configs/rabbitMQ-config";
 
 dotenv.config();
-
-let channel: Channel;
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME as string,
@@ -42,7 +39,7 @@ const database_handling = async (
   column_name: string,
   folder_name: string
 ) => {
-  channel = await connectToRabbitMQ();
+  const channel = await getRabbitMQChannel();
 
   await channel.assertQueue(queue, { durable: true });
 

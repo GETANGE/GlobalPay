@@ -1,17 +1,14 @@
-import type { Channel } from "amqplib";
-import { connectToRabbitMQ } from "../utils/RabbitMQ";
 import { randomUUIDv7 } from "bun";
 import logger from "../utils/logger";
+import { getRabbitMQChannel } from "../configs/rabbitMQ-config";
 
-let channel: Channel;
+
 const MAX_RETRIES = 3;
 const INITIAL_RETRY_DELAY_MS = 1000; // 1 second initial delay
 
 export const sendRPCRequest = async ( routingKey: string, message: any, timeoutMs = 5000, retries = MAX_RETRIES ): Promise<any> => {
     try {
-        if (!channel) {
-            channel = await connectToRabbitMQ();
-        }
+        const channel = await getRabbitMQChannel();
 
         const correlationId = randomUUIDv7();
         const replyQueue = await channel.assertQueue("", { exclusive: true });
