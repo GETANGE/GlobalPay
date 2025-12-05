@@ -28,4 +28,16 @@ export interface SmsData{
     expiresAt: string
 }
 
+export interface SmsData {
+  userId: string;
+  hashedToken: string;
+  expiresAt: Date;
+}
+
+export interface EmailData {
+  userId: string;
+  hashedToken: string;
+  expiresAt: Date;
+}
+
 export {};

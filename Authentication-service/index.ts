@@ -117,8 +117,8 @@ app.use(Errorhandlers);
 async function startServer() {
   try {
     await connectDatabase();
-    await consumeEvent("sms.sent", sms_consumer);
-    await consumeEvent("email.sent", email_consumer);
+    await consumeEvent("notifications.sms.sent", sms_consumer);
+    await consumeEvent("notifications.email.sent", email_consumer);
     await startRPCServer("auth-service.get-users-by-ids", getAllUserData);
     await startRPCServer("auth-service.get-user-by-id", getSingleUserData);
 

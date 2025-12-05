@@ -3,6 +3,9 @@ import logger from "../../utils/logger";
 import { sendMail } from "../../utils/email";
 import { sendSMS } from "../../utils/sms";
 import { publishEvent } from "../publishers/publish.notify";
+import { updateNotificationStatus } from "../../helpers/updateNotificationStatus.helper";
+import { logNotification } from "../../helpers/lognotification.helper";
+import { sendToDLQ } from "../../helpers/sendTo_DLQ.helper";
 
 
 const EXCHANGE_NAME: string ='global_pay_events';
@@ -33,7 +36,9 @@ export const consumeEvent = async(routingKey: string, callback:any)=>{
 
 export const processEmailJobConsumer = async () => {
   try {
-    const channel = await getRabbitMQChannel()
+    logger.info(`✅ Setting up email processor`);
+
+    const channel = await getRabbitMQChannel();
 
     await channel.assertQueue(EMAIL_QUEUE, { durable: true });
 
@@ -42,20 +47,30 @@ export const processEmailJobConsumer = async () => {
 
       try {
         const data = JSON.parse(msg.content.toString());
-        const { email, name, subject, message, otp, from, userId, hashedToken, expiresAt } = data;
+        const { email, name, subject, message, otp, from, userId, hashedToken, expiresAt, type } = data;
 
+        // Send email
         const result = await sendMail({ email, name, subject, message, otp, from });
 
-        await publishEvent("email.sent", { 
-          userId, 
-          hashedToken, 
-          expiresAt 
-        });
+        // Log notification in DB
+        const notificationId = await logNotification(userId, subject, message, type || "EMAIL", data);
 
-        logger.info(`💌 Email sent: ${JSON.stringify(result.info.response)}`);
+        // Publish event to pub/sub
+        await publishEvent("notifications.email.sent", { userId, hashedToken, expiresAt });
+
+        logger.info(`💌 Email sent: ${JSON.stringify(result?.info?.response || "No response info")}`);
+
+        // Update notification status to SENT
+        await updateNotificationStatus(notificationId, "SENT");
+
+        // Acknowledge message
         channel.ack(msg);
       } catch (err: any) {
         logger.error(`😢 Failed to process email job: ${err.message}`);
+        
+        // Send email to DLQ
+        await sendToDLQ(msg.content.toString(), err.message);
+
         channel.nack(msg, false, false); // don't requeue
       }
     });
@@ -66,33 +81,46 @@ export const processEmailJobConsumer = async () => {
 
 export const processSMSJobConsumer = async () => {
   try {
+    logger.info(`✅ Setting up SMS processor`);
+
     const channel = await getRabbitMQChannel();
 
     await channel.assertQueue(SMS_QUEUE, { durable: true });
+
     channel.consume(SMS_QUEUE, async (msg: any) => {
       if (!msg) return;
 
       try {
         const data = JSON.parse(msg.content.toString());
-        const { phone_number, message, from, userId, hashedToken, expiresAt } = data;
+        const { phone_number, message, from, userId, hashedToken, expiresAt, type } = data;
 
-        logger.info(`💌 Processing sms job `);
+        logger.info(`💌 Processing SMS job`);
+
+        // Send SMS
         await sendSMS(phone_number, message, from);
 
-        await publishEvent("sms.sent", {
-          userId, 
-          hashedToken, 
-          expiresAt
-        });
+        // Log notification in DB
+        const notificationId = await logNotification(userId, `SMS to ${phone_number}`, message, type || "SMS", data);
 
-        logger.info(`💌 SMS sent successfully`);
+        // Publish event to pub/sub
+        await publishEvent("notifications.sms.sent", { userId, hashedToken, expiresAt });
+
+        logger.info(`📨 SMS sent successfully`);
+
+        // Update notification status to SENT
+        await updateNotificationStatus(notificationId, "SENT");
+
         channel.ack(msg);
       } catch (error: any) {
-        logger.error(`😢 Failed to send sms: ${error.message}`);
-        channel.nack(msg, false, false); // do not requeue
+        logger.error(`😢 Failed to process SMS job: ${error.message}`);
+        await sendToDLQ(msg.content.toString(), error.message);
+        
+        // do NOT retry to avoid infinite loops
+        channel.nack(msg, false, false);
       }
     });
+
   } catch (error: any) {
-    logger.error(`😢 Failed to process sms jobs: ${error.message}`);
+    logger.error(`😢 Failed to set up SMS processor: ${error.message}`);
   }
 };

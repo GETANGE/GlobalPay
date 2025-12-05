@@ -1,7 +1,8 @@
 import client from "../configs/db-config";
 import logger from "../utils/logger";
+import { EmailData } from "../types/express";
 
-export const email_consumer = async (data: any ) => {
+export const email_consumer = async (data: EmailData ) => {
   try{
     
     const { userId, hashedToken, expiresAt } = data;

@@ -1,7 +1,8 @@
 import client from "../configs/db-config";
 import logger from "../utils/logger";
+import { SmsData } from "../types/express";
 
-export const sms_consumer = async (data: any ) => {
+export const sms_consumer = async (data: SmsData ) => {
   try{
     const { userId, hashedToken, expiresAt } = data;
     

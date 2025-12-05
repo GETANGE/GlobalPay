@@ -6,7 +6,7 @@ const EMAIL_QUEUE: string = "email_queue"
 const SMS_QUEUE: string = "sms_queue"
 
 
-export const publishEmailJob_queue = async(data: EmailData)=>{
+export const EmailJob_queue = async(data: EmailData)=>{
     try {
         const channel = await getRabbitMQChannel()
 
@@ -23,7 +23,7 @@ export const publishEmailJob_queue = async(data: EmailData)=>{
     }
 }
 
-export const publishSMSJob_queue = async(data: SmsData)=>{
+export const SMSJob_queue = async(data: SmsData)=>{
     try {
         const channel = await getRabbitMQChannel()
 

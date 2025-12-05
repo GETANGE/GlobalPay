@@ -25,10 +25,11 @@ import {
   processEmailJobConsumer,
   processSMSJobConsumer,
 } from "./events/consumers/auth_consumer";
+import { deadLetterQueue } from "./events/queues/DLQ.queue";
 
 dotenv.config();
 
-const PORT = Number(process.env.AUTH_PORT) || 3001;
+const PORT = Number(process.env.AUTH_PORT) || 3006;
 
 const app = express();
 
@@ -110,6 +111,9 @@ async function startServer() {
     // Consumers / Workers
     await processEmailJobConsumer();
     await processSMSJobConsumer();
+    
+    // DLQ Consumer
+    await deadLetterQueue();
 
     // RPC (Request-Response) handlers
     await startRPCServer("auth-service.get-users-by-ids", getAllUserData);
@@ -117,10 +121,10 @@ async function startServer() {
     await startRPCServer("auth-service.get-user-by-id", getSingleUserData);
 
     app.listen(PORT, () => {
-      logger.info(`🔐 Auth server running at port ${PORT}`);
+      logger.info(`🔔 Notification server running at port ${PORT}`);
     });
   } catch (error) {
-    logger.error("🔥 Failed to initialize Auth service:", error);
+    logger.error("🔥 Failed to initialize notification service:", error);
     process.exit(1);
   }
 }
