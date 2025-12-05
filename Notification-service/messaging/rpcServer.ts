@@ -52,7 +52,7 @@ export const startRPCServer = async ( queueName: string, callback: (data: any) =
       }
     });
 
-    logger.info(`🛰  Account RPC Server listening on queue: ${queueName}`);
+    logger.info(`🛰  Notification RPC Server listening on queue: ${queueName}`);
     
     // Return cleanup function
     return async () => {

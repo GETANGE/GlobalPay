@@ -38,7 +38,7 @@ const connectToRabbitMQ = async () => {
     connection = await connect(rabbitMQ_url as string);
 
     if (!hasLoggedConnection) {
-      logger.info("Connected to RabbitMQ");
+      logger.info("🐇 Connected to RabbitMQ");
       hasLoggedConnection = true;
     }
 

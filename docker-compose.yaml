@@ -46,6 +46,31 @@ services:
       timeout: 5s
       retries: 5
       start_period: 10s
+      
+      
+  # ===================================
+  # Postgres for Notifications Service
+  # ===================================
+  postgres-notifications:
+    image: postgres:15
+    container_name: postgres-notify
+    environment:
+      POSTGRES_USER: notify_user
+      POSTGRES_PASSWORD: notify_pass
+      POSTGRES_DB: notifications_db
+    ports:
+      - "5436:5432"
+    volumes:
+      - pgdata-notifications:/var/lib/postgresql/data
+    networks:
+      - globalpay-net
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U account_user -d account_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
   # =========================
   # API Gateway Service
@@ -167,3 +192,4 @@ networks:
 volumes:
   pgdata-auth:
   pgdata-account:
+  pgdata-notifications:
