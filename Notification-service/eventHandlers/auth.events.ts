@@ -16,7 +16,6 @@ export const getAllUserData = async (input: { userIds: number[] } | number[]) =>
         `;
 
         const result = await client.query(userQuery, [userIds]);
-        
         return result.rows;
 
     } catch (error) {

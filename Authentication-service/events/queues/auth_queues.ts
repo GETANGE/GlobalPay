@@ -1,7 +1,5 @@
 import { getRabbitMQChannel } from "../../configs/rabbitMQ-config"
 import logger from "../../utils/logger"
-import client from "../../configs/db-config"
-import { sendMail } from "../../utils/email"
 import { EmailData, SmsData } from "../../types/express"
 
 const EMAIL_QUEUE: string = "email_queue"
