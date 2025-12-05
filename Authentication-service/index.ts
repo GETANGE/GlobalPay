@@ -23,7 +23,9 @@ import { Errorhandlers } from "./controllers/errorHandlingController";
 import { attachRedis } from "./middlewares/attachRedis";
 import { startRPCServer } from "./messaging/rpcServer";
 import { getAllUserData, getSingleUserData } from "./eventHandlers/auth.events";
-import { processEmailJobConsumer, processSMSJobConsumer } from "./events/consumers/auth_consumer";
+import { consumeEvent } from "./events/consumers/auth_consumer";
+import { sms_consumer } from "./eventHandlers/sms.event";
+import { email_consumer } from "./eventHandlers/email.events";
 
 dotenv.config();
 
@@ -115,8 +117,8 @@ app.use(Errorhandlers);
 async function startServer() {
   try {
     await connectDatabase();
-    await processEmailJobConsumer();
-    await processSMSJobConsumer();
+    await consumeEvent("sms.sent", sms_consumer);
+    await consumeEvent("email.sent", email_consumer);
     await startRPCServer("auth-service.get-users-by-ids", getAllUserData);
     await startRPCServer("auth-service.get-user-by-id", getSingleUserData);
 
