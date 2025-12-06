@@ -28,4 +28,10 @@ export interface SmsData{
     expiresAt: string
 }
 
+export interface NotificationPayload {
+    notificationId?: string;
+    userId: string;
+    status: string;
+}
+
 export {};

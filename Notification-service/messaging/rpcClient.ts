@@ -1,6 +1,6 @@
 import { randomUUIDv7 } from "bun";
 import logger from "../utils/logger";
-import { getRabbitMQChannel } from "../configs/rabbitMQ-config";
+import { getRabbitMQChannel } from "../configs/rabbitMQ";
 
 
 const MAX_RETRIES = 3;

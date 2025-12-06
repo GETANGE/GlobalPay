@@ -20,12 +20,6 @@ const africastalking = Africastalking(credentials);
 
 const sms = africastalking.SMS;
 
-// send SMS
-interface Payload {
-  to: string[];
-  message: string;
-  from?: string;
-}
 export const sendSMS = async (
   phone_number: string,
   message: string,

@@ -19,12 +19,22 @@ export const consumeEvent = async(routingKey: string, callback:any)=>{
         await channel.assertExchange(EXCHANGE_NAME, "topic", { durable: true });
         
         const queue = await channel.assertQueue("", { exclusive: true})
+        
         await channel.bindQueue(queue.queue, EXCHANGE_NAME, routingKey)
-        channel.consume(queue.queue, (message:any)=>{
+        
+        channel.consume(queue.queue, async(message:any)=>{
             if(message !== null){
-                const content = JSON.parse(message.content.toString())
-                callback(content)
-                channel.ack(message)
+              const content = JSON.parse(message.content.toString());
+              
+              try{
+                await callback(content);
+                channel.ack(message);
+              }catch(err: any){
+                logger.info(`Error processing event: ${routingKey} - ${err.message}`);
+                
+                await sendToDLQ(message.content.toString(), err.message);
+                channel.nack(message, false, false);
+              }
             }
         })
 
@@ -36,7 +46,7 @@ export const consumeEvent = async(routingKey: string, callback:any)=>{
 
 export const processEmailJobConsumer = async () => {
   try {
-    logger.info(`✅ Setting up email processor`);
+    logger.info(`✅ Setting up email consumer`);
 
     const channel = await getRabbitMQChannel();
 
@@ -49,21 +59,16 @@ export const processEmailJobConsumer = async () => {
         const data = JSON.parse(msg.content.toString());
         const { email, name, subject, message, otp, from, userId, hashedToken, expiresAt, type } = data;
 
-        // Send email
         const result = await sendMail({ email, name, subject, message, otp, from });
 
-        // Log notification in DB
         const notificationId = await logNotification(userId, subject, message, type || "EMAIL", data);
 
-        // Publish event to pub/sub
         await publishEvent("notifications.email.sent", { userId, hashedToken, expiresAt });
 
-        logger.info(`💌 Email sent: ${JSON.stringify(result?.info?.response || "No response info")}`);
+        logger.info(`💌 Email sent: ${JSON.stringify(result.info.response || "No response info")}`);
 
-        // Update notification status to SENT
         await updateNotificationStatus(notificationId, "SENT");
 
-        // Acknowledge message
         channel.ack(msg);
       } catch (err: any) {
         logger.error(`😢 Failed to process email job: ${err.message}`);
@@ -81,7 +86,7 @@ export const processEmailJobConsumer = async () => {
 
 export const processSMSJobConsumer = async () => {
   try {
-    logger.info(`✅ Setting up SMS processor`);
+    logger.info(`✅ Setting up SMS consumer`);
 
     const channel = await getRabbitMQChannel();
 
@@ -99,15 +104,12 @@ export const processSMSJobConsumer = async () => {
         // Send SMS
         await sendSMS(phone_number, message, from);
 
-        // Log notification in DB
         const notificationId = await logNotification(userId, `SMS to ${phone_number}`, message, type || "SMS", data);
 
-        // Publish event to pub/sub
         await publishEvent("notifications.sms.sent", { userId, hashedToken, expiresAt });
 
         logger.info(`📨 SMS sent successfully`);
 
-        // Update notification status to SENT
         await updateNotificationStatus(notificationId, "SENT");
 
         channel.ack(msg);
