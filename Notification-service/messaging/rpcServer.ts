@@ -1,3 +1,4 @@
+import type { Channel } from "amqplib";
 import logger from "../utils/logger";
 import { getRabbitMQChannel } from "../configs/rabbitMQ";
 
@@ -52,7 +53,7 @@ export const startRPCServer = async ( queueName: string, callback: (data: any) =
       }
     });
 
-    logger.info(`🛰  Notification RPC Server listening on queue: ${queueName}`);
+    logger.info(`🛰  Account RPC Server listening on queue: ${queueName}`);
     
     // Return cleanup function
     return async () => {

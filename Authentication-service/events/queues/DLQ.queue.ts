@@ -1,4 +1,4 @@
-import { getRabbitMQChannel } from "../../configs/rabbitMQ";
+import { getRabbitMQChannel } from "../../configs/rabbitMQ-config";
 import logger from "../../utils/logger";
 
 const EXCHANGE_NAME = process.env.EXCHANGE_NAME || "global_pay_events";

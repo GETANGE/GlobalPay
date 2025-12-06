@@ -7,7 +7,7 @@ import helmet from "helmet";
 import dotenv from "dotenv";
 import morgan from "morgan";
 import cors from "cors";
-import { Redis } from "ioredis";
+import redisClient from "./configs/redis-config";
 import rateLimit from "express-rate-limit";
 import { RateLimiterMemory } from "rate-limiter-flexible";
 import RedisStore from "rate-limit-redis";
@@ -18,41 +18,25 @@ import { corsOptions } from "./configs/cors-config";
 import APIError from "./utils/APIError";
 import { Errorhandlers } from "./controllers/errorHandlingController";
 import { attachRedis } from "./middlewares/attachRedis";
+import notificationRoute from "./routes/notification.routes";
 
-import { startRPCServer } from "./messaging/rpcServer";
-import { getAllUserData, getSingleUserData } from "./eventHandlers/auth.events";
 import {
   processEmailJobConsumer,
   processSMSJobConsumer,
 } from "./events/consumers/auth_consumer";
 import { deadLetterQueue } from "./events/queues/DLQ.queue";
+import { initSocket } from "./configs/socket";
+import { processNotificationConsumer } from "./events/consumers/notif_consumer";
 
 dotenv.config();
 
-const PORT = Number(process.env.AUTH_PORT) || 3006;
-
 const app = express();
+const PORT = Number(process.env.AUTH_PORT) || 3006;
 
 app.use(helmet());
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(cors(corsOptions));
-
-
-const redisUrl =
-  process.env.NODE_ENV === "production"
-    ? process.env.REDIS_URL_PROD
-    : process.env.REDIS_URL_DEV;
-
-const redisClient = new Redis(redisUrl as string);
-
-redisClient.on("connect", () => {
-  logger.info(`🍃 Redis connected successfully`);
-});
-
-redisClient.on("error", (error) => {
-  logger.warn(`⚠️ Redis connection error:`, error);
-});
 
 const rateLimiter = new RateLimiterMemory({
   keyPrefix: "global",
@@ -89,7 +73,7 @@ const SensitiveEndpointRatelimit = rateLimit({
 // apply only to sensitive routes
 app.use(SensitiveEndpointRatelimit as any);
 
-app.use("/auth", attachRedis(redisClient));
+app.use("/notification", attachRedis(redisClient), notificationRoute);
 
 app.get("/", (req: Request, res: Response) => {
   res.status(200).json({
@@ -104,33 +88,34 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 
 app.use(Errorhandlers);
 
+// Initialize WebSocket
+const server = app.listen(PORT, () => {
+  logger.info(`🔔 Notification server running at port ${PORT}`);
+});
+
+initSocket(server);
+
 async function startServer() {
   try {
+    // 1. Connect to Database
     await connectDatabase();
 
-    // Consumers / Workers
+    // 2. Start Consumers / Workers
     await processEmailJobConsumer();
     await processSMSJobConsumer();
-    
-    // DLQ Consumer
+    await processNotificationConsumer();
+
+    // 3. Start Dead Letter Queue consumer
     await deadLetterQueue();
 
-    // RPC (Request-Response) handlers
-    await startRPCServer("auth-service.get-users-by-ids", getAllUserData);
-
-    await startRPCServer("auth-service.get-user-by-id", getSingleUserData);
-
-    app.listen(PORT, () => {
-      logger.info(`🔔 Notification server running at port ${PORT}`);
-    });
-  } catch (error) {
+    logger.info(`🔔 Notification service fully initialized on port ${PORT}`);
+  } catch (error: any) {
     logger.error("🔥 Failed to initialize notification service:", error);
     process.exit(1);
   }
 }
 
-startServer();
-
+// Handle uncaught exceptions/rejections
 process.on("uncaughtException", (err) => {
   logger.error("❌ Uncaught Exception:", err);
   process.exit(1);
@@ -145,3 +130,5 @@ process.on("SIGINT", () => {
   logger.info("SIGINT signal received");
   process.exit(0);
 });
+
+startServer();
