@@ -14,3 +14,13 @@ export const invalidateNotificationsCache = async () => {
     logger.error(`❌ Failed to invalidate notification cache: ${error.message}`);
   }
 };
+
+export const invalidateDeviceTokensCache = async (userId: string) => {
+  try {
+    const cacheKey = `device_tokens_${userId}`;
+    await redisClient.del(cacheKey);
+    logger.info(`🧹 Cache invalidated for device tokens of user ${userId}`);
+  } catch (error: any) {
+    logger.error(`❌ Failed to invalidate device tokens cache for user ${userId}: ${error.message}`);
+  }
+};

@@ -83,6 +83,11 @@ const account_url =
     ? process.env.ACCOUNT_SERVICE_URL_PROD
     : process.env.ACCOUNT_SERVICE_URL_DEV
 
+const notification_url = 
+    isProd === "production"
+    ? process.env.NOTIFICATION_SERVICE_URL_PROD
+    : process.env.NOTIFICATION_SERVICE_URL_DEV
+
 // Forward Proxies 
 app.use("/api/v1/auth", proxy(identity_url as string, {
     proxyReqPathResolver: req => `/auth${req.url}`,
@@ -104,7 +109,7 @@ app.use("/api/v1/auth", proxy(identity_url as string, {
     },
     //Lets you intercept the response and transform it before it is sent back to the client
     userResDecorator: (proxyRes:any, proxyResData:any, userReq:any, userRes:any) =>{
-        logger.info(`Response received from AuthService`)
+        logger.info(`Response received from Aunthentication Service`)
         return proxyResData
     }
 }))
@@ -131,7 +136,35 @@ app.use("/api/v1/account", validateToken, proxy(account_url as string, {
     },
 
     userResDecorator: (proxyRes: any, proxyResData: any) => {
-      logger.info(`Response received from AccountService`);
+      logger.info(`Response received from Account Service`);
+      return proxyResData;
+    },
+  })
+);
+
+app.use("/api/v1/notification", validateToken, proxy(notification_url as string, {
+    proxyReqPathResolver: req => `/notification${req.url}`,
+
+    proxyReqOptDecorator: (proxyReqOpts: any, srcReq: any) => {
+      proxyReqOpts.headers["Content-Type"] =
+        srcReq.headers["content-type"] || "application/json";
+
+      // Add authenticated user headers
+      if (srcReq.user) {
+        proxyReqOpts.headers["x-user-id"] = srcReq.user.userId;
+        proxyReqOpts.headers["x-user-role"] = srcReq.user.role;
+      }
+
+      return proxyReqOpts;
+    },
+
+    proxyErrorHandler: (err: Error, res: Response, next: NextFunction) => {
+      logger.error(`Proxy error: ${err.message}`);
+      next(new APIError(`Internal server error`, 500));
+    },
+
+    userResDecorator: (proxyRes: any, proxyResData: any) => {
+      logger.info(`Response received from Notification Service`);
       return proxyResData;
     },
   })
@@ -172,4 +205,5 @@ app.listen(PORT, ()=>{
     logger.info(`🦈 Api-gateway is listening on port: ${PORT}`)
     logger.info(`🔐 Aunthentification Service URL: ${identity_url}`)
     logger.info(`💳 Account Service URL: ${account_url}`)
+    logger.info(`📧 Notification Service URL: ${notification_url}`)
 })

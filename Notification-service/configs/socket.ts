@@ -22,8 +22,6 @@ export const initSocket = (server: HTTPServer) => {
             const notifications = await getUserNotifications(userId);
             
             socket.emit("notifications_list", {
-              page: 1,
-              limit: 10,
               total: notifications.length,
               data: notifications
             });
@@ -44,4 +42,13 @@ export const initSocket = (server: HTTPServer) => {
     });
     
     logger.info(`🔌 Socket server initialized`);
+};
+
+export const emitNotification = async (userId: string, notification: any) => {
+  if(!io) {
+    logger.error(`Socket server not initialized; skipping emit.`);
+    return;
+  };
+  
+  io.to(userId).emit("new_notification", notification);
 };
