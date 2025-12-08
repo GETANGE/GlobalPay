@@ -22,8 +22,6 @@ export const initSocket = (server: HTTPServer) => {
             const notifications = await getUserNotifications(userId);
             
             socket.emit("notifications_list", {
-              page: 1,
-              limit: 10,
               total: notifications.length,
               data: notifications
             });

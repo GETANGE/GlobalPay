@@ -7,6 +7,7 @@ const NOTIFICATION_QUEUE = "notification_queue";
 
 export const processNotificationConsumer = async () => {
   logger.info("✅ Starting notification consumer");
+  
   const channel = await getRabbitMQChannel();
   await channel.assertQueue(NOTIFICATION_QUEUE, { durable: true });
 

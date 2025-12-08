@@ -4,10 +4,10 @@ import { baseMessage } from "../types/express";
 import { getFCM_Tokens } from "./fcm.service";
 
 interface SendOptions {
-  data?: Record<string, string>;
-  notification?: { title?: string; body?: string };
-  device_type?: "android" | "ios" | "web" | "all";
-  priority?: "high" | "normal" | "low";
+  data: Record<string, string>;
+  notification: { title?: string; body?: string };
+  device_type: "android" | "ios" | "web" | "all";
+  priority: "high" | "normal" | "low";
 }
 
 const chunk = <T,>(arr: T[], size = 500): T[][] => {
@@ -76,7 +76,7 @@ export const sendMulticast = async (userId: string, options: SendOptions) => {
       if (resp.error) {
         logger.error(`Failed to send notification to token ${batch[index]}: ${resp.error}`);
       } else {
-        logger.info(`Successfully sent notification to token ${batch[index]}`);
+        logger.info(`📩 Successfully sent notification to token ${batch[index]}`);
       }
     });
   }
