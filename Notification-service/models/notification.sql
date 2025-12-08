@@ -1,7 +1,7 @@
 -- ============================
 -- ENUMS
 -- ============================
-CREATE TYPE notification_status AS ENUM ('PENDING', 'SENT', 'FAILED', 'READ');
+CREATE TYPE notification_status AS ENUM ('PENDING', 'SENT', 'DELETED', 'READ');
 CREATE TYPE recipient_status AS ENUM ('PENDING', 'DELIVERED', 'FAILED', 'READ');
 CREATE TYPE device_type AS ENUM ('android', 'ios', 'web');
 
@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS notifications (
     title TEXT NOT NULL,
     message TEXT NOT NULL,
     data JSONB,
-    type TEXT,
+    device_type TEXT,
     status notification_status DEFAULT 'PENDING',
     created_at TIMESTAMP DEFAULT NOW()
 );

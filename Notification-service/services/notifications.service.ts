@@ -18,7 +18,7 @@ export const getUserNotifications = async (userId: string, page: number = 1, lim
   const directQuery = `
     SELECT id, title, message, type, user_id, created_at, status
     FROM notifications
-    WHERE user_id = $1
+    WHERE user_id = $1 AND status <> 'DELETED'
   `;
 
   const directRes = await client.query(directQuery, [userId]);
@@ -53,9 +53,6 @@ export const getUserNotifications = async (userId: string, page: number = 1, lim
   return paginated;
 };
 
-
-// MUST BE SENT TO A QUEUE FIRST.
-
 export const markNotificationRead = async (notificationId: string, userId: string) => {
   const query = `
     UPDATE notifications
@@ -84,6 +81,74 @@ export const markAllNotificationsRead = async (userId: string) => {
 
   if (result.rowCount === 0) {
     throw new APIError("No notifications found", 404);
+  }
+  
+  // invalidate cache
+  await invalidateNotificationsCache();
+};
+
+export const deleteNotification_service = async (notificationId: string, userId: string) => {
+  const query = `
+    UPDATE notifications
+    SET status = 'DELETED'
+    WHERE id = $1 AND user_id = $2
+  `;
+
+  const result = await client.query(query, [notificationId, userId]);
+
+  if (result.rowCount === 0) {
+    throw new APIError("Notification not found", 404);
+  }
+  
+  // invalidate cache
+  await invalidateNotificationsCache();
+};
+
+export const getSingleNotification = async (notificationId: string, userId: string) => {
+  const query = `
+    SELECT * FROM notifications
+    WHERE id = $1 AND user_id = $2 AND status <> 'DELETED'
+  `;
+
+  const result = await client.query(query, [notificationId, userId]);
+
+  if (result.rowCount === 0) {
+    throw new APIError("Notification not found", 404);
+  }
+  
+  // invalidate cache
+  await invalidateNotificationsCache();
+  
+  return result.rows[0];
+};
+
+export const deleteAllNotifications_service = async (userId: string) => {
+  const query = `
+    UPDATE notifications
+    SET status = 'DELETED'
+    WHERE user_id = $1 AND status <> 'DELETED'
+  `;
+
+  const result = await client.query(query, [userId]);
+
+  if (result.rowCount === 0) {
+    throw new APIError("No notifications found", 404);
+  }
+  
+  // invalidate cache
+  await invalidateNotificationsCache();
+};
+
+export const sendNotification_service = async (title: string, body: string, extraData: any, device_type: string, userId: string) => {
+  const query = `
+    INSERT INTO notifications (title, body, data, device_type, user_id, status)
+    VALUES ($1, $2, $3, $4, $5, 'SENT')
+  `;
+
+  const result = await client.query(query, [title, body, extraData, device_type, userId]);
+
+  if (result.rowCount === 0) {
+    throw new APIError("Notification not sent", 500);
   }
   
   // invalidate cache

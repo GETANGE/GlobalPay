@@ -45,3 +45,12 @@ export const initSocket = (server: HTTPServer) => {
     
     logger.info(`🔌 Socket server initialized`);
 };
+
+export const emitNotification = async (userId: string, notification: any) => {
+  if(!io) {
+    logger.error(`Socket server not initialized; skipping emit.`);
+    return;
+  };
+  
+  io.to(userId).emit("new_notification", notification);
+};

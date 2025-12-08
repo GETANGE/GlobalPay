@@ -27,6 +27,7 @@ import {
 import { deadLetterQueue } from "./events/queues/DLQ.queue";
 import { initSocket } from "./configs/socket";
 import { processNotificationConsumer } from "./events/consumers/notif_consumer";
+import { processDeviceTokens } from "./events/consumers/fcm_consumer";
 
 dotenv.config();
 
@@ -73,14 +74,18 @@ const SensitiveEndpointRatelimit = rateLimit({
 // apply only to sensitive routes
 app.use(SensitiveEndpointRatelimit as any);
 
-app.use("/notification", attachRedis(redisClient), notificationRoute);
-
-app.get("/", (req: Request, res: Response) => {
+app.get("/health", (req: Request, res: Response) => {
   res.status(200).json({
     status: "success",
-    message: "Auth-Service health-check",
+    message: "Notification-Service health-check",
+    data: {
+      version: process.env.npm_package_version || "1.0.0",
+      environment: process.env.NODE_ENV,
+    },
   });
 });
+
+app.use("/notification", attachRedis(redisClient), notificationRoute);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   next(new APIError(`Route ${req.originalUrl} not found`, 404));
@@ -103,6 +108,7 @@ async function startServer() {
     // 2. Start Consumers / Workers
     await processEmailJobConsumer();
     await processSMSJobConsumer();
+    await processDeviceTokens();
     await processNotificationConsumer();
 
     // 3. Start Dead Letter Queue consumer

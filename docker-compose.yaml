@@ -147,7 +147,35 @@ services:
     networks:
       - globalpay-net
     restart: always
-
+    
+  # =========================
+  # Notification Service
+  # =========================
+  # notification-service:
+  #   build:
+  #     context: ./Notification-service
+  #   container_name: notification-service
+  #   env_file:
+  #     - ./Notification-service/.env
+  #   ports:
+  #     - "3006:3006"
+  #   environment:
+  #     - NODE_ENV=production
+  #     - DATABASE_URL_PROD=postgresql://notification_user:notification_pass@postgres-notifications:5432/notification_db
+  #     - REDIS_URL_PROD=redis://redis:6379
+  #     - RABBITMQ_URL_PROD=amqp://guest:guest@rabbitmq:5672
+  #   depends_on:
+  #     postgres-notifications:
+  #       condition: service_healthy
+  #     redis:
+  #       condition: service_healthy
+  #     rabbitmq:
+  #       condition: service_healthy
+  #   networks:
+  #     - globalpay-net
+  #   restart: always
+  #   healthcheck:
+  #     test: ["CMD", "curl", "-f", "http://notification-service:3006/health"]
   # =========================
   # Shared Redis Instance
   # =========================
@@ -182,6 +210,17 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
+    networks:
+      - globalpay-net
+    restart: always
+    
+  debezium-server:
+    image: quay.io/debezium/server:2.6
+    container_name: debezium-server
+    volumes:
+      - ./debezium/conf:/debezium/conf
+    depends_on:
+      - rabbitmq
     networks:
       - globalpay-net
     restart: always
