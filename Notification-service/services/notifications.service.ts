@@ -54,14 +54,23 @@ export const markNotificationRead = async (notificationId: string, userId: strin
     WHERE id = $1 AND user_id = $2
   `;
 
-  const result = await client.query(query, [notificationId, userId, "READ"]);
-
-  if (result.rowCount === 0) {
-    throw new APIError("Notification not found", 404);
+  try{
+    await client.query("BEGIN");
+    
+    const result = await client.query(query, [notificationId, userId, "READ"]);
+    
+    if (result.rowCount === 0) {
+      throw new APIError("Notification not found", 404);
+    }
+    
+    // invalidate cache
+    await invalidateNotificationsCache();
+    
+    await client.query("COMMIT");
+  }catch(error){
+    await client.query("ROLLBACK");
+    throw error;
   }
-  
-  // invalidate cache
-  await invalidateNotificationsCache();
 };
 
 export const markAllNotificationsRead = async (userId: string) => {
@@ -70,15 +79,24 @@ export const markAllNotificationsRead = async (userId: string) => {
     SET status = '$3'
     WHERE user_id = $1
   `;
-
-  const result = await client.query(query, [userId, "READ"]);
-
-  if (result.rowCount === 0) {
-    throw new APIError("No notifications found", 404);
-  }
   
-  // invalidate cache
-  await invalidateNotificationsCache();
+  try{
+    await client.query("BEGIN");
+    
+    const result = await client.query(query, [userId, "READ"]);
+    
+    if (result.rowCount === 0) {
+      throw new APIError("No notifications found", 404);
+    }
+    
+    // invalidate cache
+    await invalidateNotificationsCache();
+    
+    await client.query("COMMIT");
+  }catch(error){
+    await client.query("ROLLBACK");
+    throw error;
+  }
 };
 
 export const deleteNotification_service = async (notificationId: string, userId: string) => {
@@ -122,15 +140,24 @@ export const deleteAllNotifications_service = async (userId: string) => {
     SET status = 'DELETED'
     WHERE user_id = $1 AND status <> 'DELETED'
   `;
-
-  const result = await client.query(query, [userId]);
-
-  if (result.rowCount === 0) {
-    throw new APIError("No notifications found", 404);
-  }
   
-  // invalidate cache
-  await invalidateNotificationsCache();
+  try{
+    await client.query("BEGIN");
+    
+    const result = await client.query(query, [userId]);
+    
+    if (result.rowCount === 0) {
+      throw new APIError("No notifications found", 404);
+    }
+    
+    // invalidate cache
+    await invalidateNotificationsCache();
+    
+    await client.query("COMMIT");
+  }catch(error){
+    await client.query("ROLLBACK");
+    throw error;
+  }
 };
 
 export const sendNotification_service = async (
