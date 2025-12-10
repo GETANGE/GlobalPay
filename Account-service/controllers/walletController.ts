@@ -2,6 +2,7 @@ import type { NextFunction, Response, Request } from "express";
 import logger from "../utils/logger";
 import APIError from "../utils/APIError";
 import client from "../configs/db-config";
+import { publishNotification } from "../events/queues/kyc_queues";
 import { sendRPCRequest } from "../messaging/rpcClient";
 
 const cacheInvalidation = async(req:Request, walletId: string | number)=>{
@@ -175,6 +176,16 @@ export const updateAccount = async (req: any, res: Response, next: NextFunction)
         const currencyQuery = `UPDATE wallets SET currency = $1 WHERE wallet_id = $2`;
         await client.query(currencyQuery, [currency, wallet_id]);
         await cacheInvalidation(req, wallet_id);
+        
+        await publishNotification({
+            action: "notification",
+            title: `Wallet Updated`,
+            body: `Your wallet has been updated successfully.`,
+            extraData: { wallet_id, currency },
+            device_type: "all",
+            priority: "normal",
+            userId: user.id.toString(),
+        });
 
         return res.status(200).json({
             status: "success",

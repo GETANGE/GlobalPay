@@ -30,8 +30,11 @@ export interface SmsData{
 
 export interface NotificationPayload {
     notificationId?: string;
-    userId: string;
-    status: string;
+    description?: string;
+    broadcastId?: string;
+    topic?: string;
+    userId?: string;
+    status?: string;
     action: string;
 }
 

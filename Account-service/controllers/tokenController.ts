@@ -4,6 +4,7 @@ import APIError from "../utils/APIError";
 import { selfHostedVault } from "../services/selfHostedVault";
 import { linkAccount, validateCardNumber, validateCVV, validateExpirationDate } from "../helpers/cryptoHelper";
 import client from "../configs/db-config";
+import { publishNotification } from "../events/queues/kyc_queues";
 
 const cacheInvalidation = async (req: Request, tokenId: string) => {
     const tokenKey = `token:${tokenId}`;
@@ -220,6 +221,17 @@ export const updateLinkedAccounts = async (req: any, res: Response, next: NextFu
 
     // repopulate cache with fresh data
     await cacheInvalidation(req, tokenId)
+    
+    await publishNotification({
+      action: "notification",
+      title: `${type} Account Updated`,
+      body: `Your ${type.toLowerCase()} account has been linked/updated successfully.`,
+      extraData: { tokenId, type },
+      device_type: "all",
+      priority: "normal",
+      userId: user.id.toString(),
+    });
+
 
     res.status(200).json({
       status: "success",
