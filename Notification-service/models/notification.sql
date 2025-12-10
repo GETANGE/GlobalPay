@@ -84,3 +84,21 @@ CREATE TABLE IF NOT EXISTS device_tokens (
 -- Useful when sending push notifications
 CREATE INDEX IF NOT EXISTS idx_device_tokens_user_id
     ON device_tokens(user_id);
+
+
+-- ============================
+-- NOTIFICATION broadcasts(For tracking topics )
+-- ============================
+CREATE TABLE IF NOT EXISTS notification_broadcasts (
+    id UUID PRIMARY KEY,
+    description TEXT NOT NULL,
+    topic TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Indexes
+CREATE INDEX IF NOT EXISTS idx_notification_broadcasts_notification_id
+    ON notification_broadcasts(notification_id);
+
+CREATE INDEX IF NOT EXISTS idx_notification_broadcasts_topic
+    ON notification_broadcasts(topic);

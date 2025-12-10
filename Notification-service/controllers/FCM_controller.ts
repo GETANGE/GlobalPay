@@ -5,8 +5,11 @@ import redisClient from "../configs/redis-config";
 import { getFCM_Tokens, getFCM_Token } from "../services/fcm.service";
 import { DeviceTokensQueue } from "../events/queues/notification.queue";
 
-
-export const saveDeviceToken = async (req: any, res: Response, next: NextFunction) => {
+export const saveDeviceToken = async (
+  req: any,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const { token, device_type } = req.body;
     const userId = req.user.id;
@@ -27,8 +30,11 @@ export const saveDeviceToken = async (req: any, res: Response, next: NextFunctio
   }
 };
 
-
-export const deleteDeviceToken = async (req: any, res: Response, next: NextFunction) => {
+export const deleteDeviceToken = async (
+  req: any,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const { token } = req.body;
     const userId = req.user.id;
@@ -49,8 +55,11 @@ export const deleteDeviceToken = async (req: any, res: Response, next: NextFunct
   }
 };
 
-
-export const updateDeviceToken = async (req: any, res: Response, next: NextFunction) => {
+export const updateDeviceToken = async (
+  req: any,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const { token, device_type } = req.body;
     const userId = req.user.id;
@@ -59,7 +68,7 @@ export const updateDeviceToken = async (req: any, res: Response, next: NextFunct
       return next(new APIError("token and device_type are required", 400));
     }
 
-    await DeviceTokensQueue({ action: "update", userId, token, device_type});
+    await DeviceTokensQueue({ action: "update", userId, token, device_type });
 
     res.status(200).json({
       status: "success",
@@ -71,13 +80,16 @@ export const updateDeviceToken = async (req: any, res: Response, next: NextFunct
   }
 };
 
-
-export const getDeviceTokens = async (req: any, res: Response, next: NextFunction) => {
+export const getDeviceTokens = async (
+  req: any,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const userId = req.user.id;
-    
+
     const cacheKey = `device_tokens_${userId}`;
-    
+
     const cachedTokens = await redisClient.get(cacheKey);
     if (cachedTokens) {
       const tokens = JSON.parse(cachedTokens);
@@ -88,7 +100,7 @@ export const getDeviceTokens = async (req: any, res: Response, next: NextFunctio
     }
 
     const tokens = await getFCM_Tokens(userId);
-    
+
     await redisClient.set(cacheKey, JSON.stringify(tokens), "EX", 60 * 60 * 24);
 
     res.status(200).json({
@@ -101,11 +113,15 @@ export const getDeviceTokens = async (req: any, res: Response, next: NextFunctio
   }
 };
 
-export const getSingleDeviceToken = async (req: any, res: Response, next: NextFunction) => {
+export const getSingleDeviceToken = async (
+  req: any,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const userId = req.user.id;
     const token = req.params.token;
-    
+
     const cacheKey = `device_tokens_${userId}_${token}`;
 
     const cachedToken = await redisClient.get(cacheKey);
@@ -118,8 +134,13 @@ export const getSingleDeviceToken = async (req: any, res: Response, next: NextFu
     }
 
     const deviceToken = await getFCM_Token(userId, token);
-    
-    await redisClient.set(cacheKey, JSON.stringify(deviceToken), "EX", 60 * 60 * 24);
+
+    await redisClient.set(
+      cacheKey,
+      JSON.stringify(deviceToken),
+      "EX",
+      60 * 60 * 24,
+    );
 
     res.status(200).json({
       status: "success",

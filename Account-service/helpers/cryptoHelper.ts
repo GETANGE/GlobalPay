@@ -2,6 +2,7 @@ import crypto from "crypto";
 import dotenv from "dotenv";
 import logger from "../utils/logger";
 import client from "../configs/db-config";
+import { publishNotification } from "../events/queues/kyc_queues";
 
 dotenv.config()
 
@@ -76,6 +77,17 @@ export const linkAccount = async ( userId: number, type: "CARD" | "BANK", tokenI
         }
 
         await client.query("COMMIT");
+        
+        await publishNotification({
+          action: "notification",
+          title: "Account Linked Successfully",
+          body: `Your ${type.toLowerCase()} account has been linked successfully.`,
+          extraData: { tokenId, type },
+          device_type: "all",
+          priority: "high",
+          userId: userId.toString(),
+        });
+        
         return tokenId;
     } catch (error) {
         await client.query("ROLLBACK").catch(() => {});

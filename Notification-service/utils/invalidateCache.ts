@@ -24,3 +24,20 @@ export const invalidateDeviceTokensCache = async (userId: string) => {
     logger.error(`❌ Failed to invalidate device tokens cache for user ${userId}: ${error.message}`);
   }
 };
+
+export const invalidateAllBroadcastCaches = async () => {
+  try {
+    const pattern = "broadcast:*";
+    const keys = await redisClient.keys(pattern);
+
+    if (keys.length > 0) {
+      await redisClient.del(keys);
+    }
+
+    logger.info(`🧹 All broadcast caches invalidated (${keys.length} keys removed)`);
+  } catch (error: any) {
+    logger.error(
+      `❌ Failed to invalidate broadcast caches: ${error.message}`
+    );
+  }
+};

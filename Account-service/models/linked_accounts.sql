@@ -1,5 +1,6 @@
 CREATE TABLE IF NOT EXISTS vault_tokens (
     id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL,
     token_id VARCHAR(64) UNIQUE NOT NULL,
     encrypted_data TEXT NOT NULL,
     created_at TIMESTAMPTZ DEFAULT NOW()

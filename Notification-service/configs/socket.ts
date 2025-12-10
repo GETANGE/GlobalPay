@@ -11,26 +11,6 @@ export const initSocket = (server: HTTPServer) => {
     
     io.on("connection", (socket: Socket) => {
         logger.info("A user connected:", socket.id);
-        
-        // rooms for getting notifications in realtime
-        socket.on("my_notification", async(userId: string) => {
-          socket.join(userId);
-          logger.info(`Socket ${socket.id} joined room ${userId}`);
-          
-          // fetch all notifications for this user
-          try{
-            const notifications = await getUserNotifications(userId);
-            
-            socket.emit("notifications_list", {
-              total: notifications.length,
-              data: notifications
-            });
-            
-            logger.info(`📨 Sent ${notifications.length} notifications to user ${userId}`);
-          } catch(error:any){
-            logger.error(`❌ Failed to fetch notifications for user ${userId}:`, error);
-          }
-        });
     });
 
     io.on("disconnect", (socket: Socket) => {

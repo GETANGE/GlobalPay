@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import dotenv from "dotenv";
 import { decryptData, encryptData } from "../helpers/cryptoHelper";
+import { publishNotification } from "../events/queues/kyc_queues";
 import client from "../configs/db-config";
 import logger from "../utils/logger";
 import type { VaultAdapter } from "../types/vault-adapter";
@@ -84,6 +85,19 @@ export const selfHostedVault: VaultAdapter = {
         }
     
         await client.query("COMMIT");
+        
+        if (userId) {
+          await publishNotification({
+            action: "notification",
+            title: "Card Tokenized",
+            body: `Your ${type || "card"} has been securely tokenized.`,
+            extraData: { tokenId },
+            device_type: "all",
+            priority: "high",
+            userId
+          });
+        }
+        
         return tokenId;
       } catch (error) {
         await client.query("ROLLBACK").catch(() => {});
@@ -93,39 +107,41 @@ export const selfHostedVault: VaultAdapter = {
     },
 
     async chargeToken(tokenId: string, amount: number, currency: string) {
-        // decrypt card data and process payment transaction
-        if (!tokenId) throw new Error("Token ID is required");
-
-        if (typeof amount !== 'number' || amount <= 0) throw new Error("Invalid amount");
-
-        if (!currency) throw new Error("Currency is required");
-
-        try {
-            const result = await client.query(
-                `SELECT encrypted_data FROM vault_tokens WHERE token_id = $1`,
-                [tokenId]
-            );
-
-            if (result.rowCount === 0) {
-                throw new Error("Token not found");
-            }
-
-            const { encrypted, iv, tag } = JSON.parse(result.rows[0].encrypted_data);
-            const decryptedData = await decryptData(encrypted, iv, tag, VAULT_KEY);
-            const cardData = JSON.parse(decryptedData);
-
-            // send response to the real payment processing function
-            return { 
-                success: true, 
-                charged: { 
-                    amount, 
-                    currency, 
-                    card: cardData 
-                }
-            };
-        } catch (error) {
-            logger.error(`Charge failed for token ${tokenId}: ${error}`);
-            throw new Error("Payment processing failed");
-        }
+      if (!tokenId) throw new Error("Token ID is required");
+      if (typeof amount !== "number" || amount <= 0) throw new Error("Invalid amount");
+      if (!currency) throw new Error("Currency is required");
+  
+      try {
+        const result = await client.query(
+          `SELECT encrypted_data, user_id FROM vault_tokens WHERE token_id = $1`,
+          [tokenId]
+        );
+  
+        if (result.rowCount === 0) throw new Error("Token not found");
+  
+        const { encrypted, iv, tag } = JSON.parse(result.rows[0].encrypted_data);
+        const decryptedData = await decryptData(encrypted, iv, tag, VAULT_KEY);
+        const cardData = JSON.parse(decryptedData);
+  
+        const chargeResult = { 
+          success: true, 
+          charged: { amount, currency, card: cardData } };
+  
+        // Publish notification
+        await publishNotification({
+          action: "notification",
+          title: "Payment Processed",
+          body: `A payment of ${currency} ${amount} was successfully charged.`,
+          extraData: { tokenId, amount, currency },
+          device_type: "all",
+          priority: "high",
+          userId: result.rows[0].user_id
+        });
+  
+        return chargeResult;
+      } catch (error) {
+        logger.error(`Charge failed for token ${tokenId}: ${error}`);
+        throw new Error("Payment processing failed");
+      }
     }
 };

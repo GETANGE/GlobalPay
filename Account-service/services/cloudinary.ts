@@ -4,6 +4,7 @@ import logger from "../utils/logger";
 import client from "../configs/db-config";
 import { QUEUES } from "../utils/queue";
 import { getRabbitMQChannel } from "../configs/rabbitMQ-config";
+import { publishNotification } from "../events/queues/kyc_queues";
 
 dotenv.config();
 
@@ -40,7 +41,6 @@ const database_handling = async (
   folder_name: string
 ) => {
   const channel = await getRabbitMQChannel();
-
   await channel.assertQueue(queue, { durable: true });
 
   channel.consume(queue, async (message: any) => {
@@ -75,13 +75,43 @@ const database_handling = async (
       }
 
       logger.info(`${column_name} uploaded awaiting verification`);
+
+      // --- Send notification to the user ---
+      await publishNotification({
+        action: "notification",
+        title: `${folder_name} uploaded`,
+        body: `Your ${folder_name} document has been uploaded successfully and is awaiting verification.`,
+        extraData: { fileUrl: result.secure_url },
+        device_type: "all",
+        priority: "high",
+        userId: user.id,
+      });
+
       channel.ack(message);
     } catch (error: any) {
       logger.error(`Failed to process KYC job: ${error.message}`);
+
+      // send a failure notification
+      if (message) {
+        const job_data = JSON.parse(message.content.toString());
+        if (job_data.user.id) {
+          await publishNotification({
+            action: "notification",
+            title: `${folder_name} upload failed`,
+            body: `We couldn't upload your ${folder_name} document. Please try again later.`,
+            extraData: {},
+            device_type: "all",
+            priority: "high",
+            userId: job_data.user.id,
+          });
+        }
+      }
+
       channel.nack(message, false, false);
     }
   });
 };
+
 
 Promise.allSettled([
   database_handling(QUEUES.identity, "national_id_url", "identity_cards"),

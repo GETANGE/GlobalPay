@@ -27,8 +27,8 @@ export const notificationQueue = async (data: NotificationPayload) => {
       
       channel.sendToQueue(NOTIFICATION_QUEUE, Buffer.from(JSON.stringify(data)), { persistent: true });
       
-      logger.info(`📥 Notification added to queue successfully`);
+      logger.info(`📤 Published notification to queue: ${NOTIFICATION_QUEUE}`);
     } catch (error) {
-        logger.error(`Failed to send notification to queue: ${error}`);
+        logger.error(`Failed to add notification message to queue: ${error}`);
     }
 };
