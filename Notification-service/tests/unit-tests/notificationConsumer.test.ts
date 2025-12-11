@@ -187,6 +187,7 @@ describe("processNotificationConsumer FCM", () => {
           userId: "user-xyz",
           title: "Hello",
           body: "World",
+          priority: "high",
           data: { foo: "bar" },
           device_type: "android",
         })
@@ -202,7 +203,8 @@ describe("processNotificationConsumer FCM", () => {
       "World",
       { foo: "bar" },
       "android",
-      "user-xyz"
+      "high",
+      "user-xyz",
     );
 
     expect(fakeChannel.ack).toHaveBeenCalledWith(msg);
