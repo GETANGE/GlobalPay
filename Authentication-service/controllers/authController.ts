@@ -165,6 +165,14 @@ export const Registration = async (
         userId: newUser.rows[0].id,
         username: newUser.rows[0].username
       })
+      
+      await EmailJob_queue({
+        email: newUser.rows[0].email,
+        userId: newUser.rows[0].id,
+        name: `${newUser.rows[0].first_name} ${newUser.rows[0].last_name}`,
+        subject: getSubject("welcome"),
+        message: `Welcome to our platform`,
+      });
     }
 
     res.status(201).json({

@@ -14,9 +14,9 @@ export interface EmailData{
     userId: number;
     subject: string;
     message: string;
-    otp: number,
-    hashedToken: string;
-    expiresAt: string;
+    otp?: number,
+    hashedToken?: string;
+    expiresAt?: string;
 }
 
 export interface SmsData{
@@ -26,18 +26,6 @@ export interface SmsData{
     userId: number;
     hashedToken: string;
     expiresAt: string
-}
-
-export interface SmsData {
-  userId: string;
-  hashedToken: string;
-  expiresAt: Date;
-}
-
-export interface EmailData {
-  userId: string;
-  hashedToken: string;
-  expiresAt: Date;
 }
 
 export {};

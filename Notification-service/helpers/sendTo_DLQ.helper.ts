@@ -10,9 +10,22 @@ export const sendToDLQ = async (message: any, reason?: string) => {
   try {
     const channel = await getRabbitMQChannel();
     await channel.assertQueue(DLQ_QUEUE, { durable: true });
-    
+
+    let parsed = {};
+
+    // Ensure the message is parsed safely
+    if (typeof message === "string") {
+      try {
+        parsed = JSON.parse(message);
+      } catch {
+        parsed = { raw: message };
+      }
+    } else {
+      parsed = message;
+    }
+
     const payload = {
-      ...message,
+      ...parsed,
       failedAt: new Date().toISOString(),
       reason: reason || "Unknown",
     };
@@ -26,3 +39,4 @@ export const sendToDLQ = async (message: any, reason?: string) => {
     logger.error(`Failed to push message to DLQ: ${error.message}`);
   }
 };
+

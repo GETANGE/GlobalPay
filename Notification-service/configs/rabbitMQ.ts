@@ -18,8 +18,6 @@ const rabbitMQ_url =
 let hasLoggedConnection = false;
 
 export const getRabbitMQChannel = async (): Promise<Channel> => {
-  if (channel) return channel;
-
   if (!connection) {
     await connectToRabbitMQ();
   }
@@ -28,9 +26,7 @@ export const getRabbitMQChannel = async (): Promise<Channel> => {
     throw new Error("RabbitMQ connection not available.");
   }
 
-  channel = await connection.createChannel();
-  
-  return channel;
+  return connection.createChannel();
 };
 
 const connectToRabbitMQ = async () => {

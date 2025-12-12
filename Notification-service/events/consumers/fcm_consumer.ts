@@ -46,7 +46,7 @@ export const processDeviceTokens = async () => {
       channel.ack(msg);
     } catch (error: any) {
       logger.error("❌ Error processing device token:", error);
-      await sendToDLQ(data, error.message);
+      // await sendToDLQ(data, error.message);
       channel.nack(msg, false, false);
     }
   });

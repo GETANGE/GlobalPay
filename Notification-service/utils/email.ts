@@ -24,9 +24,9 @@ const emailTemplate = (name: string, message: string, otp?: number): string => `
         <p style="font-size: 18px; margin: 0;">Your OTP is: <strong>${otp}</strong></p>
       </div>
       <p><small>This OTP will expire in 10 minutes. Please do not share it with anyone.</small></p>
+      
+      <p>If you did not initiate this request, please ignore this email.</p>
     ` : ""}
-
-    <p>If you did not initiate this request, please ignore this email.</p>
 
     <p style="margin-top: 30px;">Regards,<br/><strong>GlobalPay Team</strong></p>
   </div>
