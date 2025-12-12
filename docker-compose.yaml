@@ -66,7 +66,7 @@ services:
       - globalpay-net
     restart: always
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U account_user -d account_db"]
+      test: ["CMD-SHELL", "pg_isready -U notify_user -d notifications_db"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -151,31 +151,32 @@ services:
   # =========================
   # Notification Service
   # =========================
-  # notification-service:
-  #   build:
-  #     context: ./Notification-service
-  #   container_name: notification-service
-  #   env_file:
-  #     - ./Notification-service/.env
-  #   ports:
-  #     - "3006:3006"
-  #   environment:
-  #     - NODE_ENV=production
-  #     - DATABASE_URL_PROD=postgresql://notification_user:notification_pass@postgres-notifications:5432/notification_db
-  #     - REDIS_URL_PROD=redis://redis:6379
-  #     - RABBITMQ_URL_PROD=amqp://guest:guest@rabbitmq:5672
-  #   depends_on:
-  #     postgres-notifications:
-  #       condition: service_healthy
-  #     redis:
-  #       condition: service_healthy
-  #     rabbitmq:
-  #       condition: service_healthy
-  #   networks:
-  #     - globalpay-net
-  #   restart: always
-  #   healthcheck:
-  #     test: ["CMD", "curl", "-f", "http://notification-service:3006/health"]
+  notification-service:
+    build:
+      context: ./Notification-service
+    container_name: notification-service
+    env_file:
+      - ./Notification-service/.env
+    ports:
+      - "3006:3006"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL_PROD=postgresql://notify_user:notify_pass@postgres-notifications:5432/notifications_db
+      - REDIS_URL_PROD=redis://redis:6379
+      - RABBITMQ_URL_PROD=amqp://guest:guest@rabbitmq:5672
+    depends_on:
+      postgres-notifications:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - globalpay-net
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://notification-service:3006/health"]
+      
   # =========================
   # Shared Redis Instance
   # =========================
